@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PermisosEditDlg" widgetVar="PermisosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditPermisosTitle}" closeOnEscape="true">
+
+            <h:form id="PermisosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{permisosController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditPermisosLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{permisosController.selected.id}" />
+                            <p:tooltip for="id" value="#{permisosController.getComponentMessages('id', mensajes.EditPermisosHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditPermisosLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{permisosController.selected.descripcion}" title="#{mensajes.EditPermisosTitle_descripcion}" required="true" requiredMessage="#{mensajes.EditPermisosRequiredMessage_descripcion}" size="100" maxlength="200"/>
+                            <p:tooltip for="descripcion" value="#{permisosController.getComponentMessages('descripcion', mensajes.EditPermisosHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditPermisosLabel_funcion}" for="funcion" />
+                        <h:panelGroup>
+                            <p:inputText id="funcion" value="#{permisosController.selected.funcion}" title="#{mensajes.EditPermisosTitle_funcion}" required="true" requiredMessage="#{mensajes.EditPermisosRequiredMessage_funcion}" size="100" maxlength="200"/>
+                            <p:tooltip for="funcion" value="#{permisosController.getComponentMessages('funcion', mensajes.EditPermisosHelpText_funcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditPermisosLabel_permiso}" for="permiso" />
+                        <h:panelGroup>
+                            <p:inputText id="permiso" value="#{permisosController.selected.permiso}" title="#{mensajes.EditPermisosTitle_permiso}" required="true" requiredMessage="#{mensajes.EditPermisosRequiredMessage_permiso}" size="100" maxlength="200"/>
+                            <p:tooltip for="permiso" value="#{permisosController.getComponentMessages('permiso', mensajes.EditPermisosHelpText_permiso)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditPermisosLabel_empresa}" for="empresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="empresa" value="#{permisosController.selected.empresa}" required="true" requiredMessage="#{mensajes.EditPermisosRequiredMessage_empresa}" converter="empresasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresasController.items}"
+                                               var="empresaItem"
+                                               itemValue="#{empresaItem}"
+                                               itemLabel="#{empresaItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="empresa" value="#{permisosController.getComponentMessages('empresa', mensajes.EditPermisosHelpText_empresa)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{permisosController.save}" value="#{mensajes.Save}" update="display,:PermisosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisosEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('PermisosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

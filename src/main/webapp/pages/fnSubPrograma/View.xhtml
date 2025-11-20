@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnSubProgramaViewDlg" widgetVar="FnSubProgramaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnSubProgramaTitle}" closeOnEscape="true">
+
+            <h:form id="FnSubProgramaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnSubProgramaController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnSubProgramaLabel_id}"/>
+                        <h:outputText value="#{fnSubProgramaController.selected.id}" title="#{mensajes.ViewFnSubProgramaTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnSubProgramaLabel_descripcion}"/>
+                        <h:outputText value="#{fnSubProgramaController.selected.descripcion}" title="#{mensajes.ViewFnSubProgramaTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnSubProgramaLabel_programa}"/>
+                        <h:outputText value="#{fnSubProgramaController.selected.programa.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnSubProgramaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

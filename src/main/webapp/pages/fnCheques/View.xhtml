@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnChequesViewDlg" widgetVar="FnChequesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnChequesTitle}" closeOnEscape="true">
+
+            <h:form id="FnChequesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnChequesController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_id}"/>
+                        <h:outputText value="#{fnChequesController.selected.id}" title="#{mensajes.ViewFnChequesTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_banco}"/>
+                        <h:outputText value="#{fnChequesController.selected.banco}" title="#{mensajes.ViewFnChequesTitle_banco}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_cuenta}"/>
+                        <h:outputText value="#{fnChequesController.selected.cuenta}" title="#{mensajes.ViewFnChequesTitle_cuenta}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_numero}"/>
+                        <h:outputText value="#{fnChequesController.selected.numero}" title="#{mensajes.ViewFnChequesTitle_numero}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_fechaEmision}"/>
+                        <h:outputText value="#{fnChequesController.selected.fechaEmision}" title="#{mensajes.ViewFnChequesTitle_fechaEmision}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnChequesLabel_fechaCobro}"/>
+                        <h:outputText value="#{fnChequesController.selected.fechaCobro}" title="#{mensajes.ViewFnChequesTitle_fechaCobro}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnChequesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

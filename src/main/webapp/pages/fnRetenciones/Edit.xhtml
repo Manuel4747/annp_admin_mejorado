@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnRetencionesEditDlg" widgetVar="FnRetencionesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnRetencionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnRetencionesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnRetencionesController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnRetencionesLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnRetencionesController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnRetencionesController.getComponentMessages('id', mensajes.EditFnRetencionesHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnRetencionesLabel_porcentaje}" for="porcentaje" />
+                        <h:panelGroup>
+                            <p:inputText id="porcentaje" value="#{fnRetencionesController.selected.porcentaje}" title="#{mensajes.EditFnRetencionesTitle_porcentaje}"/>
+                            <p:tooltip for="porcentaje" value="#{fnRetencionesController.getComponentMessages('porcentaje', mensajes.EditFnRetencionesHelpText_porcentaje)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnRetencionesLabel_monto}" for="monto" />
+                        <h:panelGroup>
+                            <p:inputText id="monto" value="#{fnRetencionesController.selected.monto}" title="#{mensajes.EditFnRetencionesTitle_monto}"/>
+                            <p:tooltip for="monto" value="#{fnRetencionesController.getComponentMessages('monto', mensajes.EditFnRetencionesHelpText_monto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnRetencionesLabel_pago}" for="pago" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="pago" value="#{fnRetencionesController.selected.pago}"  converter="fnPagosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnPagosController.items}"
+                                               var="pagoItem"
+                                               itemValue="#{pagoItem}"
+                                               itemLabel="#{pagoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="pago" value="#{fnRetencionesController.getComponentMessages('pago', mensajes.EditFnRetencionesHelpText_pago)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnRetencionesController.save}" value="#{mensajes.Save}" update="display,:FnRetencionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnRetencionesEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnRetencionesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

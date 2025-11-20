@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnProgramasListForm">
+
+        <p:panel header="#{mensajes.ListFnProgramasTitle}">
+            <p:contextMenu id="FnProgramasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnProgramasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnProgramasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnProgramasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnProgramasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnProgramasMenuItem_fnPresupuestoCollection}" icon="ui-icon-search"  action="#{fnProgramasController.navigateFnPresupuestoCollection}" disabled="#{empty fnProgramasController.selected.fnPresupuestoCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProgramasMenuItem_fnSubProgramaCollection}" icon="ui-icon-search"  action="#{fnProgramasController.navigateFnSubProgramaCollection}" disabled="#{empty fnProgramasController.selected.fnSubProgramaCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProgramasMenuItem_fnPlanFinancieroCollection}" icon="ui-icon-search"  action="#{fnProgramasController.navigateFnPlanFinancieroCollection}" disabled="#{empty fnProgramasController.selected.fnPlanFinancieroCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnProgramasController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnProgramasController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnProgramasController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnProgramasDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnProgramasDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnProgramasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProgramasTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProgramasTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnProgramasController.prepareCreate}" update=":FnProgramasCreateForm" oncomplete="PF('FnProgramasCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnProgramasViewForm" oncomplete="PF('FnProgramasViewDialog').show()" disabled="#{empty fnProgramasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnProgramasEditForm" oncomplete="PF('FnProgramasEditDialog').show()" disabled="#{empty fnProgramasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnProgramasController.delete}" update=":growl,datalist" disabled="#{empty fnProgramasController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

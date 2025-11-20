@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>Bienvenido al Sistema de Gestión de Expedientes Administrativos - JEM</title>
+    </h:head>
+
+    <h:body styleClass="login-body">
+        <p:growl id="growl" life="7000" showDetail="true"></p:growl>
+        <h:form>
+            <p:remoteCommand name="onload" action="#{usuariosController.onload()}" autoRun="true" />
+            <div class="login-panel ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-6 left-side">
+                        <p:graphicImage library="manhattan-layout" styleClass="login-image" value="#{usuariosController.imagenInicio}"/>
+                    </div>
+                    <div class="ui-g-6 ui-sm-12 right-side">
+                        <div class="ui-g-12 container">
+                            <h2><h:outputText value="Bienvenido al Sistema de Gestión de Expedientes Administrativos - JEM" /></h2>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:outputLabel for="username" value="Usuario" />
+                            <div class="input-wrapper">
+                                <p:inputText id="username" value="#{usuariosController.usuario}" placeholder="Username" />
+                                <i class="fa fa-user" />
+                            </div>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:outputLabel for="password" value="Contraseña" />
+                            <div class="input-wrapper">
+                                <p:password id="password" placeholder="Password" value="#{usuariosController.contrasena}" feedback="false" />
+                                <i class="fa fa-lock" />
+                            </div>
+                        </div>
+                        <div class="ui-g-12 button-container">
+                            <p:commandButton value="Ingreso al Sistema" action="#{usuariosController.loginControl()}"></p:commandButton>
+                        </div>
+                <div class="ui-g-12" style="text-align:center">
+                    <p:graphicImage value="#{usuariosController.imagenLogo}" style="max-height: 50px" styleClass="logo" />
+                </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+        <h:outputStylesheet name="css/layout-#{parametrosSistemaController.theme}.css" library="manhattan-layout" />
+    </h:body>
+
+    <p:dialog positionType="absolute" id="DocumentosCreateDlg" widgetVar="DocumentosCreateDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+
+        <h:form id="DocumentosListForm">
+
+                <p:outputLabel value="Ingresar como: " for="rol" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="rol" value="#{usuariosController.usuarioElegido}" converter="usuariosConverter">
+                        <p:ajax event="change" listener="#{usuariosController.redirigir()}" />
+                        <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                        <f:selectItems value="#{usuariosController.listaUsuariosElegir}"
+                                       var="usuarioItem"
+                                       itemValue="#{usuarioItem}"
+                                       itemLabel="#{usuarioItem.nombresApellidos}"
+                                       />
+
+                    </p:selectOneMenu>
+                </h:panelGroup>
+        </h:form>
+    </p:dialog>
+    <p:dialog positionType="absolute" id="PerfilesDlg" widgetVar="PerfilesDialog" modal="true" resizable="false" appendTo="@(body)" closeOnEscape="true">
+
+        <h:form id="PerfilesForm">
+
+                <p:outputLabel value="Perfil: " for="perfil" />
+                <h:panelGroup>
+                    <p:selectOneMenu id="perfil" value="#{usuariosController.perfilElegido}" converter="perfilesConverter">
+                        <p:ajax event="change" listener="#{usuariosController.redirigir2()}" />
+                        <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                        <f:selectItems value="#{usuariosController.listaPerfilesElegir}"
+                                       var="perfilItem"
+                                       itemValue="#{perfilItem}"
+                                       itemLabel="#{perfilItem.descripcion}"
+                                       />
+
+                    </p:selectOneMenu>
+                </h:panelGroup>
+        </h:form>
+    </p:dialog>
+</html>

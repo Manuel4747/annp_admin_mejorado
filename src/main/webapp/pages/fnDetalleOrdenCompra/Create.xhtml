@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetalleOrdenCompraCreateDlg" widgetVar="FnDetalleOrdenCompraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnDetalleOrdenCompraTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleOrdenCompraCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnDetalleOrdenCompraController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleOrdenCompraLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnDetalleOrdenCompraController.selected.id}" title="#{mensajes.CreateFnDetalleOrdenCompraTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnDetalleOrdenCompraRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnDetalleOrdenCompraController.getComponentMessages('id', mensajes.CreateFnDetalleOrdenCompraHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleOrdenCompraLabel_articulo}" for="articulo" />
+                        <h:panelGroup>
+                            <p:inputText id="articulo" value="#{fnDetalleOrdenCompraController.selected.articulo}" title="#{mensajes.CreateFnDetalleOrdenCompraTitle_articulo}"/>
+                            <p:tooltip for="articulo" value="#{fnDetalleOrdenCompraController.getComponentMessages('articulo', mensajes.CreateFnDetalleOrdenCompraHelpText_articulo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleOrdenCompraLabel_cantidad}" for="cantidad" />
+                        <h:panelGroup>
+                            <p:inputText id="cantidad" value="#{fnDetalleOrdenCompraController.selected.cantidad}" title="#{mensajes.CreateFnDetalleOrdenCompraTitle_cantidad}"/>
+                            <p:tooltip for="cantidad" value="#{fnDetalleOrdenCompraController.getComponentMessages('cantidad', mensajes.CreateFnDetalleOrdenCompraHelpText_cantidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleOrdenCompraLabel_costoUnitario}" for="costoUnitario" />
+                        <h:panelGroup>
+                            <p:inputText id="costoUnitario" value="#{fnDetalleOrdenCompraController.selected.costoUnitario}" title="#{mensajes.CreateFnDetalleOrdenCompraTitle_costoUnitario}"/>
+                            <p:tooltip for="costoUnitario" value="#{fnDetalleOrdenCompraController.getComponentMessages('costoUnitario', mensajes.CreateFnDetalleOrdenCompraHelpText_costoUnitario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleOrdenCompraLabel_total}" for="total" />
+                        <h:panelGroup>
+                            <p:inputText id="total" value="#{fnDetalleOrdenCompraController.selected.total}" title="#{mensajes.CreateFnDetalleOrdenCompraTitle_total}"/>
+                            <p:tooltip for="total" value="#{fnDetalleOrdenCompraController.getComponentMessages('total', mensajes.CreateFnDetalleOrdenCompraHelpText_total)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetalleOrdenCompraController.saveNew}" value="#{mensajes.Save}" update="display,:FnDetalleOrdenCompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetalleOrdenCompraCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetalleOrdenCompraCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

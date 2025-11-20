@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstadosUsuarioCreateDlg" widgetVar="EstadosUsuarioCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateEstadosUsuarioTitle}" closeOnEscape="true">
+
+            <h:form id="EstadosUsuarioCreateForm">
+
+                <h:panelGroup id="display" rendered="#{estadosUsuarioController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateEstadosUsuarioLabel_codigo}" for="codigo" />
+                        <h:panelGroup>
+                            <p:inputText id="codigo" value="#{estadosUsuarioController.selected.codigo}" title="#{mensajes.CreateEstadosUsuarioTitle_codigo}" required="true" requiredMessage="#{mensajes.CreateEstadosUsuarioRequiredMessage_codigo}" size="2" maxlength="2"/>
+                            <p:tooltip for="codigo" value="#{estadosUsuarioController.getComponentMessages('codigo', mensajes.CreateEstadosUsuarioHelpText_codigo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateEstadosUsuarioLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{estadosUsuarioController.selected.descripcion}" title="#{mensajes.CreateEstadosUsuarioTitle_descripcion}" size="100" maxlength="200"/>
+                            <p:tooltip for="descripcion" value="#{estadosUsuarioController.getComponentMessages('descripcion', mensajes.CreateEstadosUsuarioHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateEstadosUsuarioLabel_empresa}" for="empresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="empresa" value="#{estadosUsuarioController.selected.empresa}" required="true" requiredMessage="#{mensajes.CreateEstadosUsuarioRequiredMessage_empresa}" converter="empresasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresasController.items}"
+                                               var="empresaItem"
+                                               itemValue="#{empresaItem}"
+                                               itemLabel="#{empresaItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="empresa" value="#{estadosUsuarioController.getComponentMessages('empresa', mensajes.CreateEstadosUsuarioHelpText_empresa)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{estadosUsuarioController.saveNew}" value="#{mensajes.Save}" update="display,:EstadosUsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EstadosUsuarioCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('EstadosUsuarioCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

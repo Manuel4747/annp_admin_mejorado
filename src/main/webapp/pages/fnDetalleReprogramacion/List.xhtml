@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnDetalleReprogramacionListForm">
+
+        <p:panel header="#{mensajes.ListFnDetalleReprogramacionTitle}">
+            <p:contextMenu id="FnDetalleReprogramacionDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnDetalleReprogramacionListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnDetalleReprogramacionListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnDetalleReprogramacionListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnDetalleReprogramacionListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnDetalleReprogramacionMenuItem_idDetallePtoAumentar}" icon="ui-icon-search"  actionListener="#{fnDetalleReprogramacionController.prepareIdDetallePtoAumentar}" update=":FnDetallePlanFinancieroViewForm" oncomplete="PF('FnDetallePlanFinancieroViewDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected.idDetallePtoAumentar}"/>  
+                <p:menuitem value="#{mensajes.FnDetalleReprogramacionMenuItem_idDetallePtoDisminuir}" icon="ui-icon-search"  actionListener="#{fnDetalleReprogramacionController.prepareIdDetallePtoDisminuir}" update=":FnDetallePlanFinancieroViewForm" oncomplete="PF('FnDetallePlanFinancieroViewDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected.idDetallePtoDisminuir}"/>  
+                <p:menuitem value="#{mensajes.FnDetalleReprogramacionMenuItem_tipoDeVariacionRp}" icon="ui-icon-search"  actionListener="#{fnDetalleReprogramacionController.prepareTipoDeVariacionRp}" update=":FnTipoDeVariacionRpViewForm" oncomplete="PF('FnTipoDeVariacionRpViewDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected.tipoDeVariacionRp}"/>  
+                <p:menuitem value="#{mensajes.FnDetalleReprogramacionMenuItem_fnDetalleReprogramacionCollection}" icon="ui-icon-search"  action="#{fnDetalleReprogramacionController.navigateFnDetalleReprogramacionCollection}" disabled="#{empty fnDetalleReprogramacionController.selected.fnDetalleReprogramacionCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnDetalleReprogramacionMenuItem_reprogramaciones}" icon="ui-icon-search"  actionListener="#{fnDetalleReprogramacionController.prepareReprogramaciones}" update=":FnDetalleReprogramacionViewForm" oncomplete="PF('FnDetalleReprogramacionViewDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected.reprogramaciones}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnDetalleReprogramacionController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnDetalleReprogramacionController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnDetalleReprogramacionController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetalleReprogramacionDataTableContextMenu" listener="#{fnDetalleReprogramacionController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetalleReprogramacionDataTableContextMenu" listener="#{fnDetalleReprogramacionController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnDetalleReprogramacionController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnDetalleReprogramacionListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleReprogramacionTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idDetallePtoAumentar.id}" filterBy="#{item.idDetallePtoAumentar.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleReprogramacionTitle_idDetallePtoAumentar}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDetallePtoAumentar.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idDetallePtoDisminuir.id}" filterBy="#{item.idDetallePtoDisminuir.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleReprogramacionTitle_idDetallePtoDisminuir}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idDetallePtoDisminuir.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipoDeVariacionRp.descripcion}" filterBy="#{item.tipoDeVariacionRp.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleReprogramacionTitle_tipoDeVariacionRp}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipoDeVariacionRp.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.reprogramaciones.id}" filterBy="#{item.reprogramaciones.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleReprogramacionTitle_reprogramaciones}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.reprogramaciones.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnDetalleReprogramacionController.prepareCreate}" update=":FnDetalleReprogramacionCreateForm" oncomplete="PF('FnDetalleReprogramacionCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnDetalleReprogramacionViewForm" oncomplete="PF('FnDetalleReprogramacionViewDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnDetalleReprogramacionEditForm" oncomplete="PF('FnDetalleReprogramacionEditDialog').show()" disabled="#{empty fnDetalleReprogramacionController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnDetalleReprogramacionController.delete}" update=":growl,datalist" disabled="#{empty fnDetalleReprogramacionController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

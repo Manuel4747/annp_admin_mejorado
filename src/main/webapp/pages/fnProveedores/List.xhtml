@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnProveedoresListForm">
+
+        <p:panel header="#{mensajes.ListFnProveedoresTitle}">
+            <p:contextMenu id="FnProveedoresDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnProveedoresListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnProveedoresListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnProveedoresListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnProveedoresListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnFacturasCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnFacturasCollection}" disabled="#{empty fnProveedoresController.selected.fnFacturasCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnComprobantesDePagoCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnComprobantesDePagoCollection}" disabled="#{empty fnProveedoresController.selected.fnComprobantesDePagoCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnContratosCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnContratosCollection}" disabled="#{empty fnProveedoresController.selected.fnContratosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnLicitacionesCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnLicitacionesCollection}" disabled="#{empty fnProveedoresController.selected.fnLicitacionesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnDetalleLicitacionCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnDetalleLicitacionCollection}" disabled="#{empty fnProveedoresController.selected.fnDetalleLicitacionCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnProveedoresMenuItem_fnOrdenesDeCompraCollection}" icon="ui-icon-search"  action="#{fnProveedoresController.navigateFnOrdenesDeCompraCollection}" disabled="#{empty fnProveedoresController.selected.fnOrdenesDeCompraCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnProveedoresController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnProveedoresController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnProveedoresController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnProveedoresDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnProveedoresDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnProveedoresListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProveedoresTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ruc}" filterBy="#{item.ruc}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProveedoresTitle_ruc}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ruc}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.razonSocial}" filterBy="#{item.razonSocial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProveedoresTitle_razonSocial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.razonSocial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccion}" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProveedoresTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnProveedoresTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnProveedoresController.prepareCreate}" update=":FnProveedoresCreateForm" oncomplete="PF('FnProveedoresCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnProveedoresViewForm" oncomplete="PF('FnProveedoresViewDialog').show()" disabled="#{empty fnProveedoresController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnProveedoresEditForm" oncomplete="PF('FnProveedoresEditDialog').show()" disabled="#{empty fnProveedoresController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnProveedoresController.delete}" update=":growl,datalist" disabled="#{empty fnProveedoresController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

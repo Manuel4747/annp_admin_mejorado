@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnObjetosDeGastoCreateDlg" widgetVar="FnObjetosDeGastoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnObjetosDeGastoTitle}" closeOnEscape="true">
+
+            <h:form id="FnObjetosDeGastoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnObjetosDeGastoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnObjetosDeGastoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnObjetosDeGastoController.selected.id}" title="#{mensajes.CreateFnObjetosDeGastoTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnObjetosDeGastoRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnObjetosDeGastoController.getComponentMessages('id', mensajes.CreateFnObjetosDeGastoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnObjetosDeGastoLabel_numero}" for="numero" />
+                        <h:panelGroup>
+                            <p:inputText id="numero" value="#{fnObjetosDeGastoController.selected.numero}" title="#{mensajes.CreateFnObjetosDeGastoTitle_numero}" required="true" requiredMessage="#{mensajes.CreateFnObjetosDeGastoRequiredMessage_numero}"/>
+                            <p:tooltip for="numero" value="#{fnObjetosDeGastoController.getComponentMessages('numero', mensajes.CreateFnObjetosDeGastoHelpText_numero)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnObjetosDeGastoLabel_denominacion}" for="denominacion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="denominacion" value="#{fnObjetosDeGastoController.selected.denominacion}" title="#{mensajes.CreateFnObjetosDeGastoTitle_denominacion}" required="true" requiredMessage="#{mensajes.CreateFnObjetosDeGastoRequiredMessage_denominacion}"/>
+                            <p:tooltip for="denominacion" value="#{fnObjetosDeGastoController.getComponentMessages('denominacion', mensajes.CreateFnObjetosDeGastoHelpText_denominacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnObjetosDeGastoLabel_concepto}" for="concepto" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="concepto" value="#{fnObjetosDeGastoController.selected.concepto}" title="#{mensajes.CreateFnObjetosDeGastoTitle_concepto}" required="true" requiredMessage="#{mensajes.CreateFnObjetosDeGastoRequiredMessage_concepto}"/>
+                            <p:tooltip for="concepto" value="#{fnObjetosDeGastoController.getComponentMessages('concepto', mensajes.CreateFnObjetosDeGastoHelpText_concepto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnObjetosDeGastoLabel_abreviacion}" for="abreviacion" />
+                        <h:panelGroup>
+                            <p:inputText id="abreviacion" value="#{fnObjetosDeGastoController.selected.abreviacion}" title="#{mensajes.CreateFnObjetosDeGastoTitle_abreviacion}" size="50" maxlength="50"/>
+                            <p:tooltip for="abreviacion" value="#{fnObjetosDeGastoController.getComponentMessages('abreviacion', mensajes.CreateFnObjetosDeGastoHelpText_abreviacion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnObjetosDeGastoController.saveNew}" value="#{mensajes.Save}" update="display,:FnObjetosDeGastoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnObjetosDeGastoCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnObjetosDeGastoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

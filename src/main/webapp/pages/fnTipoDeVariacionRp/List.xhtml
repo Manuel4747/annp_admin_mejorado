@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnTipoDeVariacionRpListForm">
+
+        <p:panel header="#{mensajes.ListFnTipoDeVariacionRpTitle}">
+            <p:contextMenu id="FnTipoDeVariacionRpDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnTipoDeVariacionRpListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnTipoDeVariacionRpListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnTipoDeVariacionRpListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnTipoDeVariacionRpListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnTipoDeVariacionRpMenuItem_fnDetalleReprogramacionCollection}" icon="ui-icon-search"  action="#{fnTipoDeVariacionRpController.navigateFnDetalleReprogramacionCollection}" disabled="#{empty fnTipoDeVariacionRpController.selected.fnDetalleReprogramacionCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnTipoDeVariacionRpController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnTipoDeVariacionRpController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnTipoDeVariacionRpController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnTipoDeVariacionRpDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnTipoDeVariacionRpDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnTipoDeVariacionRpListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnTipoDeVariacionRpTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnTipoDeVariacionRpTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnTipoDeVariacionRpController.prepareCreate}" update=":FnTipoDeVariacionRpCreateForm" oncomplete="PF('FnTipoDeVariacionRpCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnTipoDeVariacionRpViewForm" oncomplete="PF('FnTipoDeVariacionRpViewDialog').show()" disabled="#{empty fnTipoDeVariacionRpController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnTipoDeVariacionRpEditForm" oncomplete="PF('FnTipoDeVariacionRpEditDialog').show()" disabled="#{empty fnTipoDeVariacionRpController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnTipoDeVariacionRpController.delete}" update=":growl,datalist" disabled="#{empty fnTipoDeVariacionRpController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

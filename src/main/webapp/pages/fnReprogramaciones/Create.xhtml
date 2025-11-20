@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnReprogramacionesCreateDlg" widgetVar="FnReprogramacionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnReprogramacionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnReprogramacionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnReprogramacionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnReprogramacionesController.selected.id}" title="#{mensajes.CreateFnReprogramacionesTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnReprogramacionesRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnReprogramacionesController.getComponentMessages('id', mensajes.CreateFnReprogramacionesHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_fechaInicio}" for="fechaInicio" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaInicio" pattern="MM/dd/yyyy" value="#{fnReprogramacionesController.selected.fechaInicio}" title="#{mensajes.CreateFnReprogramacionesTitle_fechaInicio}" required="true" requiredMessage="#{mensajes.CreateFnReprogramacionesRequiredMessage_fechaInicio}" showOn="button"/>
+                            <p:tooltip for="fechaInicio" value="#{fnReprogramacionesController.getComponentMessages('fechaInicio', mensajes.CreateFnReprogramacionesHelpText_fechaInicio)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnReprogramacionesController.selected.descripcion}" title="#{mensajes.CreateFnReprogramacionesTitle_descripcion}" required="true" requiredMessage="#{mensajes.CreateFnReprogramacionesRequiredMessage_descripcion}"/>
+                            <p:tooltip for="descripcion" value="#{fnReprogramacionesController.getComponentMessages('descripcion', mensajes.CreateFnReprogramacionesHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_periodo}" for="periodo" />
+                        <h:panelGroup>
+                            <p:inputText id="periodo" value="#{fnReprogramacionesController.selected.periodo}" title="#{mensajes.CreateFnReprogramacionesTitle_periodo}" required="true" requiredMessage="#{mensajes.CreateFnReprogramacionesRequiredMessage_periodo}"/>
+                            <p:tooltip for="periodo" value="#{fnReprogramacionesController.getComponentMessages('periodo', mensajes.CreateFnReprogramacionesHelpText_periodo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_fechaAprobacion}" for="fechaAprobacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaAprobacion" pattern="MM/dd/yyyy" value="#{fnReprogramacionesController.selected.fechaAprobacion}" title="#{mensajes.CreateFnReprogramacionesTitle_fechaAprobacion}"  showOn="button"/>
+                            <p:tooltip for="fechaAprobacion" value="#{fnReprogramacionesController.getComponentMessages('fechaAprobacion', mensajes.CreateFnReprogramacionesHelpText_fechaAprobacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_nroDocAprobacion}" for="nroDocAprobacion" />
+                        <h:panelGroup>
+                            <p:inputText id="nroDocAprobacion" value="#{fnReprogramacionesController.selected.nroDocAprobacion}" title="#{mensajes.CreateFnReprogramacionesTitle_nroDocAprobacion}" size="100" maxlength="100"/>
+                            <p:tooltip for="nroDocAprobacion" value="#{fnReprogramacionesController.getComponentMessages('nroDocAprobacion', mensajes.CreateFnReprogramacionesHelpText_nroDocAprobacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_importe}" for="importe" />
+                        <h:panelGroup>
+                            <p:inputText id="importe" value="#{fnReprogramacionesController.selected.importe}" title="#{mensajes.CreateFnReprogramacionesTitle_importe}"/>
+                            <p:tooltip for="importe" value="#{fnReprogramacionesController.getComponentMessages('importe', mensajes.CreateFnReprogramacionesHelpText_importe)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnReprogramacionesLabel_tiposReprogramaciones}" for="tiposReprogramaciones" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tiposReprogramaciones" value="#{fnReprogramacionesController.selected.tiposReprogramaciones}" required="true" requiredMessage="#{mensajes.CreateFnReprogramacionesRequiredMessage_tiposReprogramaciones}" converter="fnTiposReprogramacionesConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnTiposReprogramacionesController.items}"
+                                               var="tiposReprogramacionesItem"
+                                               itemValue="#{tiposReprogramacionesItem}"
+                                               itemLabel="#{tiposReprogramacionesItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tiposReprogramaciones" value="#{fnReprogramacionesController.getComponentMessages('tiposReprogramaciones', mensajes.CreateFnReprogramacionesHelpText_tiposReprogramaciones)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnReprogramacionesController.saveNew}" value="#{mensajes.Save}" update="display,:FnReprogramacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnReprogramacionesCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnReprogramacionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

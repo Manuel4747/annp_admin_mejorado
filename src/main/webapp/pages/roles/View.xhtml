@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolesViewDlg" widgetVar="RolesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewRolesTitle}" closeOnEscape="true">
+
+            <h:form id="RolesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{rolesController.selected != null}">
+
+                       
+                        <h:outputText value="#{mensajes.ViewRolesLabel_descripcion}"/>
+                        <h:outputText value="#{rolesController.selected.descripcion}" title="#{mensajes.ViewRolesTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewRolesLabel_fechaHoraAlta}"/>
+                        <h:outputText value="#{rolesController.selected.fechaHoraAlta}" title="#{mensajes.ViewRolesTitle_fechaHoraAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewRolesLabel_fechaHoraUltimoEstado}"/>
+                        <h:outputText value="#{rolesController.selected.fechaHoraUltimoEstado}" title="#{mensajes.ViewRolesTitle_fechaHoraUltimoEstado}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>
+
+                        
+                        <h:outputText value="#{mensajes.ViewRolesLabel_usuarioAlta}"/>
+                        <h:outputText value="#{rolesController.selected.usuarioAlta.nombresApellidos}"/>
+
+                        <h:outputText value="#{mensajes.ViewRolesLabel_usuarioUltimoEstado}"/>
+                        <h:outputText value="#{rolesController.selected.usuarioUltimoEstado.nombresApellidos}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('RolesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnLicitacionesEditDlg" widgetVar="FnLicitacionesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnLicitacionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnLicitacionesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnLicitacionesController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnLicitacionesLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnLicitacionesController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnLicitacionesController.getComponentMessages('id', mensajes.EditFnLicitacionesHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnLicitacionesLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnLicitacionesController.selected.fecha}" title="#{mensajes.EditFnLicitacionesTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnLicitacionesController.getComponentMessages('fecha', mensajes.EditFnLicitacionesHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnLicitacionesLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnLicitacionesController.selected.descripcion}" title="#{mensajes.EditFnLicitacionesTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnLicitacionesController.getComponentMessages('descripcion', mensajes.EditFnLicitacionesHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnLicitacionesLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:inputText id="estado" value="#{fnLicitacionesController.selected.estado}" title="#{mensajes.EditFnLicitacionesTitle_estado}"/>
+                            <p:tooltip for="estado" value="#{fnLicitacionesController.getComponentMessages('estado', mensajes.EditFnLicitacionesHelpText_estado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnLicitacionesLabel_adjudicado}" for="adjudicado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="adjudicado" value="#{fnLicitacionesController.selected.adjudicado}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="adjudicadoItem"
+                                               itemValue="#{adjudicadoItem}"
+                                               itemLabel="#{adjudicadoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="adjudicado" value="#{fnLicitacionesController.getComponentMessages('adjudicado', mensajes.EditFnLicitacionesHelpText_adjudicado)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnLicitacionesController.save}" value="#{mensajes.Save}" update="display,:FnLicitacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnLicitacionesEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnLicitacionesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

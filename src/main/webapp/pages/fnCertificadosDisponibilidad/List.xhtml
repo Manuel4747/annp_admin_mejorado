@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnCertificadosDisponibilidadListForm">
+
+        <p:panel header="#{mensajes.ListFnCertificadosDisponibilidadTitle}">
+            <p:contextMenu id="FnCertificadosDisponibilidadDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnCertificadosDisponibilidadListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnCertificadosDisponibilidadListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnCertificadosDisponibilidadListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnCertificadosDisponibilidadListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnCertificadosDisponibilidadController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnCertificadosDisponibilidadController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnCertificadosDisponibilidadController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnCertificadosDisponibilidadDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnCertificadosDisponibilidadDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnCertificadosDisponibilidadListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnCertificadosDisponibilidadTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnCertificadosDisponibilidadTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnCertificadosDisponibilidadTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnCertificadosDisponibilidadController.prepareCreate}" update=":FnCertificadosDisponibilidadCreateForm" oncomplete="PF('FnCertificadosDisponibilidadCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnCertificadosDisponibilidadViewForm" oncomplete="PF('FnCertificadosDisponibilidadViewDialog').show()" disabled="#{empty fnCertificadosDisponibilidadController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnCertificadosDisponibilidadEditForm" oncomplete="PF('FnCertificadosDisponibilidadEditDialog').show()" disabled="#{empty fnCertificadosDisponibilidadController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnCertificadosDisponibilidadController.delete}" update=":growl,datalist" disabled="#{empty fnCertificadosDisponibilidadController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

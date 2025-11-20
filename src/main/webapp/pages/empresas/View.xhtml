@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresasViewDlg" widgetVar="EmpresasViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewEmpresasTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:tabView id="EmpresasTabView">
+
+                        <p:tab id="EmpresasTab1" title="#{mensajes.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column" rendered="#{empresasController.selected != null}">
+                                <h:outputText value="#{mensajes.ViewEmpresasLabel_id}"/>
+                                <h:outputText value="#{empresasController.selected.id}" title="#{mensajes.ViewEmpresasTitle_id}"/>
+
+                                <h:outputText value="#{mensajes.ViewEmpresasLabel_razonSocial}"/>
+                                <h:outputText value="#{empresasController.selected.razonSocial}" title="#{mensajes.ViewEmpresasTitle_razonSocial}"/>
+
+                                <h:outputText value="#{mensajes.ViewEmpresasLabel_ruc}"/>
+                                <h:outputText value="#{empresasController.selected.ruc}" title="#{mensajes.ViewEmpresasTitle_ruc}"/>
+
+                                <h:outputText value="#{mensajes.ViewEmpresasLabel_direccion}"/>
+                                <h:outputText value="#{empresasController.selected.direccion}" title="#{mensajes.ViewEmpresasTitle_direccion}"/>
+
+                                <h:outputText value="#{mensajes.ViewEmpresasLabel_telefono}"/>
+                                <h:outputText value="#{empresasController.selected.telefono}" title="#{mensajes.ViewEmpresasTitle_telefono}"/>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('EmpresasViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

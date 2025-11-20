@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnDetallePresupuestoListForm">
+
+        <p:panel header="#{mensajes.ListFnDetallePresupuestoTitle}">
+            <p:contextMenu id="FnDetallePresupuestoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnDetallePresupuestoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnDetallePresupuestoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnDetallePresupuestoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnDetallePresupuestoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnDetallePresupuestoMenuItem_distribucion}" icon="ui-icon-search"  actionListener="#{fnDetallePresupuestoController.prepareDistribucion}" update=":FnDistribucionViewForm" oncomplete="PF('FnDistribucionViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected.distribucion}"/>  
+                <p:menuitem value="#{mensajes.FnDetallePresupuestoMenuItem_objetoDeGasto}" icon="ui-icon-search"  actionListener="#{fnDetallePresupuestoController.prepareObjetoDeGasto}" update=":FnObjetosDeGastoViewForm" oncomplete="PF('FnObjetosDeGastoViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected.objetoDeGasto}"/>  
+                <p:menuitem value="#{mensajes.FnDetallePresupuestoMenuItem_presupuesto}" icon="ui-icon-search"  actionListener="#{fnDetallePresupuestoController.preparePresupuesto}" update=":FnPresupuestoViewForm" oncomplete="PF('FnPresupuestoViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected.presupuesto}"/>  
+                <p:menuitem value="#{mensajes.FnDetallePresupuestoMenuItem_proyecto}" icon="ui-icon-search"  actionListener="#{fnDetallePresupuestoController.prepareProyecto}" update=":FnProyectosViewForm" oncomplete="PF('FnProyectosViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected.proyecto}"/>  
+                <p:menuitem value="#{mensajes.FnDetallePresupuestoMenuItem_subdistribucion}" icon="ui-icon-search"  actionListener="#{fnDetallePresupuestoController.prepareSubdistribucion}" update=":FnSubDistribucionViewForm" oncomplete="PF('FnSubDistribucionViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected.subdistribucion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnDetallePresupuestoController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnDetallePresupuestoController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnDetallePresupuestoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetallePresupuestoDataTableContextMenu" listener="#{fnDetallePresupuestoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetallePresupuestoDataTableContextMenu" listener="#{fnDetallePresupuestoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnDetallePresupuestoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnDetallePresupuestoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHoraCreacion}" filterBy="#{item.fechaHoraCreacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_fechaHoraCreacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraCreacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarioCreacion}" filterBy="#{item.usuarioCreacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_usuarioCreacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioCreacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHoraModificacion}" filterBy="#{item.fechaHoraModificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_fechaHoraModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraModificacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarioModificacion}" filterBy="#{item.usuarioModificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_usuarioModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioModificacion}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.valorInicial}" filterBy="#{item.valorInicial}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_valorInicial}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.valorInicial}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.valor}" filterBy="#{item.valor}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_valor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.valor}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.distribucion.descripcion}" filterBy="#{item.distribucion.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_distribucion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.distribucion.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.objetoDeGasto.id}" filterBy="#{item.objetoDeGasto.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_objetoDeGasto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.objetoDeGasto.id}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.presupuesto.id}" filterBy="#{item.presupuesto.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_presupuesto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.presupuesto.id}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.proyecto.descripcion}" filterBy="#{item.proyecto.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_proyecto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.proyecto.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.subdistribucion.descripcion}" filterBy="#{item.subdistribucion.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetallePresupuestoTitle_subdistribucion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.subdistribucion.descripcion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnDetallePresupuestoController.prepareCreate}" update=":FnDetallePresupuestoCreateForm" oncomplete="PF('FnDetallePresupuestoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnDetallePresupuestoViewForm" oncomplete="PF('FnDetallePresupuestoViewDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnDetallePresupuestoEditForm" oncomplete="PF('FnDetallePresupuestoEditDialog').show()" disabled="#{empty fnDetallePresupuestoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnDetallePresupuestoController.delete}" update=":growl,datalist" disabled="#{empty fnDetallePresupuestoController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

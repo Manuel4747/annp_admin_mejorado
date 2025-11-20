@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnDetallePlanFinancieroEditDlg" widgetVar="FnDetallePlanFinancieroEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnDetallePlanFinancieroTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetallePlanFinancieroEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnDetallePlanFinancieroController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnDetallePlanFinancieroController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnDetallePlanFinancieroController.getComponentMessages('id', mensajes.EditFnDetallePlanFinancieroHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_detallePlanFinancierocol}" for="detallePlanFinancierocol" />
+                        <h:panelGroup>
+                            <p:inputText id="detallePlanFinancierocol" value="#{fnDetallePlanFinancieroController.selected.detallePlanFinancierocol}" title="#{mensajes.EditFnDetallePlanFinancieroTitle_detallePlanFinancierocol}" size="45" maxlength="45"/>
+                            <p:tooltip for="detallePlanFinancierocol" value="#{fnDetallePlanFinancieroController.getComponentMessages('detallePlanFinancierocol', mensajes.EditFnDetallePlanFinancieroHelpText_detallePlanFinancierocol)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_mes}" for="mes" />
+                        <h:panelGroup>
+                            <p:inputText id="mes" value="#{fnDetallePlanFinancieroController.selected.mes}" title="#{mensajes.EditFnDetallePlanFinancieroTitle_mes}"/>
+                            <p:tooltip for="mes" value="#{fnDetallePlanFinancieroController.getComponentMessages('mes', mensajes.EditFnDetallePlanFinancieroHelpText_mes)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_valor}" for="valor" />
+                        <h:panelGroup>
+                            <p:inputText id="valor" value="#{fnDetallePlanFinancieroController.selected.valor}" title="#{mensajes.EditFnDetallePlanFinancieroTitle_valor}"/>
+                            <p:tooltip for="valor" value="#{fnDetallePlanFinancieroController.getComponentMessages('valor', mensajes.EditFnDetallePlanFinancieroHelpText_valor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_departamento}" for="departamento" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="departamento" value="#{fnDetallePlanFinancieroController.selected.departamento}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_departamento}" converter="fnDepartamentoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDepartamentoController.items}"
+                                               var="departamentoItem"
+                                               itemValue="#{departamentoItem}"
+                                               itemLabel="#{departamentoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="departamento" value="#{fnDetallePlanFinancieroController.getComponentMessages('departamento', mensajes.EditFnDetallePlanFinancieroHelpText_departamento)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_distribucion}" for="distribucion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="distribucion" value="#{fnDetallePlanFinancieroController.selected.distribucion}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_distribucion}" converter="fnDistribucionConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDistribucionController.items}"
+                                               var="distribucionItem"
+                                               itemValue="#{distribucionItem}"
+                                               itemLabel="#{distribucionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="distribucion" value="#{fnDetallePlanFinancieroController.getComponentMessages('distribucion', mensajes.EditFnDetallePlanFinancieroHelpText_distribucion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_fuentesDeFinanciamiento}" for="fuentesDeFinanciamiento" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="fuentesDeFinanciamiento" value="#{fnDetallePlanFinancieroController.selected.fuentesDeFinanciamiento}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_fuentesDeFinanciamiento}" converter="fnFuentesDeFinanciamientoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnFuentesDeFinanciamientoController.items}"
+                                               var="fuentesDeFinanciamientoItem"
+                                               itemValue="#{fuentesDeFinanciamientoItem}"
+                                               itemLabel="#{fuentesDeFinanciamientoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="fuentesDeFinanciamiento" value="#{fnDetallePlanFinancieroController.getComponentMessages('fuentesDeFinanciamiento', mensajes.EditFnDetallePlanFinancieroHelpText_fuentesDeFinanciamiento)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_objetosDeGasto}" for="objetosDeGasto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="objetosDeGasto" value="#{fnDetallePlanFinancieroController.selected.objetosDeGasto}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_objetosDeGasto}" converter="fnObjetosDeGastoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnObjetosDeGastoController.items}"
+                                               var="objetosDeGastoItem"
+                                               itemValue="#{objetosDeGastoItem}"
+                                               itemLabel="#{objetosDeGastoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="objetosDeGasto" value="#{fnDetallePlanFinancieroController.getComponentMessages('objetosDeGasto', mensajes.EditFnDetallePlanFinancieroHelpText_objetosDeGasto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_planFinanciero}" for="planFinanciero" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="planFinanciero" value="#{fnDetallePlanFinancieroController.selected.planFinanciero}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_planFinanciero}" converter="fnPlanFinancieroConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnPlanFinancieroController.items}"
+                                               var="planFinancieroItem"
+                                               itemValue="#{planFinancieroItem}"
+                                               itemLabel="#{planFinancieroItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="planFinanciero" value="#{fnDetallePlanFinancieroController.getComponentMessages('planFinanciero', mensajes.EditFnDetallePlanFinancieroHelpText_planFinanciero)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_proyecto}" for="proyecto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proyecto" value="#{fnDetallePlanFinancieroController.selected.proyecto}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_proyecto}" converter="fnProyectosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProyectosController.items}"
+                                               var="proyectoItem"
+                                               itemValue="#{proyectoItem}"
+                                               itemLabel="#{proyectoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proyecto" value="#{fnDetallePlanFinancieroController.getComponentMessages('proyecto', mensajes.EditFnDetallePlanFinancieroHelpText_proyecto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetallePlanFinancieroLabel_subDistribucion}" for="subDistribucion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="subDistribucion" value="#{fnDetallePlanFinancieroController.selected.subDistribucion}" required="true" requiredMessage="#{mensajes.EditFnDetallePlanFinancieroRequiredMessage_subDistribucion}" converter="fnSubDistribucionConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnSubDistribucionController.items}"
+                                               var="subDistribucionItem"
+                                               itemValue="#{subDistribucionItem}"
+                                               itemLabel="#{subDistribucionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="subDistribucion" value="#{fnDetallePlanFinancieroController.getComponentMessages('subDistribucion', mensajes.EditFnDetallePlanFinancieroHelpText_subDistribucion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetallePlanFinancieroController.save}" value="#{mensajes.Save}" update="display,:FnDetallePlanFinancieroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetallePlanFinancieroEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetallePlanFinancieroEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

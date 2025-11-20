@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnProveedoresCreateDlg" widgetVar="FnProveedoresCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnProveedoresTitle}" closeOnEscape="true">
+
+            <h:form id="FnProveedoresCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnProveedoresController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnProveedoresLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnProveedoresController.selected.id}" title="#{mensajes.CreateFnProveedoresTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnProveedoresRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnProveedoresController.getComponentMessages('id', mensajes.CreateFnProveedoresHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnProveedoresLabel_ruc}" for="ruc" />
+                        <h:panelGroup>
+                            <p:inputText id="ruc" value="#{fnProveedoresController.selected.ruc}" title="#{mensajes.CreateFnProveedoresTitle_ruc}" size="20" maxlength="20"/>
+                            <p:tooltip for="ruc" value="#{fnProveedoresController.getComponentMessages('ruc', mensajes.CreateFnProveedoresHelpText_ruc)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnProveedoresLabel_razonSocial}" for="razonSocial" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="razonSocial" value="#{fnProveedoresController.selected.razonSocial}" title="#{mensajes.CreateFnProveedoresTitle_razonSocial}" />
+                            <p:tooltip for="razonSocial" value="#{fnProveedoresController.getComponentMessages('razonSocial', mensajes.CreateFnProveedoresHelpText_razonSocial)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnProveedoresLabel_direccion}" for="direccion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="direccion" value="#{fnProveedoresController.selected.direccion}" title="#{mensajes.CreateFnProveedoresTitle_direccion}" />
+                            <p:tooltip for="direccion" value="#{fnProveedoresController.getComponentMessages('direccion', mensajes.CreateFnProveedoresHelpText_direccion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnProveedoresLabel_telefono}" for="telefono" />
+                        <h:panelGroup>
+                            <p:inputText id="telefono" value="#{fnProveedoresController.selected.telefono}" title="#{mensajes.CreateFnProveedoresTitle_telefono}" size="20" maxlength="20"/>
+                            <p:tooltip for="telefono" value="#{fnProveedoresController.getComponentMessages('telefono', mensajes.CreateFnProveedoresHelpText_telefono)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnProveedoresController.saveNew}" value="#{mensajes.Save}" update="display,:FnProveedoresListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnProveedoresCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnProveedoresCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

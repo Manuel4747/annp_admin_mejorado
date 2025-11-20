@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnDetalleFacturaEditDlg" widgetVar="FnDetalleFacturaEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnDetalleFacturaTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleFacturaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnDetalleFacturaController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnDetalleFacturaController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnDetalleFacturaController.getComponentMessages('id', mensajes.EditFnDetalleFacturaHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_cantidad}" for="cantidad" />
+                        <h:panelGroup>
+                            <p:inputText id="cantidad" value="#{fnDetalleFacturaController.selected.cantidad}" title="#{mensajes.EditFnDetalleFacturaTitle_cantidad}"/>
+                            <p:tooltip for="cantidad" value="#{fnDetalleFacturaController.getComponentMessages('cantidad', mensajes.EditFnDetalleFacturaHelpText_cantidad)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_costoUnitario}" for="costoUnitario" />
+                        <h:panelGroup>
+                            <p:inputText id="costoUnitario" value="#{fnDetalleFacturaController.selected.costoUnitario}" title="#{mensajes.EditFnDetalleFacturaTitle_costoUnitario}"/>
+                            <p:tooltip for="costoUnitario" value="#{fnDetalleFacturaController.getComponentMessages('costoUnitario', mensajes.EditFnDetalleFacturaHelpText_costoUnitario)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_total}" for="total" />
+                        <h:panelGroup>
+                            <p:inputText id="total" value="#{fnDetalleFacturaController.selected.total}" title="#{mensajes.EditFnDetalleFacturaTitle_total}"/>
+                            <p:tooltip for="total" value="#{fnDetalleFacturaController.getComponentMessages('total', mensajes.EditFnDetalleFacturaHelpText_total)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_iva10}" for="iva10" />
+                        <h:panelGroup>
+                            <p:inputText id="iva10" value="#{fnDetalleFacturaController.selected.iva10}" title="#{mensajes.EditFnDetalleFacturaTitle_iva10}"/>
+                            <p:tooltip for="iva10" value="#{fnDetalleFacturaController.getComponentMessages('iva10', mensajes.EditFnDetalleFacturaHelpText_iva10)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_iva5}" for="iva5" />
+                        <h:panelGroup>
+                            <p:inputText id="iva5" value="#{fnDetalleFacturaController.selected.iva5}" title="#{mensajes.EditFnDetalleFacturaTitle_iva5}"/>
+                            <p:tooltip for="iva5" value="#{fnDetalleFacturaController.getComponentMessages('iva5', mensajes.EditFnDetalleFacturaHelpText_iva5)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_excenta}" for="excenta" />
+                        <h:panelGroup>
+                            <p:inputText id="excenta" value="#{fnDetalleFacturaController.selected.excenta}" title="#{mensajes.EditFnDetalleFacturaTitle_excenta}"/>
+                            <p:tooltip for="excenta" value="#{fnDetalleFacturaController.getComponentMessages('excenta', mensajes.EditFnDetalleFacturaHelpText_excenta)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_totalIva}" for="totalIva" />
+                        <h:panelGroup>
+                            <p:inputText id="totalIva" value="#{fnDetalleFacturaController.selected.totalIva}" title="#{mensajes.EditFnDetalleFacturaTitle_totalIva}"/>
+                            <p:tooltip for="totalIva" value="#{fnDetalleFacturaController.getComponentMessages('totalIva', mensajes.EditFnDetalleFacturaHelpText_totalIva)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_articulo}" for="articulo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="articulo" value="#{fnDetalleFacturaController.selected.articulo}"  converter="fnArticulosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnArticulosController.items}"
+                                               var="articuloItem"
+                                               itemValue="#{articuloItem}"
+                                               itemLabel="#{articuloItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="articulo" value="#{fnDetalleFacturaController.getComponentMessages('articulo', mensajes.EditFnDetalleFacturaHelpText_articulo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleFacturaLabel_factura}" for="factura" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="factura" value="#{fnDetalleFacturaController.selected.factura}"  converter="fnFacturasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnFacturasController.items}"
+                                               var="facturaItem"
+                                               itemValue="#{facturaItem}"
+                                               itemLabel="#{facturaItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="factura" value="#{fnDetalleFacturaController.getComponentMessages('factura', mensajes.EditFnDetalleFacturaHelpText_factura)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetalleFacturaController.save}" value="#{mensajes.Save}" update="display,:FnDetalleFacturaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetalleFacturaEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetalleFacturaEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

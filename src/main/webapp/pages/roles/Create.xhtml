@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolesCreateDlg" positionType="absolute" widgetVar="RolesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateRolesTitle}" closeOnEscape="true">
+
+            <h:form id="RolesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{rolesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateRolesLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{rolesController.selected.descripcion}" title="#{mensajes.CreateRolesTitle_descripcion}" required="true" requiredMessage="#{mensajes.CreateRolesRequiredMessage_descripcion}" size="60" maxlength="80"/>
+                            <p:tooltip for="descripcion" value="#{rolesController.getComponentMessages('descripcion', mensajes.CreateRolesHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{rolesController.saveNew}" value="#{mensajes.Save}" update="display,:RolesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RolesCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('RolesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
+<!--
+                        <p:outputLabel value="#{mensajes.CreateRolesLabel_fechaHoraUltimoEstado}" for="fechaHoraUltimoEstado" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaHoraUltimoEstado" pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" value="#{rolesController.selected.fechaHoraUltimoEstado}" title="#{mensajes.CreateRolesTitle_fechaHoraUltimoEstado}" required="true" requiredMessage="#{mensajes.CreateRolesRequiredMessage_fechaHoraUltimoEstado}" showOn="button"/>
+                            <p:tooltip for="fechaHoraUltimoEstado" value="#{rolesController.getComponentMessages('fechaHoraUltimoEstado', mensajes.CreateRolesHelpText_fechaHoraUltimoEstado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateRolesLabel_empresa}" for="empresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="empresa" value="#{rolesController.selected.empresa}" required="true" requiredMessage="#{mensajes.CreateRolesRequiredMessage_empresa}" converter="empresasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresasController.items}"
+                                               var="empresaItem"
+                                               itemValue="#{empresaItem}"
+                                               itemLabel="#{empresaItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="empresa" value="#{rolesController.getComponentMessages('empresa', mensajes.CreateRolesHelpText_empresa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateRolesLabel_usuarioAlta}" for="usuarioAlta" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="usuarioAlta" value="#{rolesController.selected.usuarioAlta}" required="true" requiredMessage="#{mensajes.CreateRolesRequiredMessage_usuarioAlta}" converter="usuariosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{usuariosController.items}"
+                                               var="usuarioAltaItem"
+                                               itemValue="#{usuarioAltaItem}"
+                                               itemLabel="#{usuarioAltaItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="usuarioAlta" value="#{rolesController.getComponentMessages('usuarioAlta', mensajes.CreateRolesHelpText_usuarioAlta)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateRolesLabel_usuarioUltimoEstado}" for="usuarioUltimoEstado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="usuarioUltimoEstado" value="#{rolesController.selected.usuarioUltimoEstado}" required="true" requiredMessage="#{mensajes.CreateRolesRequiredMessage_usuarioUltimoEstado}" converter="usuariosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{usuariosController.items}"
+                                               var="usuarioUltimoEstadoItem"
+                                               itemValue="#{usuarioUltimoEstadoItem}"
+                                               itemLabel="#{usuarioUltimoEstadoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="usuarioUltimoEstado" value="#{rolesController.getComponentMessages('usuarioUltimoEstado', mensajes.CreateRolesHelpText_usuarioUltimoEstado)}"/>
+                        </h:panelGroup>
+-->

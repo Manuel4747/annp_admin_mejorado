@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnRetencionesListForm">
+
+        <p:panel header="#{mensajes.ListFnRetencionesTitle}">
+            <p:contextMenu id="FnRetencionesDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnRetencionesListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnRetencionesListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnRetencionesListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnRetencionesListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnRetencionesMenuItem_pago}" icon="ui-icon-search"  actionListener="#{fnRetencionesController.preparePago}" update=":FnPagosViewForm" oncomplete="PF('FnPagosViewDialog').show()" disabled="#{empty fnRetencionesController.selected.pago}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnRetencionesController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnRetencionesController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnRetencionesController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnRetencionesDataTableContextMenu" listener="#{fnRetencionesController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnRetencionesDataTableContextMenu" listener="#{fnRetencionesController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnRetencionesController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnRetencionesListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnRetencionesTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.porcentaje}" filterBy="#{item.porcentaje}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnRetencionesTitle_porcentaje}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.porcentaje}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.monto}" filterBy="#{item.monto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnRetencionesTitle_monto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.monto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.pago.id}" filterBy="#{item.pago.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnRetencionesTitle_pago}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pago.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnRetencionesController.prepareCreate}" update=":FnRetencionesCreateForm" oncomplete="PF('FnRetencionesCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnRetencionesViewForm" oncomplete="PF('FnRetencionesViewDialog').show()" disabled="#{empty fnRetencionesController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnRetencionesEditForm" oncomplete="PF('FnRetencionesEditDialog').show()" disabled="#{empty fnRetencionesController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnRetencionesController.delete}" update=":growl,datalist" disabled="#{empty fnRetencionesController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

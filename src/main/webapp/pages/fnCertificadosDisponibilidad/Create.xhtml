@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnCertificadosDisponibilidadCreateDlg" widgetVar="FnCertificadosDisponibilidadCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnCertificadosDisponibilidadTitle}" closeOnEscape="true">
+
+            <h:form id="FnCertificadosDisponibilidadCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnCertificadosDisponibilidadController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnCertificadosDisponibilidadLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnCertificadosDisponibilidadController.selected.id}" title="#{mensajes.CreateFnCertificadosDisponibilidadTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnCertificadosDisponibilidadRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnCertificadosDisponibilidadController.getComponentMessages('id', mensajes.CreateFnCertificadosDisponibilidadHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnCertificadosDisponibilidadLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnCertificadosDisponibilidadController.selected.fecha}" title="#{mensajes.CreateFnCertificadosDisponibilidadTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnCertificadosDisponibilidadController.getComponentMessages('fecha', mensajes.CreateFnCertificadosDisponibilidadHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnCertificadosDisponibilidadLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnCertificadosDisponibilidadController.selected.descripcion}" title="#{mensajes.CreateFnCertificadosDisponibilidadTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnCertificadosDisponibilidadController.getComponentMessages('descripcion', mensajes.CreateFnCertificadosDisponibilidadHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnCertificadosDisponibilidadController.saveNew}" value="#{mensajes.Save}" update="display,:FnCertificadosDisponibilidadListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnCertificadosDisponibilidadCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnCertificadosDisponibilidadCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDepartamentoCreateDlg" widgetVar="FnDepartamentoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnDepartamentoTitle}" closeOnEscape="true">
+
+            <h:form id="FnDepartamentoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnDepartamentoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnDepartamentoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnDepartamentoController.selected.id}" title="#{mensajes.CreateFnDepartamentoTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnDepartamentoRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnDepartamentoController.getComponentMessages('id', mensajes.CreateFnDepartamentoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDepartamentoLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnDepartamentoController.selected.descripcion}" title="#{mensajes.CreateFnDepartamentoTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnDepartamentoController.getComponentMessages('descripcion', mensajes.CreateFnDepartamentoHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDepartamentoController.saveNew}" value="#{mensajes.Save}" update="display,:FnDepartamentoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDepartamentoCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDepartamentoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

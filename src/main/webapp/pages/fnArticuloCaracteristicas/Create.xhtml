@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnArticuloCaracteristicasCreateDlg" widgetVar="FnArticuloCaracteristicasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnArticuloCaracteristicasTitle}" closeOnEscape="true">
+
+            <h:form id="FnArticuloCaracteristicasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnArticuloCaracteristicasController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnArticuloCaracteristicasController.selected.id}" title="#{mensajes.CreateFnArticuloCaracteristicasTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnArticuloCaracteristicasRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnArticuloCaracteristicasController.getComponentMessages('id', mensajes.CreateFnArticuloCaracteristicasHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_caracteristica}" for="caracteristica" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="caracteristica" value="#{fnArticuloCaracteristicasController.selected.caracteristica}" title="#{mensajes.CreateFnArticuloCaracteristicasTitle_caracteristica}" />
+                            <p:tooltip for="caracteristica" value="#{fnArticuloCaracteristicasController.getComponentMessages('caracteristica', mensajes.CreateFnArticuloCaracteristicasHelpText_caracteristica)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_valor}" for="valor" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="valor" value="#{fnArticuloCaracteristicasController.selected.valor}" title="#{mensajes.CreateFnArticuloCaracteristicasTitle_valor}" />
+                            <p:tooltip for="valor" value="#{fnArticuloCaracteristicasController.getComponentMessages('valor', mensajes.CreateFnArticuloCaracteristicasHelpText_valor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_articulo}" for="articulo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="articulo" value="#{fnArticuloCaracteristicasController.selected.articulo}"  converter="fnArticulosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnArticulosController.items}"
+                                               var="articuloItem"
+                                               itemValue="#{articuloItem}"
+                                               itemLabel="#{articuloItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="articulo" value="#{fnArticuloCaracteristicasController.getComponentMessages('articulo', mensajes.CreateFnArticuloCaracteristicasHelpText_articulo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnArticuloCaracteristicasController.saveNew}" value="#{mensajes.Save}" update="display,:FnArticuloCaracteristicasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnArticuloCaracteristicasCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnArticuloCaracteristicasCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

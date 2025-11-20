@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnObjetosDeGastoEditDlg" widgetVar="FnObjetosDeGastoEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnObjetosDeGastoTitle}" closeOnEscape="true">
+
+            <h:form id="FnObjetosDeGastoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnObjetosDeGastoController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnObjetosDeGastoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnObjetosDeGastoController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnObjetosDeGastoController.getComponentMessages('id', mensajes.EditFnObjetosDeGastoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnObjetosDeGastoLabel_numero}" for="numero" />
+                        <h:panelGroup>
+                            <p:inputText id="numero" value="#{fnObjetosDeGastoController.selected.numero}" title="#{mensajes.EditFnObjetosDeGastoTitle_numero}" required="true" requiredMessage="#{mensajes.EditFnObjetosDeGastoRequiredMessage_numero}"/>
+                            <p:tooltip for="numero" value="#{fnObjetosDeGastoController.getComponentMessages('numero', mensajes.EditFnObjetosDeGastoHelpText_numero)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnObjetosDeGastoLabel_denominacion}" for="denominacion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="denominacion" value="#{fnObjetosDeGastoController.selected.denominacion}" title="#{mensajes.EditFnObjetosDeGastoTitle_denominacion}" required="true" requiredMessage="#{mensajes.EditFnObjetosDeGastoRequiredMessage_denominacion}"/>
+                            <p:tooltip for="denominacion" value="#{fnObjetosDeGastoController.getComponentMessages('denominacion', mensajes.EditFnObjetosDeGastoHelpText_denominacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnObjetosDeGastoLabel_concepto}" for="concepto" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="concepto" value="#{fnObjetosDeGastoController.selected.concepto}" title="#{mensajes.EditFnObjetosDeGastoTitle_concepto}" required="true" requiredMessage="#{mensajes.EditFnObjetosDeGastoRequiredMessage_concepto}"/>
+                            <p:tooltip for="concepto" value="#{fnObjetosDeGastoController.getComponentMessages('concepto', mensajes.EditFnObjetosDeGastoHelpText_concepto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnObjetosDeGastoLabel_abreviacion}" for="abreviacion" />
+                        <h:panelGroup>
+                            <p:inputText id="abreviacion" value="#{fnObjetosDeGastoController.selected.abreviacion}" title="#{mensajes.EditFnObjetosDeGastoTitle_abreviacion}" size="50" maxlength="50"/>
+                            <p:tooltip for="abreviacion" value="#{fnObjetosDeGastoController.getComponentMessages('abreviacion', mensajes.EditFnObjetosDeGastoHelpText_abreviacion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnObjetosDeGastoController.save}" value="#{mensajes.Save}" update="display,:FnObjetosDeGastoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnObjetosDeGastoEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnObjetosDeGastoEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

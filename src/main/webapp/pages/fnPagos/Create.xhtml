@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnPagosCreateDlg" widgetVar="FnPagosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnPagosTitle}" closeOnEscape="true">
+
+            <h:form id="FnPagosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnPagosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnPagosController.selected.id}" title="#{mensajes.CreateFnPagosTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnPagosRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnPagosController.getComponentMessages('id', mensajes.CreateFnPagosHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_formaDePago}" for="formaDePago" />
+                        <h:panelGroup>
+                            <p:inputText id="formaDePago" value="#{fnPagosController.selected.formaDePago}" title="#{mensajes.CreateFnPagosTitle_formaDePago}"/>
+                            <p:tooltip for="formaDePago" value="#{fnPagosController.getComponentMessages('formaDePago', mensajes.CreateFnPagosHelpText_formaDePago)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_cuentaProveedor}" for="cuentaProveedor" />
+                        <h:panelGroup>
+                            <p:inputText id="cuentaProveedor" value="#{fnPagosController.selected.cuentaProveedor}" title="#{mensajes.CreateFnPagosTitle_cuentaProveedor}" size="50" maxlength="50"/>
+                            <p:tooltip for="cuentaProveedor" value="#{fnPagosController.getComponentMessages('cuentaProveedor', mensajes.CreateFnPagosHelpText_cuentaProveedor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_importe}" for="importe" />
+                        <h:panelGroup>
+                            <p:inputText id="importe" value="#{fnPagosController.selected.importe}" title="#{mensajes.CreateFnPagosTitle_importe}"/>
+                            <p:tooltip for="importe" value="#{fnPagosController.getComponentMessages('importe', mensajes.CreateFnPagosHelpText_importe)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_cuentaSalida}" for="cuentaSalida" />
+                        <h:panelGroup>
+                            <p:inputText id="cuentaSalida" value="#{fnPagosController.selected.cuentaSalida}" title="#{mensajes.CreateFnPagosTitle_cuentaSalida}" size="50" maxlength="50"/>
+                            <p:tooltip for="cuentaSalida" value="#{fnPagosController.getComponentMessages('cuentaSalida', mensajes.CreateFnPagosHelpText_cuentaSalida)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_proveedor}" for="proveedor" />
+                        <h:panelGroup>
+                            <p:inputText id="proveedor" value="#{fnPagosController.selected.proveedor}" title="#{mensajes.CreateFnPagosTitle_proveedor}"/>
+                            <p:tooltip for="proveedor" value="#{fnPagosController.getComponentMessages('proveedor', mensajes.CreateFnPagosHelpText_proveedor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnPagosController.selected.fecha}" title="#{mensajes.CreateFnPagosTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnPagosController.getComponentMessages('fecha', mensajes.CreateFnPagosHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_factura}" for="factura" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="factura" value="#{fnPagosController.selected.factura}"  converter="fnFacturasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnFacturasController.items}"
+                                               var="facturaItem"
+                                               itemValue="#{facturaItem}"
+                                               itemLabel="#{facturaItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="factura" value="#{fnPagosController.getComponentMessages('factura', mensajes.CreateFnPagosHelpText_factura)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnPagosLabel_cheque}" for="cheque" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="cheque" value="#{fnPagosController.selected.cheque}"  converter="fnChequesConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnChequesController.items}"
+                                               var="chequeItem"
+                                               itemValue="#{chequeItem}"
+                                               itemLabel="#{chequeItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="cheque" value="#{fnPagosController.getComponentMessages('cheque', mensajes.CreateFnPagosHelpText_cheque)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnPagosController.saveNew}" value="#{mensajes.Save}" update="display,:FnPagosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnPagosCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnPagosCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

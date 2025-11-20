@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PermisosListForm">
+
+        <p:panel header="#{mensajes.ListPermisosTitle}">
+            <p:contextMenu id="PermisosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('PermisosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('PermisosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('PermisosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('PermisosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.PermisosMenuItem_permisosPorRolesCollection}" icon="ui-icon-search"  action="#{permisosController.navigatePermisosPorRolesCollection}" disabled="#{empty permisosController.selected.permisosPorRolesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.PermisosMenuItem_empresa}" icon="ui-icon-search"  actionListener="#{permisosController.prepareEmpresa}" update=":EmpresasViewForm" oncomplete="PF('EmpresasViewDialog').show()" disabled="#{empty permisosController.selected.empresa}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{permisosController.items}"
+                         lazy="false" emptyMessage="#{mensajes.NoRegistros}"
+                         rowKey="#{item.id}"
+                         var="item" filterEvent="enter"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{permisosController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{permisosController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PermisosDataTableContextMenu" listener="#{permisosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PermisosDataTableContextMenu" listener="#{permisosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{permisosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PermisosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterMatchMode="contains" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterMatchMode="contains" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.funcion}" filterMatchMode="contains" filterBy="#{item.funcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosTitle_funcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.funcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.permiso}" filterMatchMode="contains" filterBy="#{item.permiso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosTitle_permiso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permiso}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.empresa.id}" filterMatchMode="contains" filterBy="#{item.empresa.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosTitle_empresa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresa.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{permisosController.prepareCreate}" update=":PermisosCreateForm" oncomplete="PF('PermisosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":PermisosViewForm" oncomplete="PF('PermisosViewDialog').show()" disabled="#{empty permisosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":PermisosEditForm" oncomplete="PF('PermisosEditDialog').show()" disabled="#{empty permisosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{permisosController.delete}" update=":growl,datalist" disabled="#{empty permisosController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

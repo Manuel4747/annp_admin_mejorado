@@ -1,0 +1,123 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package py.com.annp.persistencia.models;
+
+import py.com.startic.gestion.models.*;
+import java.io.Serializable;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+/**
+ *
+ * @author lichi
+ */
+@Entity
+@Table(name = "fn_detalle_orden_compra")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "FnDetalleOrdenCompra.findAll", query = "SELECT f FROM FnDetalleOrdenCompra f")
+    , @NamedQuery(name = "FnDetalleOrdenCompra.findById", query = "SELECT f FROM FnDetalleOrdenCompra f WHERE f.id = :id")
+    , @NamedQuery(name = "FnDetalleOrdenCompra.findByArticulo", query = "SELECT f FROM FnDetalleOrdenCompra f WHERE f.articulo = :articulo")
+    , @NamedQuery(name = "FnDetalleOrdenCompra.findByCantidad", query = "SELECT f FROM FnDetalleOrdenCompra f WHERE f.cantidad = :cantidad")
+    , @NamedQuery(name = "FnDetalleOrdenCompra.findByCostoUnitario", query = "SELECT f FROM FnDetalleOrdenCompra f WHERE f.costoUnitario = :costoUnitario")
+    , @NamedQuery(name = "FnDetalleOrdenCompra.findByTotal", query = "SELECT f FROM FnDetalleOrdenCompra f WHERE f.total = :total")})
+public class FnDetalleOrdenCompra implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "articulo")
+    private Integer articulo;
+    @Column(name = "cantidad")
+    private Long cantidad;
+    @Column(name = "costo_unitario")
+    private Long costoUnitario;
+    @Column(name = "total")
+    private Long total;
+
+    public FnDetalleOrdenCompra() {
+    }
+
+    public FnDetalleOrdenCompra(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getArticulo() {
+        return articulo;
+    }
+
+    public void setArticulo(Integer articulo) {
+        this.articulo = articulo;
+    }
+
+    public Long getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Long cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Long getCostoUnitario() {
+        return costoUnitario;
+    }
+
+    public void setCostoUnitario(Long costoUnitario) {
+        this.costoUnitario = costoUnitario;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof FnDetalleOrdenCompra)) {
+            return false;
+        }
+        FnDetalleOrdenCompra other = (FnDetalleOrdenCompra) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "py.com.staric.gestion.models.FnDetalleOrdenCompra[ id=" + id + " ]";
+    }
+    
+}

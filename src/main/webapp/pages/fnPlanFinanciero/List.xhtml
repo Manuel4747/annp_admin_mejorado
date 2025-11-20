@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnPlanFinancieroListForm">
+
+        <p:panel header="#{mensajes.ListFnPlanFinancieroTitle}">
+            <p:contextMenu id="FnPlanFinancieroDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnPlanFinancieroListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnPlanFinancieroListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnPlanFinancieroListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnPlanFinancieroListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnPlanFinancieroMenuItem_fnDetallePlanFinancieroCollection}" icon="ui-icon-search"  action="#{fnPlanFinancieroController.navigateFnDetallePlanFinancieroCollection}" disabled="#{empty fnPlanFinancieroController.selected.fnDetallePlanFinancieroCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnPlanFinancieroMenuItem_programa}" icon="ui-icon-search"  actionListener="#{fnPlanFinancieroController.preparePrograma}" update=":FnProgramasViewForm" oncomplete="PF('FnProgramasViewDialog').show()" disabled="#{empty fnPlanFinancieroController.selected.programa}"/>  
+                <p:menuitem value="#{mensajes.FnPlanFinancieroMenuItem_tiposPresupuesto}" icon="ui-icon-search"  actionListener="#{fnPlanFinancieroController.prepareTiposPresupuesto}" update=":FnTiposPresupuestoViewForm" oncomplete="PF('FnTiposPresupuestoViewDialog').show()" disabled="#{empty fnPlanFinancieroController.selected.tiposPresupuesto}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnPlanFinancieroController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnPlanFinancieroController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnPlanFinancieroController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnPlanFinancieroDataTableContextMenu" listener="#{fnPlanFinancieroController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnPlanFinancieroDataTableContextMenu" listener="#{fnPlanFinancieroController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnPlanFinancieroController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnPlanFinancieroListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.periodo}" filterBy="#{item.periodo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_periodo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.periodo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHoraCreacion}" filterBy="#{item.fechaHoraCreacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_fechaHoraCreacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraCreacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarionCreacion}" filterBy="#{item.usuarionCreacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_usuarionCreacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarionCreacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaHoraModificacion}" filterBy="#{item.fechaHoraModificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_fechaHoraModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaHoraModificacion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarioModificacion}" filterBy="#{item.usuarioModificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_usuarioModificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioModificacion}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.programa.descripcion}" filterBy="#{item.programa.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_programa}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.programa.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.tiposPresupuesto.descripcion}" filterBy="#{item.tiposPresupuesto.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnPlanFinancieroTitle_tiposPresupuesto}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.tiposPresupuesto.descripcion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnPlanFinancieroController.prepareCreate}" update=":FnPlanFinancieroCreateForm" oncomplete="PF('FnPlanFinancieroCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnPlanFinancieroViewForm" oncomplete="PF('FnPlanFinancieroViewDialog').show()" disabled="#{empty fnPlanFinancieroController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnPlanFinancieroEditForm" oncomplete="PF('FnPlanFinancieroEditDialog').show()" disabled="#{empty fnPlanFinancieroController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnPlanFinancieroController.delete}" update=":growl,datalist" disabled="#{empty fnPlanFinancieroController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnTipoArticuloViewDlg" widgetVar="FnTipoArticuloViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnTipoArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="FnTipoArticuloViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnTipoArticuloController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnTipoArticuloLabel_id}"/>
+                        <h:outputText value="#{fnTipoArticuloController.selected.id}" title="#{mensajes.ViewFnTipoArticuloTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnTipoArticuloLabel_descripcion}"/>
+                        <h:outputText value="#{fnTipoArticuloController.selected.descripcion}" title="#{mensajes.ViewFnTipoArticuloTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnTipoArticuloViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

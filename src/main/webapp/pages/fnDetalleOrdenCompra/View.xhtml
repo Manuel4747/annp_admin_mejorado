@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetalleOrdenCompraViewDlg" widgetVar="FnDetalleOrdenCompraViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnDetalleOrdenCompraTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleOrdenCompraViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnDetalleOrdenCompraController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleOrdenCompraLabel_id}"/>
+                        <h:outputText value="#{fnDetalleOrdenCompraController.selected.id}" title="#{mensajes.ViewFnDetalleOrdenCompraTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleOrdenCompraLabel_articulo}"/>
+                        <h:outputText value="#{fnDetalleOrdenCompraController.selected.articulo}" title="#{mensajes.ViewFnDetalleOrdenCompraTitle_articulo}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleOrdenCompraLabel_cantidad}"/>
+                        <h:outputText value="#{fnDetalleOrdenCompraController.selected.cantidad}" title="#{mensajes.ViewFnDetalleOrdenCompraTitle_cantidad}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleOrdenCompraLabel_costoUnitario}"/>
+                        <h:outputText value="#{fnDetalleOrdenCompraController.selected.costoUnitario}" title="#{mensajes.ViewFnDetalleOrdenCompraTitle_costoUnitario}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleOrdenCompraLabel_total}"/>
+                        <h:outputText value="#{fnDetalleOrdenCompraController.selected.total}" title="#{mensajes.ViewFnDetalleOrdenCompraTitle_total}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnDetalleOrdenCompraViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

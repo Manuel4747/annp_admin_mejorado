@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnContratosViewDlg" widgetVar="FnContratosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnContratosTitle}" closeOnEscape="true">
+
+            <h:form id="FnContratosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnContratosController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_id}"/>
+                        <h:outputText value="#{fnContratosController.selected.id}" title="#{mensajes.ViewFnContratosTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_fecha}"/>
+                        <h:outputText value="#{fnContratosController.selected.fecha}" title="#{mensajes.ViewFnContratosTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_descripcion}"/>
+                        <h:outputText value="#{fnContratosController.selected.descripcion}" title="#{mensajes.ViewFnContratosTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_importe}"/>
+                        <h:outputText value="#{fnContratosController.selected.importe}" title="#{mensajes.ViewFnContratosTitle_importe}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_licitacion}"/>
+                        <h:outputText value="#{fnContratosController.selected.licitacion.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnContratosLabel_proveedor}"/>
+                        <h:outputText value="#{fnContratosController.selected.proveedor.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnContratosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

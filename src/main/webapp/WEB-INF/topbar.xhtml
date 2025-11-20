@@ -1,0 +1,33 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="jakarta.faces.core"
+    xmlns:h="jakarta.faces.html"
+    xmlns:ui="jakarta.faces.facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/manhattan">
+
+    <div class="ui-g">
+        <div class="layout-topbar">
+            <a href="#" id="layout-menu-btn" class="menu-btn">
+                <i class="fa fa-bars"></i>
+            </a>        
+            <a href="http://www.jem.gov.py" target="_blank">
+                <p:graphicImage value="#{usuariosController.imagenLogo}" height="100%"/>
+            </a>
+            <div class="layout-topbar-menu-wrapper"> 
+                <ul class="topbar-menu" >
+                    <li class="profile-item">
+                        <a href="#">           
+                            <p:outputLabel style="font-size: 20px; font-weight: bold" value="#{usuariosController.nombreUsu}"/> 
+                        </a>
+                    </li>
+                </ul>    
+                <a href="#" class="rightpanel-btn">
+                    <h:form id="menuForm">
+                        <p:commandButton id="panelAlertas" value="Panel" rendered="true" actionListener="#{parametrosSistemaController.confPanelAlertas()}"/>
+                    </h:form> 
+                </a>
+            </div>
+        </div>
+    </div>    
+</ui:composition>

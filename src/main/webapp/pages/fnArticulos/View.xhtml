@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnArticulosViewDlg" widgetVar="FnArticulosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnArticulosTitle}" closeOnEscape="true">
+
+            <h:form id="FnArticulosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnArticulosController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnArticulosLabel_id}"/>
+                        <h:outputText value="#{fnArticulosController.selected.id}" title="#{mensajes.ViewFnArticulosTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnArticulosLabel_descipcion}"/>
+                        <h:outputText value="#{fnArticulosController.selected.descipcion}" title="#{mensajes.ViewFnArticulosTitle_descipcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnArticulosLabel_categoria}"/>
+                        <h:outputText value="#{fnArticulosController.selected.categoria.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnArticulosLabel_rubro}"/>
+                        <h:outputText value="#{fnArticulosController.selected.rubro.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnArticulosLabel_tipo}"/>
+                        <h:outputText value="#{fnArticulosController.selected.tipo.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnArticulosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

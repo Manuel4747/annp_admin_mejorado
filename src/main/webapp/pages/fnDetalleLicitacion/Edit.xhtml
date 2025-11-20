@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnDetalleLicitacionEditDlg" widgetVar="FnDetalleLicitacionEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnDetalleLicitacionTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleLicitacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnDetalleLicitacionController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnDetalleLicitacionLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnDetalleLicitacionController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnDetalleLicitacionController.getComponentMessages('id', mensajes.EditFnDetalleLicitacionHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleLicitacionLabel_licitacion}" for="licitacion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="licitacion" value="#{fnDetalleLicitacionController.selected.licitacion}"  converter="fnLicitacionesConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnLicitacionesController.items}"
+                                               var="licitacionItem"
+                                               itemValue="#{licitacionItem}"
+                                               itemLabel="#{licitacionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="licitacion" value="#{fnDetalleLicitacionController.getComponentMessages('licitacion', mensajes.EditFnDetalleLicitacionHelpText_licitacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnDetalleLicitacionLabel_oferente}" for="oferente" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="oferente" value="#{fnDetalleLicitacionController.selected.oferente}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="oferenteItem"
+                                               itemValue="#{oferenteItem}"
+                                               itemLabel="#{oferenteItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="oferente" value="#{fnDetalleLicitacionController.getComponentMessages('oferente', mensajes.EditFnDetalleLicitacionHelpText_oferente)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetalleLicitacionController.save}" value="#{mensajes.Save}" update="display,:FnDetalleLicitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetalleLicitacionEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetalleLicitacionEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

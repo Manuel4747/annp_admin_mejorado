@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="EmpresasListForm">
+
+        <p:panel header="#{mensajes.ListEmpresasTitle}">
+            <p:contextMenu id="EmpresasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('EmpresasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('EmpresasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('EmpresasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('EmpresasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_rotuladosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateRotuladosCollection}" disabled="#{empty empresasController.selected.rotuladosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_expedientesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateExpedientesCollection}" disabled="#{empty empresasController.selected.expedientesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_insumosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateInsumosCollection}" disabled="#{empty empresasController.selected.insumosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_tramitesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateTramitesCollection}" disabled="#{empty empresasController.selected.tramitesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_departamentosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateDepartamentosCollection}" disabled="#{empty empresasController.selected.departamentosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_rolesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateRolesCollection}" disabled="#{empty empresasController.selected.rolesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_usuariosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateUsuariosCollection}" disabled="#{empty empresasController.selected.usuariosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_estadosUsuarioCollection}" icon="ui-icon-search"  action="#{empresasController.navigateEstadosUsuarioCollection}" disabled="#{empty empresasController.selected.estadosUsuarioCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_rolesPorUsuariosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateRolesPorUsuariosCollection}" disabled="#{empty empresasController.selected.rolesPorUsuariosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_sexosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateSexosCollection}" disabled="#{empty empresasController.selected.sexosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_solicitudesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateSolicitudesCollection}" disabled="#{empty empresasController.selected.solicitudesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_permisosPorRolesCollection}" icon="ui-icon-search"  action="#{empresasController.navigatePermisosPorRolesCollection}" disabled="#{empty empresasController.selected.permisosPorRolesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_rubrosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateRubrosCollection}" disabled="#{empty empresasController.selected.rubrosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_proveedoresCollection}" icon="ui-icon-search"  action="#{empresasController.navigateProveedoresCollection}" disabled="#{empty empresasController.selected.proveedoresCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_documentosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateDocumentosCollection}" disabled="#{empty empresasController.selected.documentosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_tiposPersonaCollection}" icon="ui-icon-search"  action="#{empresasController.navigateTiposPersonaCollection}" disabled="#{empty empresasController.selected.tiposPersonaCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_pantallasCollection}" icon="ui-icon-search"  action="#{empresasController.navigatePantallasCollection}" disabled="#{empty empresasController.selected.pantallasCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_cambiosRotuladoCollection}" icon="ui-icon-search"  action="#{empresasController.navigateCambiosRotuladoCollection}" disabled="#{empty empresasController.selected.cambiosRotuladoCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_cambiosResponsableCollection}" icon="ui-icon-search"  action="#{empresasController.navigateCambiosResponsableCollection}" disabled="#{empty empresasController.selected.cambiosResponsableCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_movimientosReparacionBienesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateMovimientosReparacionBienesCollection}" disabled="#{empty empresasController.selected.movimientosReparacionBienesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_tiposMovimientoCollection}" icon="ui-icon-search"  action="#{empresasController.navigateTiposMovimientoCollection}" disabled="#{empty empresasController.selected.tiposMovimientoCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_bienesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateBienesCollection}" disabled="#{empty empresasController.selected.bienesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_modelosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateModelosCollection}" disabled="#{empty empresasController.selected.modelosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_permisosCollection}" icon="ui-icon-search"  action="#{empresasController.navigatePermisosCollection}" disabled="#{empty empresasController.selected.permisosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_estadosCollection}" icon="ui-icon-search"  action="#{empresasController.navigateEstadosCollection}" disabled="#{empty empresasController.selected.estadosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_indicesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateIndicesCollection}" disabled="#{empty empresasController.selected.indicesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_monedasCollection}" icon="ui-icon-search"  action="#{empresasController.navigateMonedasCollection}" disabled="#{empty empresasController.selected.monedasCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_marcasCollection}" icon="ui-icon-search"  action="#{empresasController.navigateMarcasCollection}" disabled="#{empty empresasController.selected.marcasCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_movimientosBienesCollection}" icon="ui-icon-search"  action="#{empresasController.navigateMovimientosBienesCollection}" disabled="#{empty empresasController.selected.movimientosBienesCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.EmpresasMenuItem_estadosTramiteCollection}" icon="ui-icon-search"  action="#{empresasController.navigateEstadosTramiteCollection}" disabled="#{empty empresasController.selected.estadosTramiteCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{empresasController.items}"
+                         lazy="false" emptyMessage="#{mensajes.NoRegistros}"
+                         rowKey="#{item.id}"
+                         var="item" filterEvent="enter"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{empresasController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{empresasController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmpresasDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:EmpresasDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpresasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterMatchMode="contains" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListEmpresasTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.razonSocial}" filterMatchMode="contains" filterBy="#{item.razonSocial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListEmpresasTitle_razonSocial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.razonSocial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.ruc}" filterMatchMode="contains" filterBy="#{item.ruc}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListEmpresasTitle_ruc}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ruc}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.direccion}" filterMatchMode="contains" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListEmpresasTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.telefono}" filterMatchMode="contains" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListEmpresasTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{empresasController.prepareCreate}" update=":EmpresasCreateForm" oncomplete="PF('EmpresasCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":EmpresasViewForm" oncomplete="PF('EmpresasViewDialog').show()" disabled="#{empty empresasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":EmpresasEditForm" oncomplete="PF('EmpresasEditDialog').show()" disabled="#{empty empresasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{empresasController.delete}" update=":growl,datalist" disabled="#{empty empresasController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

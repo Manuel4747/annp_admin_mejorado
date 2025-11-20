@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnArticulosListForm">
+
+        <p:panel header="#{mensajes.ListFnArticulosTitle}">
+            <p:contextMenu id="FnArticulosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnArticulosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnArticulosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnArticulosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnArticulosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnArticulosMenuItem_fnArticuloCaracteristicasCollection}" icon="ui-icon-search"  action="#{fnArticulosController.navigateFnArticuloCaracteristicasCollection}" disabled="#{empty fnArticulosController.selected.fnArticuloCaracteristicasCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnArticulosMenuItem_categoria}" icon="ui-icon-search"  actionListener="#{fnArticulosController.prepareCategoria}" update=":FnCategoriaArticuloViewForm" oncomplete="PF('FnCategoriaArticuloViewDialog').show()" disabled="#{empty fnArticulosController.selected.categoria}"/>  
+                <p:menuitem value="#{mensajes.FnArticulosMenuItem_rubro}" icon="ui-icon-search"  actionListener="#{fnArticulosController.prepareRubro}" update=":FnRubroArticuloViewForm" oncomplete="PF('FnRubroArticuloViewDialog').show()" disabled="#{empty fnArticulosController.selected.rubro}"/>  
+                <p:menuitem value="#{mensajes.FnArticulosMenuItem_tipo}" icon="ui-icon-search"  actionListener="#{fnArticulosController.prepareTipo}" update=":FnTipoArticuloViewForm" oncomplete="PF('FnTipoArticuloViewDialog').show()" disabled="#{empty fnArticulosController.selected.tipo}"/>  
+                <p:menuitem value="#{mensajes.FnArticulosMenuItem_fnDetalleFacturaCollection}" icon="ui-icon-search"  action="#{fnArticulosController.navigateFnDetalleFacturaCollection}" disabled="#{empty fnArticulosController.selected.fnDetalleFacturaCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnArticulosController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnArticulosController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnArticulosController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnArticulosDataTableContextMenu" listener="#{fnArticulosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnArticulosDataTableContextMenu" listener="#{fnArticulosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnArticulosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnArticulosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnArticulosTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descipcion}" filterBy="#{item.descipcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnArticulosTitle_descipcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descipcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.categoria.descripcion}" filterBy="#{item.categoria.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnArticulosTitle_categoria}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.categoria.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.rubro.descripcion}" filterBy="#{item.rubro.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnArticulosTitle_rubro}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rubro.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipo.descripcion}" filterBy="#{item.tipo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnArticulosTitle_tipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnArticulosController.prepareCreate}" update=":FnArticulosCreateForm" oncomplete="PF('FnArticulosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnArticulosViewForm" oncomplete="PF('FnArticulosViewDialog').show()" disabled="#{empty fnArticulosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnArticulosEditForm" oncomplete="PF('FnArticulosEditDialog').show()" disabled="#{empty fnArticulosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnArticulosController.delete}" update=":growl,datalist" disabled="#{empty fnArticulosController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

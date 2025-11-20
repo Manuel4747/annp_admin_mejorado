@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnRetencionesViewDlg" widgetVar="FnRetencionesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnRetencionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnRetencionesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnRetencionesController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnRetencionesLabel_id}"/>
+                        <h:outputText value="#{fnRetencionesController.selected.id}" title="#{mensajes.ViewFnRetencionesTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnRetencionesLabel_porcentaje}"/>
+                        <h:outputText value="#{fnRetencionesController.selected.porcentaje}" title="#{mensajes.ViewFnRetencionesTitle_porcentaje}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnRetencionesLabel_monto}"/>
+                        <h:outputText value="#{fnRetencionesController.selected.monto}" title="#{mensajes.ViewFnRetencionesTitle_monto}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnRetencionesLabel_pago}"/>
+                        <h:outputText value="#{fnRetencionesController.selected.pago.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnRetencionesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

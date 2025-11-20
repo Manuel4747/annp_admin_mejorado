@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnComprobantesDePagoCreateDlg" widgetVar="FnComprobantesDePagoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnComprobantesDePagoTitle}" closeOnEscape="true">
+
+            <h:form id="FnComprobantesDePagoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnComprobantesDePagoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnComprobantesDePagoController.selected.id}" title="#{mensajes.CreateFnComprobantesDePagoTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnComprobantesDePagoRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnComprobantesDePagoController.getComponentMessages('id', mensajes.CreateFnComprobantesDePagoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_tipo}" for="tipo" />
+                        <h:panelGroup>
+                            <p:inputText id="tipo" value="#{fnComprobantesDePagoController.selected.tipo}" title="#{mensajes.CreateFnComprobantesDePagoTitle_tipo}"/>
+                            <p:tooltip for="tipo" value="#{fnComprobantesDePagoController.getComponentMessages('tipo', mensajes.CreateFnComprobantesDePagoHelpText_tipo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:inputText id="fecha" value="#{fnComprobantesDePagoController.selected.fecha}" title="#{mensajes.CreateFnComprobantesDePagoTitle_fecha}"/>
+                            <p:tooltip for="fecha" value="#{fnComprobantesDePagoController.getComponentMessages('fecha', mensajes.CreateFnComprobantesDePagoHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_importe}" for="importe" />
+                        <h:panelGroup>
+                            <p:inputText id="importe" value="#{fnComprobantesDePagoController.selected.importe}" title="#{mensajes.CreateFnComprobantesDePagoTitle_importe}"/>
+                            <p:tooltip for="importe" value="#{fnComprobantesDePagoController.getComponentMessages('importe', mensajes.CreateFnComprobantesDePagoHelpText_importe)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_pago}" for="pago" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="pago" value="#{fnComprobantesDePagoController.selected.pago}"  converter="fnPagosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnPagosController.items}"
+                                               var="pagoItem"
+                                               itemValue="#{pagoItem}"
+                                               itemLabel="#{pagoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="pago" value="#{fnComprobantesDePagoController.getComponentMessages('pago', mensajes.CreateFnComprobantesDePagoHelpText_pago)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnComprobantesDePagoLabel_proveedor}" for="proveedor" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proveedor" value="#{fnComprobantesDePagoController.selected.proveedor}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="proveedorItem"
+                                               itemValue="#{proveedorItem}"
+                                               itemLabel="#{proveedorItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proveedor" value="#{fnComprobantesDePagoController.getComponentMessages('proveedor', mensajes.CreateFnComprobantesDePagoHelpText_proveedor)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnComprobantesDePagoController.saveNew}" value="#{mensajes.Save}" update="display,:FnComprobantesDePagoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnComprobantesDePagoCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnComprobantesDePagoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

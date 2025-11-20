@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnObjetosDeGastoListForm">
+
+        <p:panel header="#{mensajes.ListFnObjetosDeGastoTitle}">
+            <p:contextMenu id="FnObjetosDeGastoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnObjetosDeGastoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnObjetosDeGastoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnObjetosDeGastoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnObjetosDeGastoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnObjetosDeGastoMenuItem_fnDetallePlanFinancieroCollection}" icon="ui-icon-search"  action="#{fnObjetosDeGastoController.navigateFnDetallePlanFinancieroCollection}" disabled="#{empty fnObjetosDeGastoController.selected.fnDetallePlanFinancieroCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnObjetosDeGastoMenuItem_fnDetallePresupuestoCollection}" icon="ui-icon-search"  action="#{fnObjetosDeGastoController.navigateFnDetallePresupuestoCollection}" disabled="#{empty fnObjetosDeGastoController.selected.fnDetallePresupuestoCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnObjetosDeGastoController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnObjetosDeGastoController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnObjetosDeGastoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnObjetosDeGastoDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnObjetosDeGastoDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnObjetosDeGastoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnObjetosDeGastoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.numero}" filterBy="#{item.numero}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnObjetosDeGastoTitle_numero}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numero}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.denominacion}" filterBy="#{item.denominacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnObjetosDeGastoTitle_denominacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.denominacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.concepto}" filterBy="#{item.concepto}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnObjetosDeGastoTitle_concepto}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.concepto}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.abreviacion}" filterBy="#{item.abreviacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnObjetosDeGastoTitle_abreviacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.abreviacion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnObjetosDeGastoController.prepareCreate}" update=":FnObjetosDeGastoCreateForm" oncomplete="PF('FnObjetosDeGastoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnObjetosDeGastoViewForm" oncomplete="PF('FnObjetosDeGastoViewDialog').show()" disabled="#{empty fnObjetosDeGastoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnObjetosDeGastoEditForm" oncomplete="PF('FnObjetosDeGastoEditDialog').show()" disabled="#{empty fnObjetosDeGastoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnObjetosDeGastoController.delete}" update=":growl,datalist" disabled="#{empty fnObjetosDeGastoController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

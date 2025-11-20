@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisosPorRolesViewDlg" widgetVar="PermisosPorRolesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewPermisosPorRolesTitle}" closeOnEscape="true">
+
+            <h:form id="PermisosPorRolesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{permisosPorRolesController.selected != null}">
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_permisos}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.permisos.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_roles}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.roles.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_estado}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.estado.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('PermisosPorRolesViewDialog').hide()"/>
+                </h:panelGroup>
+<!--
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_empresa}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.empresa.id}"/>
+-->
+<!--
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_permisosPorRolesPK_permiso}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.permisosPorRolesPK.permiso}" title="#{mensajes.ViewPermisosPorRolesTitle_permisosPorRolesPK_permiso}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosPorRolesLabel_permisosPorRolesPK_rol}"/>
+                        <h:outputText value="#{permisosPorRolesController.selected.permisosPorRolesPK.rol}" title="#{mensajes.ViewPermisosPorRolesTitle_permisosPorRolesPK_rol}"/>
+-->
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnProyectosEditDlg" widgetVar="FnProyectosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnProyectosTitle}" closeOnEscape="true">
+
+            <h:form id="FnProyectosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnProyectosController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnProyectosLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnProyectosController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnProyectosController.getComponentMessages('id', mensajes.EditFnProyectosHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnProyectosLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnProyectosController.selected.descripcion}" title="#{mensajes.EditFnProyectosTitle_descripcion}" required="true" requiredMessage="#{mensajes.EditFnProyectosRequiredMessage_descripcion}"/>
+                            <p:tooltip for="descripcion" value="#{fnProyectosController.getComponentMessages('descripcion', mensajes.EditFnProyectosHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnProyectosLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnProyectosController.selected.fecha}" title="#{mensajes.EditFnProyectosTitle_fecha}" required="true" requiredMessage="#{mensajes.EditFnProyectosRequiredMessage_fecha}" showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnProyectosController.getComponentMessages('fecha', mensajes.EditFnProyectosHelpText_fecha)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnProyectosController.save}" value="#{mensajes.Save}" update="display,:FnProyectosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnProyectosEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnProyectosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

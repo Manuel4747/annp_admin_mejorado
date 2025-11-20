@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnDetalleFacturaListForm">
+
+        <p:panel header="#{mensajes.ListFnDetalleFacturaTitle}">
+            <p:contextMenu id="FnDetalleFacturaDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnDetalleFacturaListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnDetalleFacturaListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnDetalleFacturaListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnDetalleFacturaListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnDetalleFacturaMenuItem_articulo}" icon="ui-icon-search"  actionListener="#{fnDetalleFacturaController.prepareArticulo}" update=":FnArticulosViewForm" oncomplete="PF('FnArticulosViewDialog').show()" disabled="#{empty fnDetalleFacturaController.selected.articulo}"/>  
+                <p:menuitem value="#{mensajes.FnDetalleFacturaMenuItem_factura}" icon="ui-icon-search"  actionListener="#{fnDetalleFacturaController.prepareFactura}" update=":FnFacturasViewForm" oncomplete="PF('FnFacturasViewDialog').show()" disabled="#{empty fnDetalleFacturaController.selected.factura}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnDetalleFacturaController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnDetalleFacturaController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnDetalleFacturaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetalleFacturaDataTableContextMenu" listener="#{fnDetalleFacturaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnDetalleFacturaDataTableContextMenu" listener="#{fnDetalleFacturaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnDetalleFacturaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnDetalleFacturaListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cantidad}" filterBy="#{item.cantidad}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_cantidad}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidad}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.costoUnitario}" filterBy="#{item.costoUnitario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_costoUnitario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.costoUnitario}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.total}" filterBy="#{item.total}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_total}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.total}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.iva10}" filterBy="#{item.iva10}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_iva10}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iva10}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.iva5}" filterBy="#{item.iva5}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_iva5}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iva5}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.excenta}" filterBy="#{item.excenta}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_excenta}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.excenta}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.totalIva}" filterBy="#{item.totalIva}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_totalIva}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.totalIva}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.articulo.id}" filterBy="#{item.articulo.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_articulo}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.articulo.id}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.factura.descripcion}" filterBy="#{item.factura.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnDetalleFacturaTitle_factura}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.factura.descripcion}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnDetalleFacturaController.prepareCreate}" update=":FnDetalleFacturaCreateForm" oncomplete="PF('FnDetalleFacturaCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnDetalleFacturaViewForm" oncomplete="PF('FnDetalleFacturaViewDialog').show()" disabled="#{empty fnDetalleFacturaController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnDetalleFacturaEditForm" oncomplete="PF('FnDetalleFacturaEditDialog').show()" disabled="#{empty fnDetalleFacturaController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnDetalleFacturaController.delete}" update=":growl,datalist" disabled="#{empty fnDetalleFacturaController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

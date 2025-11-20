@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetallePlanFinancieroViewDlg" widgetVar="FnDetallePlanFinancieroViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnDetallePlanFinancieroTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetallePlanFinancieroViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnDetallePlanFinancieroController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_id}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.id}" title="#{mensajes.ViewFnDetallePlanFinancieroTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_detallePlanFinancierocol}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.detallePlanFinancierocol}" title="#{mensajes.ViewFnDetallePlanFinancieroTitle_detallePlanFinancierocol}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_mes}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.mes}" title="#{mensajes.ViewFnDetallePlanFinancieroTitle_mes}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_valor}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.valor}" title="#{mensajes.ViewFnDetallePlanFinancieroTitle_valor}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_departamento}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.departamento.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_distribucion}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.distribucion.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_fuentesDeFinanciamiento}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.fuentesDeFinanciamiento.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_objetosDeGasto}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.objetosDeGasto.id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_planFinanciero}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.planFinanciero.id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_proyecto}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.proyecto.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetallePlanFinancieroLabel_subDistribucion}"/>
+                        <h:outputText value="#{fnDetallePlanFinancieroController.selected.subDistribucion.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnDetallePlanFinancieroViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

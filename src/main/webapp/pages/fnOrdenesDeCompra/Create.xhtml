@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnOrdenesDeCompraCreateDlg" widgetVar="FnOrdenesDeCompraCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnOrdenesDeCompraTitle}" closeOnEscape="true">
+
+            <h:form id="FnOrdenesDeCompraCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnOrdenesDeCompraController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnOrdenesDeCompraLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnOrdenesDeCompraController.selected.id}" title="#{mensajes.CreateFnOrdenesDeCompraTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnOrdenesDeCompraRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnOrdenesDeCompraController.getComponentMessages('id', mensajes.CreateFnOrdenesDeCompraHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnOrdenesDeCompraLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnOrdenesDeCompraController.selected.fecha}" title="#{mensajes.CreateFnOrdenesDeCompraTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnOrdenesDeCompraController.getComponentMessages('fecha', mensajes.CreateFnOrdenesDeCompraHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnOrdenesDeCompraLabel_importe}" for="importe" />
+                        <h:panelGroup>
+                            <p:inputText id="importe" value="#{fnOrdenesDeCompraController.selected.importe}" title="#{mensajes.CreateFnOrdenesDeCompraTitle_importe}"/>
+                            <p:tooltip for="importe" value="#{fnOrdenesDeCompraController.getComponentMessages('importe', mensajes.CreateFnOrdenesDeCompraHelpText_importe)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnOrdenesDeCompraLabel_proveedor}" for="proveedor" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proveedor" value="#{fnOrdenesDeCompraController.selected.proveedor}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="proveedorItem"
+                                               itemValue="#{proveedorItem}"
+                                               itemLabel="#{proveedorItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proveedor" value="#{fnOrdenesDeCompraController.getComponentMessages('proveedor', mensajes.CreateFnOrdenesDeCompraHelpText_proveedor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnOrdenesDeCompraLabel_contrato}" for="contrato" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="contrato" value="#{fnOrdenesDeCompraController.selected.contrato}"  converter="fnContratosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnContratosController.items}"
+                                               var="contratoItem"
+                                               itemValue="#{contratoItem}"
+                                               itemLabel="#{contratoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="contrato" value="#{fnOrdenesDeCompraController.getComponentMessages('contrato', mensajes.CreateFnOrdenesDeCompraHelpText_contrato)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnOrdenesDeCompraController.saveNew}" value="#{mensajes.Save}" update="display,:FnOrdenesDeCompraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnOrdenesDeCompraCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnOrdenesDeCompraCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

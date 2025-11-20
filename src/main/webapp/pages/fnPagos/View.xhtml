@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnPagosViewDlg" widgetVar="FnPagosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnPagosTitle}" closeOnEscape="true">
+
+            <h:form id="FnPagosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnPagosController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_id}"/>
+                        <h:outputText value="#{fnPagosController.selected.id}" title="#{mensajes.ViewFnPagosTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_formaDePago}"/>
+                        <h:outputText value="#{fnPagosController.selected.formaDePago}" title="#{mensajes.ViewFnPagosTitle_formaDePago}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_cuentaProveedor}"/>
+                        <h:outputText value="#{fnPagosController.selected.cuentaProveedor}" title="#{mensajes.ViewFnPagosTitle_cuentaProveedor}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_importe}"/>
+                        <h:outputText value="#{fnPagosController.selected.importe}" title="#{mensajes.ViewFnPagosTitle_importe}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_cuentaSalida}"/>
+                        <h:outputText value="#{fnPagosController.selected.cuentaSalida}" title="#{mensajes.ViewFnPagosTitle_cuentaSalida}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_proveedor}"/>
+                        <h:outputText value="#{fnPagosController.selected.proveedor}" title="#{mensajes.ViewFnPagosTitle_proveedor}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_fecha}"/>
+                        <h:outputText value="#{fnPagosController.selected.fecha}" title="#{mensajes.ViewFnPagosTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_factura}"/>
+                        <h:outputText value="#{fnPagosController.selected.factura.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPagosLabel_cheque}"/>
+                        <h:outputText value="#{fnPagosController.selected.cheque.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnPagosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

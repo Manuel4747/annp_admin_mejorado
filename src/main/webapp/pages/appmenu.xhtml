@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:panelGrid columns="4" style="border-width: 0px">
+                <p:menubar>
+                    <p:menuitem value="#{mensajes.Home}" action="#{usuariosController.obtenerHome()}"  oncomplete="endHandler();" icon="ui-icon-home"/>
+                    <p:submenu label="#{mensajes.Permisos}" rendered="#{filtroURL.verifPermiso('menuPermisos')}">
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/permisosPorRoles/index.xhtml')}" value="#{mensajes.PermisosPorRolesHeading}..." outcome="/pages/permisosPorRoles/index" />
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/roles/index.xhtml')}" value="#{mensajes.RolesHeading}..." outcome="/pages/roles/index" />
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/rolesPorUsuarios/index.xhtml')}" value="#{mensajes.RolesPorUsuariosHeading}..." outcome="/pages/rolesPorUsuarios/index" />
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/usuarios/index.xhtml')}" value="#{mensajes.UsuariosHeading}..." outcome="/pages/usuarios/index" />
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/usuariosContrasena/index.xhtml')}" value="Cambio Contrasena" outcome="/pages/usuariosContrasena/index" />
+                        <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/formulario/index.xhtml')}" value="Formulario" outcome="/pages/formulario/index" />
+                    </p:submenu> 
+
+                    <p:submenu label="#{mensajes.Maintenance}">
+                        <p:menuitem value="#{mensajes.FnArticuloCaracteristicasHeading}..." outcome="/pages/fnArticuloCaracteristicas/index" />
+                        <p:menuitem value="#{mensajes.FnArticulosHeading}..." outcome="/pages/fnArticulos/index" />
+                        <p:menuitem value="#{mensajes.FnCategoriaArticuloHeading}..." outcome="/pages/fnCategoriaArticulo/index" />
+                        <p:menuitem value="#{mensajes.FnCertificadosDisponibilidadHeading}..." outcome="/pages/fnCertificadosDisponibilidad/index" />
+                        <p:menuitem value="#{mensajes.FnChequesHeading}..." outcome="/pages/fnCheques/index" />
+                        <p:menuitem value="#{mensajes.FnComprobantesDePagoHeading}..." outcome="/pages/fnComprobantesDePago/index" />
+                        <p:menuitem value="#{mensajes.FnContratosHeading}..." outcome="/pages/fnContratos/index" />
+                        <p:menuitem value="#{mensajes.FnDepartamentoHeading}..." outcome="/pages/fnDepartamento/index" />
+                        <p:menuitem value="#{mensajes.FnDetalleFacturaHeading}..." outcome="/pages/fnDetalleFactura/index" />
+                        <p:menuitem value="#{mensajes.FnDetalleLicitacionHeading}..." outcome="/pages/fnDetalleLicitacion/index" />
+                        <p:menuitem value="#{mensajes.FnDetalleOrdenCompraHeading}..." outcome="/pages/fnDetalleOrdenCompra/index" />
+                        <p:menuitem value="#{mensajes.FnDetallePlanFinancieroHeading}..." outcome="/pages/fnDetallePlanFinanciero/index" />
+                        <p:menuitem value="#{mensajes.FnDetallePresupuestoHeading}..." outcome="/pages/fnDetallePresupuesto/index" />
+                        <p:menuitem value="#{mensajes.FnDetalleReprogramacionHeading}..." outcome="/pages/fnDetalleReprogramacion/index" />
+                        <p:menuitem value="#{mensajes.FnDistribucionHeading}..." outcome="/pages/fnDistribucion/index" />
+                        <p:menuitem value="#{mensajes.FnFacturasHeading}..." outcome="/pages/fnFacturas/index" />
+                        <p:menuitem value="#{mensajes.FnFuentesDeFinanciamientoHeading}..." outcome="/pages/fnFuentesDeFinanciamiento/index" />
+                        <p:menuitem value="#{mensajes.FnLicitacionesHeading}..." outcome="/pages/fnLicitaciones/index" />
+                        <p:menuitem value="#{mensajes.FnObjetosDeGastoHeading}..." outcome="/pages/fnObjetosDeGasto/index" />
+                        <p:menuitem value="#{mensajes.FnOrdenesDeCompraHeading}..." outcome="/pages/fnOrdenesDeCompra/index" />
+                        <p:menuitem value="#{mensajes.FnOrganismosFinaciadoresHeading}..." outcome="/pages/fnOrganismosFinaciadores/index" />
+                        <p:menuitem value="#{mensajes.FnPagosHeading}..." outcome="/pages/fnPagos/index" />
+                        <p:menuitem value="#{mensajes.FnPlanFinancieroHeading}..." outcome="/pages/fnPlanFinanciero/index" />
+                        <p:menuitem value="#{mensajes.FnPresupuestoHeading}..." outcome="/pages/fnPresupuesto/index" />
+                        <p:menuitem value="#{mensajes.FnProgramasHeading}..." outcome="/pages/fnProgramas/index" />
+                        <p:menuitem value="#{mensajes.FnProveedoresHeading}..." outcome="/pages/fnProveedores/index" />
+                        <p:menuitem value="#{mensajes.FnProyectosHeading}..." outcome="/pages/fnProyectos/index" />
+                        <p:menuitem value="#{mensajes.FnReprogramacionesHeading}..." outcome="/pages/fnReprogramaciones/index" />
+                        <p:menuitem value="#{mensajes.FnRetencionesHeading}..." outcome="/pages/fnRetenciones/index" />
+                        <p:menuitem value="#{mensajes.FnRubroArticuloHeading}..." outcome="/pages/fnRubroArticulo/index" />
+                        <p:menuitem value="#{mensajes.FnSubDistribucionHeading}..." outcome="/pages/fnSubDistribucion/index" />
+                        <p:menuitem value="#{mensajes.FnSubProgramaHeading}..." outcome="/pages/fnSubPrograma/index" />
+                        <p:menuitem value="#{mensajes.FnTipoArticuloHeading}..." outcome="/pages/fnTipoArticulo/index" />
+                        <p:menuitem value="#{mensajes.FnTipoDeVariacionRpHeading}..." outcome="/pages/fnTipoDeVariacionRp/index" />
+                        <p:menuitem value="#{mensajes.FnTiposPresupuestoHeading}..." outcome="/pages/fnTiposPresupuesto/index" />
+                        <p:menuitem value="#{mensajes.FnTiposReprogramacionesHeading}..." outcome="/pages/fnTiposReprogramaciones/index" />
+                    </p:submenu>
+                    <p:separator />               
+                    <p:menuitem value="#{mensajes.Logout}" action="#{usuariosController.cerrarSession()}"/>
+                </p:menubar>
+                <p:panel id="datos_usuario" closable="false" >
+                    <p:outputLabel style="font-size: 20px; font-weight: bold" value="#{usuariosController.nombreUsu}"/>  
+                </p:panel>
+                <p:panel visible="#{articulosStockCriticoController.hayArticulosStockCritico}" id="nuevos" closable="false" >
+                    <p:commandButton id="verArticulosStockCritico" style="color: red; font-size: 20px; font-weight: bold" rendered="true" ajax="false" value="Existen Articulos en Stock Critico" action="#{articulosStockCriticoController.navigateArticulosStockCritico()}" />
+                </p:panel>
+                <p:panel visible="#{pedidosArticuloController.hayPedidosArticulo}" id="nuevosPedidos" closable="false" >
+                    <p:commandButton id="verPedidosArticulo" style="color: red; font-size: 20px; font-weight: bold" rendered="true" ajax="false" value="Existen Nuevos Pedidos de Articulos" action="#{pedidosArticuloController.navigatePedidosArticulo()}" />
+                </p:panel>
+                <p:panel visible="#{verDocumentosJudicialesMesaController.hayDocumentosAtencion}" id="nuevosDocumentosAtencion" closable="false" rendered="false">
+                    <p:commandButton id="verDocumentosMesa" style="color: red; font-size: 20px; font-weight: bold" disabled="true" rendered="true" ajax="false" value="Existen Documentos a Recibir" />
+                </p:panel>
+            </p:panelGrid>
+        </h:form>
+    </ui:composition>
+
+</html>

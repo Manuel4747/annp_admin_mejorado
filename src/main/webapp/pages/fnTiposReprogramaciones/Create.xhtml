@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnTiposReprogramacionesCreateDlg" widgetVar="FnTiposReprogramacionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnTiposReprogramacionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnTiposReprogramacionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnTiposReprogramacionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnTiposReprogramacionesLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnTiposReprogramacionesController.selected.id}" title="#{mensajes.CreateFnTiposReprogramacionesTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnTiposReprogramacionesRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnTiposReprogramacionesController.getComponentMessages('id', mensajes.CreateFnTiposReprogramacionesHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnTiposReprogramacionesLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnTiposReprogramacionesController.selected.descripcion}" title="#{mensajes.CreateFnTiposReprogramacionesTitle_descripcion}" required="true" requiredMessage="#{mensajes.CreateFnTiposReprogramacionesRequiredMessage_descripcion}"/>
+                            <p:tooltip for="descripcion" value="#{fnTiposReprogramacionesController.getComponentMessages('descripcion', mensajes.CreateFnTiposReprogramacionesHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnTiposReprogramacionesController.saveNew}" value="#{mensajes.Save}" update="display,:FnTiposReprogramacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnTiposReprogramacionesCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnTiposReprogramacionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

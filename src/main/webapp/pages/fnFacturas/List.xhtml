@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnFacturasListForm">
+
+        <p:panel header="#{mensajes.ListFnFacturasTitle}">
+            <p:contextMenu id="FnFacturasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnFacturasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnFacturasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnFacturasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnFacturasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnFacturasMenuItem_ordenCompra}" icon="ui-icon-search"  actionListener="#{fnFacturasController.prepareOrdenCompra}" update=":FnOrdenesDeCompraViewForm" oncomplete="PF('FnOrdenesDeCompraViewDialog').show()" disabled="#{empty fnFacturasController.selected.ordenCompra}"/>  
+                <p:menuitem value="#{mensajes.FnFacturasMenuItem_proveedor}" icon="ui-icon-search"  actionListener="#{fnFacturasController.prepareProveedor}" update=":FnProveedoresViewForm" oncomplete="PF('FnProveedoresViewDialog').show()" disabled="#{empty fnFacturasController.selected.proveedor}"/>  
+                <p:menuitem value="#{mensajes.FnFacturasMenuItem_fnPagosCollection}" icon="ui-icon-search"  action="#{fnFacturasController.navigateFnPagosCollection}" disabled="#{empty fnFacturasController.selected.fnPagosCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnFacturasMenuItem_fnDetalleFacturaCollection}" icon="ui-icon-search"  action="#{fnFacturasController.navigateFnDetalleFacturaCollection}" disabled="#{empty fnFacturasController.selected.fnDetalleFacturaCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnFacturasController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnFacturasController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnFacturasController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnFacturasDataTableContextMenu" listener="#{fnFacturasController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnFacturasDataTableContextMenu" listener="#{fnFacturasController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnFacturasController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnFacturasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.condicion}" filterBy="#{item.condicion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_condicion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.condicion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.timbrado}" filterBy="#{item.timbrado}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_timbrado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.timbrado}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.importeTotal}" filterBy="#{item.importeTotal}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_importeTotal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.importeTotal}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.iva10}" filterBy="#{item.iva10}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnFacturasTitle_iva10}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.iva10}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.iva5}" filterBy="#{item.iva5}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnFacturasTitle_iva5}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.iva5}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.excentas}" filterBy="#{item.excentas}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnFacturasTitle_excentas}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.excentas}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnFacturasTitle_descripcion}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.ordenCompra.id}" filterBy="#{item.ordenCompra.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnFacturasTitle_ordenCompra}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ordenCompra.id}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.proveedor.id}" filterBy="#{item.proveedor.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnFacturasTitle_proveedor}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.proveedor.id}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnFacturasController.prepareCreate}" update=":FnFacturasCreateForm" oncomplete="PF('FnFacturasCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnFacturasViewForm" oncomplete="PF('FnFacturasViewDialog').show()" disabled="#{empty fnFacturasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnFacturasEditForm" oncomplete="PF('FnFacturasEditDialog').show()" disabled="#{empty fnFacturasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnFacturasController.delete}" update=":growl,datalist" disabled="#{empty fnFacturasController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

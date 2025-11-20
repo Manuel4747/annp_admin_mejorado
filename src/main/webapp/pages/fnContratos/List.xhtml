@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnContratosListForm">
+
+        <p:panel header="#{mensajes.ListFnContratosTitle}">
+            <p:contextMenu id="FnContratosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnContratosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnContratosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnContratosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnContratosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnContratosMenuItem_licitacion}" icon="ui-icon-search"  actionListener="#{fnContratosController.prepareLicitacion}" update=":FnLicitacionesViewForm" oncomplete="PF('FnLicitacionesViewDialog').show()" disabled="#{empty fnContratosController.selected.licitacion}"/>  
+                <p:menuitem value="#{mensajes.FnContratosMenuItem_proveedor}" icon="ui-icon-search"  actionListener="#{fnContratosController.prepareProveedor}" update=":FnProveedoresViewForm" oncomplete="PF('FnProveedoresViewDialog').show()" disabled="#{empty fnContratosController.selected.proveedor}"/>  
+                <p:menuitem value="#{mensajes.FnContratosMenuItem_fnOrdenesDeCompraCollection}" icon="ui-icon-search"  action="#{fnContratosController.navigateFnOrdenesDeCompraCollection}" disabled="#{empty fnContratosController.selected.fnOrdenesDeCompraCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnContratosController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnContratosController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnContratosController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnContratosDataTableContextMenu" listener="#{fnContratosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnContratosDataTableContextMenu" listener="#{fnContratosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnContratosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnContratosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.importe}" filterBy="#{item.importe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_importe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.importe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.licitacion.descripcion}" filterBy="#{item.licitacion.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_licitacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.licitacion.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.proveedor.id}" filterBy="#{item.proveedor.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnContratosTitle_proveedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.proveedor.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnContratosController.prepareCreate}" update=":FnContratosCreateForm" oncomplete="PF('FnContratosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnContratosViewForm" oncomplete="PF('FnContratosViewDialog').show()" disabled="#{empty fnContratosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnContratosEditForm" oncomplete="PF('FnContratosEditDialog').show()" disabled="#{empty fnContratosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnContratosController.delete}" update=":growl,datalist" disabled="#{empty fnContratosController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

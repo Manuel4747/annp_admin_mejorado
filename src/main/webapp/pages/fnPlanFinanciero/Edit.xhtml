@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnPlanFinancieroEditDlg" widgetVar="FnPlanFinancieroEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnPlanFinancieroTitle}" closeOnEscape="true">
+
+            <h:form id="FnPlanFinancieroEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnPlanFinancieroController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnPlanFinancieroController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnPlanFinancieroController.getComponentMessages('id', mensajes.EditFnPlanFinancieroHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_periodo}" for="periodo" />
+                        <h:panelGroup>
+                            <p:inputText id="periodo" value="#{fnPlanFinancieroController.selected.periodo}" title="#{mensajes.EditFnPlanFinancieroTitle_periodo}"/>
+                            <p:tooltip for="periodo" value="#{fnPlanFinancieroController.getComponentMessages('periodo', mensajes.EditFnPlanFinancieroHelpText_periodo)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_fechaHoraCreacion}" for="fechaHoraCreacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaHoraCreacion" pattern="MM/dd/yyyy" value="#{fnPlanFinancieroController.selected.fechaHoraCreacion}" title="#{mensajes.EditFnPlanFinancieroTitle_fechaHoraCreacion}"  showOn="button"/>
+                            <p:tooltip for="fechaHoraCreacion" value="#{fnPlanFinancieroController.getComponentMessages('fechaHoraCreacion', mensajes.EditFnPlanFinancieroHelpText_fechaHoraCreacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_usuarionCreacion}" for="usuarionCreacion" />
+                        <h:panelGroup>
+                            <p:inputText id="usuarionCreacion" value="#{fnPlanFinancieroController.selected.usuarionCreacion}" title="#{mensajes.EditFnPlanFinancieroTitle_usuarionCreacion}"/>
+                            <p:tooltip for="usuarionCreacion" value="#{fnPlanFinancieroController.getComponentMessages('usuarionCreacion', mensajes.EditFnPlanFinancieroHelpText_usuarionCreacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_fechaHoraModificacion}" for="fechaHoraModificacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaHoraModificacion" pattern="MM/dd/yyyy" value="#{fnPlanFinancieroController.selected.fechaHoraModificacion}" title="#{mensajes.EditFnPlanFinancieroTitle_fechaHoraModificacion}"  showOn="button"/>
+                            <p:tooltip for="fechaHoraModificacion" value="#{fnPlanFinancieroController.getComponentMessages('fechaHoraModificacion', mensajes.EditFnPlanFinancieroHelpText_fechaHoraModificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_usuarioModificacion}" for="usuarioModificacion" />
+                        <h:panelGroup>
+                            <p:inputText id="usuarioModificacion" value="#{fnPlanFinancieroController.selected.usuarioModificacion}" title="#{mensajes.EditFnPlanFinancieroTitle_usuarioModificacion}"/>
+                            <p:tooltip for="usuarioModificacion" value="#{fnPlanFinancieroController.getComponentMessages('usuarioModificacion', mensajes.EditFnPlanFinancieroHelpText_usuarioModificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_programa}" for="programa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="programa" value="#{fnPlanFinancieroController.selected.programa}" required="true" requiredMessage="#{mensajes.EditFnPlanFinancieroRequiredMessage_programa}" converter="fnProgramasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProgramasController.items}"
+                                               var="programaItem"
+                                               itemValue="#{programaItem}"
+                                               itemLabel="#{programaItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="programa" value="#{fnPlanFinancieroController.getComponentMessages('programa', mensajes.EditFnPlanFinancieroHelpText_programa)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnPlanFinancieroLabel_tiposPresupuesto}" for="tiposPresupuesto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tiposPresupuesto" value="#{fnPlanFinancieroController.selected.tiposPresupuesto}" required="true" requiredMessage="#{mensajes.EditFnPlanFinancieroRequiredMessage_tiposPresupuesto}" converter="fnTiposPresupuestoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnTiposPresupuestoController.items}"
+                                               var="tiposPresupuestoItem"
+                                               itemValue="#{tiposPresupuestoItem}"
+                                               itemLabel="#{tiposPresupuestoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tiposPresupuesto" value="#{fnPlanFinancieroController.getComponentMessages('tiposPresupuesto', mensajes.EditFnPlanFinancieroHelpText_tiposPresupuesto)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnPlanFinancieroController.save}" value="#{mensajes.Save}" update="display,:FnPlanFinancieroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnPlanFinancieroEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnPlanFinancieroEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

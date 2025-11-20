@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetalleLicitacionCreateDlg" widgetVar="FnDetalleLicitacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnDetalleLicitacionTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleLicitacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnDetalleLicitacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleLicitacionLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnDetalleLicitacionController.selected.id}" title="#{mensajes.CreateFnDetalleLicitacionTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnDetalleLicitacionRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnDetalleLicitacionController.getComponentMessages('id', mensajes.CreateFnDetalleLicitacionHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleLicitacionLabel_licitacion}" for="licitacion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="licitacion" value="#{fnDetalleLicitacionController.selected.licitacion}"  converter="fnLicitacionesConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnLicitacionesController.items}"
+                                               var="licitacionItem"
+                                               itemValue="#{licitacionItem}"
+                                               itemLabel="#{licitacionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="licitacion" value="#{fnDetalleLicitacionController.getComponentMessages('licitacion', mensajes.CreateFnDetalleLicitacionHelpText_licitacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleLicitacionLabel_oferente}" for="oferente" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="oferente" value="#{fnDetalleLicitacionController.selected.oferente}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="oferenteItem"
+                                               itemValue="#{oferenteItem}"
+                                               itemLabel="#{oferenteItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="oferente" value="#{fnDetalleLicitacionController.getComponentMessages('oferente', mensajes.CreateFnDetalleLicitacionHelpText_oferente)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetalleLicitacionController.saveNew}" value="#{mensajes.Save}" update="display,:FnDetalleLicitacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetalleLicitacionCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetalleLicitacionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

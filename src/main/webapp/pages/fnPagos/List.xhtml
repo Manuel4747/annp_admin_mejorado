@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnPagosListForm">
+
+        <p:panel header="#{mensajes.ListFnPagosTitle}">
+            <p:contextMenu id="FnPagosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnPagosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnPagosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnPagosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnPagosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnPagosMenuItem_fnComprobantesDePagoCollection}" icon="ui-icon-search"  action="#{fnPagosController.navigateFnComprobantesDePagoCollection}" disabled="#{empty fnPagosController.selected.fnComprobantesDePagoCollection}" ajax="false"/>  
+                <p:menuitem value="#{mensajes.FnPagosMenuItem_factura}" icon="ui-icon-search"  actionListener="#{fnPagosController.prepareFactura}" update=":FnFacturasViewForm" oncomplete="PF('FnFacturasViewDialog').show()" disabled="#{empty fnPagosController.selected.factura}"/>  
+                <p:menuitem value="#{mensajes.FnPagosMenuItem_cheque}" icon="ui-icon-search"  actionListener="#{fnPagosController.prepareCheque}" update=":FnChequesViewForm" oncomplete="PF('FnChequesViewDialog').show()" disabled="#{empty fnPagosController.selected.cheque}"/>  
+                <p:menuitem value="#{mensajes.FnPagosMenuItem_fnRetencionesCollection}" icon="ui-icon-search"  action="#{fnPagosController.navigateFnRetencionesCollection}" disabled="#{empty fnPagosController.selected.fnRetencionesCollection}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnPagosController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnPagosController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnPagosController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnPagosDataTableContextMenu" listener="#{fnPagosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnPagosDataTableContextMenu" listener="#{fnPagosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnPagosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnPagosListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.formaDePago}" filterBy="#{item.formaDePago}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_formaDePago}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.formaDePago}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaProveedor}" filterBy="#{item.cuentaProveedor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_cuentaProveedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaProveedor}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.importe}" filterBy="#{item.importe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_importe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.importe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.cuentaSalida}" filterBy="#{item.cuentaSalida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_cuentaSalida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cuentaSalida}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.proveedor}" filterBy="#{item.proveedor}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnPagosTitle_proveedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.proveedor}"/>
+                </p:column>
+
+                <!--
+                                    <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnPagosTitle_fecha}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.fecha}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.factura.descripcion}" filterBy="#{item.factura.descripcion}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnPagosTitle_factura}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.factura.descripcion}"/>
+                                    </p:column>
+                -->
+                <!--
+                                    <p:column sortBy="#{item.cheque.id}" filterBy="#{item.cheque.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListFnPagosTitle_cheque}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cheque.id}"/>
+                                    </p:column>
+                -->
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnPagosController.prepareCreate}" update=":FnPagosCreateForm" oncomplete="PF('FnPagosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnPagosViewForm" oncomplete="PF('FnPagosViewDialog').show()" disabled="#{empty fnPagosController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnPagosEditForm" oncomplete="PF('FnPagosEditDialog').show()" disabled="#{empty fnPagosController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnPagosController.delete}" update=":growl,datalist" disabled="#{empty fnPagosController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

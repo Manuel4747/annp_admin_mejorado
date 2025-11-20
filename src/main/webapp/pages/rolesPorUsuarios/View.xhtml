@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RolesPorUsuariosViewDlg" widgetVar="RolesPorUsuariosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewRolesPorUsuariosTitle}" closeOnEscape="true">
+
+            <h:form id="RolesPorUsuariosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{rolesPorUsuariosController.selected != null}">
+
+
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_fechaHoraAlta}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.fechaHoraAlta}" title="#{mensajes.ViewRolesPorUsuariosTitle_fechaHoraAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_fechaHoraUltimoEstado}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.fechaHoraUltimoEstado}" title="#{mensajes.ViewRolesPorUsuariosTitle_fechaHoraUltimoEstado}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>                       
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_roles}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.roles.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_usuarios}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.usuarios.nombresApellidos}"/>
+                    
+                    <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_estado}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.estado.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_usuarioAlta}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.usuarioAlta.nombresApellidos}"/>
+
+                        <h:outputText value="#{mensajes.ViewRolesPorUsuariosLabel_usuarioUltimoEstado}"/>
+                        <h:outputText value="#{rolesPorUsuariosController.selected.usuarioUltimoEstado.nombresApellidos}"/>
+                       </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('RolesPorUsuariosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

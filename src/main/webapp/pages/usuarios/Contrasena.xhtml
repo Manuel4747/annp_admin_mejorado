@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuariosContrasenaDlg" widgetVar="UsuariosContrasenaDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ContrasenaUsuariosTitle}" closeOnEscape="true">
+
+            <h:form id="UsuariosContrasenaForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuariosController.selected != null}">
+
+                        <p:outputLabel value="Politicas" for="politicas" />
+                        <p:panelGrid columns="1" styleClass="ui-noborder">
+                            <p:inputTextarea id="politicas" readonly="true" value="#{usuariosContrasenaController.politicas}" cols="50" rows="4" />
+                        </p:panelGrid>
+
+                        <p:outputLabel value="#{mensajes.ContrasenaUsuariosLabel_contrasena}" for="contrasena" />
+                        <h:panelGroup>
+                            <p:inputText type="password" id="contrasena" value="#{usuariosController.cambioContrasena1}" title="#{mensajes.ContrasenaUsuariosTitle_contrasena}" required="true" requiredMessage="#{mensajes.ContrasenaUsuariosRequiredMessage_contrasena}" size="50" maxlength="50"/>
+                            <p:tooltip for="contrasena" value="#{usuariosController.getComponentMessages('contrasena', mensajes.ContrasenaUsuariosHelpText_contrasena)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="#{mensajes.ContrasenaUsuariosLabel_otracontrasena}" for="otracontrasena" />
+                        <h:panelGroup>
+                            <p:inputText id="otracontrasena" type="password" value="#{usuariosController.cambioContrasena2}" title="#{mensajes.ContrasenaUsuariosTitle_contrasena}" required="true" requiredMessage="#{mensajes.ContrasenaUsuariosRequiredMessage_contrasena}" size="50" maxlength="50"/>
+                            <p:tooltip for="otracontrasena" value="#{usuariosController.getComponentMessages('otracontrasena', mensajes.ContrasenaUsuariosHelpText_otracontrasena)}"/>
+                        </h:panelGroup>
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuariosController.saveContrasena}" value="#{mensajes.Save}" update="display,:UsuariosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuariosContrasenaDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('UsuariosContrasenaDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

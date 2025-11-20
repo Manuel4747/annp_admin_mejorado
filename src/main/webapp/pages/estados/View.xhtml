@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EstadosViewDlg" widgetVar="EstadosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewEstadosTitle}" closeOnEscape="true">
+
+            <h:form id="EstadosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{estadosController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewEstadosLabel_codigo}"/>
+                        <h:outputText value="#{estadosController.selected.codigo}" title="#{mensajes.ViewEstadosTitle_codigo}"/>
+
+                        <h:outputText value="#{mensajes.ViewEstadosLabel_descripcion}"/>
+                        <h:outputText value="#{estadosController.selected.descripcion}" title="#{mensajes.ViewEstadosTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewEstadosLabel_empresa}"/>
+                        <h:outputText value="#{estadosController.selected.empresa.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('EstadosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

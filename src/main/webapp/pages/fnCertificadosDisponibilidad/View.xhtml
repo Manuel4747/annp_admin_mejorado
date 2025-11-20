@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnCertificadosDisponibilidadViewDlg" widgetVar="FnCertificadosDisponibilidadViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnCertificadosDisponibilidadTitle}" closeOnEscape="true">
+
+            <h:form id="FnCertificadosDisponibilidadViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnCertificadosDisponibilidadController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnCertificadosDisponibilidadLabel_id}"/>
+                        <h:outputText value="#{fnCertificadosDisponibilidadController.selected.id}" title="#{mensajes.ViewFnCertificadosDisponibilidadTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnCertificadosDisponibilidadLabel_fecha}"/>
+                        <h:outputText value="#{fnCertificadosDisponibilidadController.selected.fecha}" title="#{mensajes.ViewFnCertificadosDisponibilidadTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnCertificadosDisponibilidadLabel_descripcion}"/>
+                        <h:outputText value="#{fnCertificadosDisponibilidadController.selected.descripcion}" title="#{mensajes.ViewFnCertificadosDisponibilidadTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnCertificadosDisponibilidadViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

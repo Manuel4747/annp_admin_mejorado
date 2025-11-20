@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnReprogramacionesViewDlg" widgetVar="FnReprogramacionesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnReprogramacionesTitle}" closeOnEscape="true">
+
+            <h:form id="FnReprogramacionesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnReprogramacionesController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_id}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.id}" title="#{mensajes.ViewFnReprogramacionesTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_fechaInicio}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.fechaInicio}" title="#{mensajes.ViewFnReprogramacionesTitle_fechaInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_descripcion}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.descripcion}" title="#{mensajes.ViewFnReprogramacionesTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_periodo}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.periodo}" title="#{mensajes.ViewFnReprogramacionesTitle_periodo}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_fechaAprobacion}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.fechaAprobacion}" title="#{mensajes.ViewFnReprogramacionesTitle_fechaAprobacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_nroDocAprobacion}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.nroDocAprobacion}" title="#{mensajes.ViewFnReprogramacionesTitle_nroDocAprobacion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_importe}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.importe}" title="#{mensajes.ViewFnReprogramacionesTitle_importe}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnReprogramacionesLabel_tiposReprogramaciones}"/>
+                        <h:outputText value="#{fnReprogramacionesController.selected.tiposReprogramaciones.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnReprogramacionesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

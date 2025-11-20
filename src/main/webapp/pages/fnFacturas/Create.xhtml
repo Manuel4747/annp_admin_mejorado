@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnFacturasCreateDlg" widgetVar="FnFacturasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnFacturasTitle}" closeOnEscape="true">
+
+            <h:form id="FnFacturasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnFacturasController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnFacturasController.selected.id}" title="#{mensajes.CreateFnFacturasTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnFacturasRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnFacturasController.getComponentMessages('id', mensajes.CreateFnFacturasHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnFacturasController.selected.fecha}" title="#{mensajes.CreateFnFacturasTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnFacturasController.getComponentMessages('fecha', mensajes.CreateFnFacturasHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_condicion}" for="condicion" />
+                        <h:panelGroup>
+                            <p:inputText id="condicion" value="#{fnFacturasController.selected.condicion}" title="#{mensajes.CreateFnFacturasTitle_condicion}" size="2" maxlength="2"/>
+                            <p:tooltip for="condicion" value="#{fnFacturasController.getComponentMessages('condicion', mensajes.CreateFnFacturasHelpText_condicion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_timbrado}" for="timbrado" />
+                        <h:panelGroup>
+                            <p:inputText id="timbrado" value="#{fnFacturasController.selected.timbrado}" title="#{mensajes.CreateFnFacturasTitle_timbrado}" size="10" maxlength="10"/>
+                            <p:tooltip for="timbrado" value="#{fnFacturasController.getComponentMessages('timbrado', mensajes.CreateFnFacturasHelpText_timbrado)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_importeTotal}" for="importeTotal" />
+                        <h:panelGroup>
+                            <p:inputText id="importeTotal" value="#{fnFacturasController.selected.importeTotal}" title="#{mensajes.CreateFnFacturasTitle_importeTotal}"/>
+                            <p:tooltip for="importeTotal" value="#{fnFacturasController.getComponentMessages('importeTotal', mensajes.CreateFnFacturasHelpText_importeTotal)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_iva10}" for="iva10" />
+                        <h:panelGroup>
+                            <p:inputText id="iva10" value="#{fnFacturasController.selected.iva10}" title="#{mensajes.CreateFnFacturasTitle_iva10}"/>
+                            <p:tooltip for="iva10" value="#{fnFacturasController.getComponentMessages('iva10', mensajes.CreateFnFacturasHelpText_iva10)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_iva5}" for="iva5" />
+                        <h:panelGroup>
+                            <p:inputText id="iva5" value="#{fnFacturasController.selected.iva5}" title="#{mensajes.CreateFnFacturasTitle_iva5}"/>
+                            <p:tooltip for="iva5" value="#{fnFacturasController.getComponentMessages('iva5', mensajes.CreateFnFacturasHelpText_iva5)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_excentas}" for="excentas" />
+                        <h:panelGroup>
+                            <p:inputText id="excentas" value="#{fnFacturasController.selected.excentas}" title="#{mensajes.CreateFnFacturasTitle_excentas}"/>
+                            <p:tooltip for="excentas" value="#{fnFacturasController.getComponentMessages('excentas', mensajes.CreateFnFacturasHelpText_excentas)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnFacturasController.selected.descripcion}" title="#{mensajes.CreateFnFacturasTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnFacturasController.getComponentMessages('descripcion', mensajes.CreateFnFacturasHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_ordenCompra}" for="ordenCompra" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="ordenCompra" value="#{fnFacturasController.selected.ordenCompra}"  converter="fnOrdenesDeCompraConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnOrdenesDeCompraController.items}"
+                                               var="ordenCompraItem"
+                                               itemValue="#{ordenCompraItem}"
+                                               itemLabel="#{ordenCompraItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="ordenCompra" value="#{fnFacturasController.getComponentMessages('ordenCompra', mensajes.CreateFnFacturasHelpText_ordenCompra)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFacturasLabel_proveedor}" for="proveedor" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proveedor" value="#{fnFacturasController.selected.proveedor}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="proveedorItem"
+                                               itemValue="#{proveedorItem}"
+                                               itemLabel="#{proveedorItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proveedor" value="#{fnFacturasController.getComponentMessages('proveedor', mensajes.CreateFnFacturasHelpText_proveedor)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnFacturasController.saveNew}" value="#{mensajes.Save}" update="display,:FnFacturasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnFacturasCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnFacturasCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

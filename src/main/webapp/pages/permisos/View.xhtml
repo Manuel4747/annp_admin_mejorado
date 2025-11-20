@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisosViewDlg" widgetVar="PermisosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewPermisosTitle}" closeOnEscape="true">
+
+            <h:form id="PermisosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{permisosController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewPermisosLabel_id}"/>
+                        <h:outputText value="#{permisosController.selected.id}" title="#{mensajes.ViewPermisosTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosLabel_descripcion}"/>
+                        <h:outputText value="#{permisosController.selected.descripcion}" title="#{mensajes.ViewPermisosTitle_descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosLabel_funcion}"/>
+                        <h:outputText value="#{permisosController.selected.funcion}" title="#{mensajes.ViewPermisosTitle_funcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosLabel_permiso}"/>
+                        <h:outputText value="#{permisosController.selected.permiso}" title="#{mensajes.ViewPermisosTitle_permiso}"/>
+
+                        <h:outputText value="#{mensajes.ViewPermisosLabel_empresa}"/>
+                        <h:outputText value="#{permisosController.selected.empresa.id}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('PermisosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

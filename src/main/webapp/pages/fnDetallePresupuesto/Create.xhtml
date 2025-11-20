@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetallePresupuestoCreateDlg" widgetVar="FnDetallePresupuestoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnDetallePresupuestoTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetallePresupuestoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnDetallePresupuestoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnDetallePresupuestoController.selected.id}" title="#{mensajes.CreateFnDetallePresupuestoTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnDetallePresupuestoController.getComponentMessages('id', mensajes.CreateFnDetallePresupuestoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnDetallePresupuestoController.selected.descripcion}" title="#{mensajes.CreateFnDetallePresupuestoTitle_descripcion}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_descripcion}"/>
+                            <p:tooltip for="descripcion" value="#{fnDetallePresupuestoController.getComponentMessages('descripcion', mensajes.CreateFnDetallePresupuestoHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_fechaHoraCreacion}" for="fechaHoraCreacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaHoraCreacion" pattern="MM/dd/yyyy" value="#{fnDetallePresupuestoController.selected.fechaHoraCreacion}" title="#{mensajes.CreateFnDetallePresupuestoTitle_fechaHoraCreacion}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_fechaHoraCreacion}" showOn="button"/>
+                            <p:tooltip for="fechaHoraCreacion" value="#{fnDetallePresupuestoController.getComponentMessages('fechaHoraCreacion', mensajes.CreateFnDetallePresupuestoHelpText_fechaHoraCreacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_usuarioCreacion}" for="usuarioCreacion" />
+                        <h:panelGroup>
+                            <p:inputText id="usuarioCreacion" value="#{fnDetallePresupuestoController.selected.usuarioCreacion}" title="#{mensajes.CreateFnDetallePresupuestoTitle_usuarioCreacion}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_usuarioCreacion}"/>
+                            <p:tooltip for="usuarioCreacion" value="#{fnDetallePresupuestoController.getComponentMessages('usuarioCreacion', mensajes.CreateFnDetallePresupuestoHelpText_usuarioCreacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_fechaHoraModificacion}" for="fechaHoraModificacion" />
+                        <h:panelGroup>
+                            <p:calendar id="fechaHoraModificacion" pattern="MM/dd/yyyy" value="#{fnDetallePresupuestoController.selected.fechaHoraModificacion}" title="#{mensajes.CreateFnDetallePresupuestoTitle_fechaHoraModificacion}"  showOn="button"/>
+                            <p:tooltip for="fechaHoraModificacion" value="#{fnDetallePresupuestoController.getComponentMessages('fechaHoraModificacion', mensajes.CreateFnDetallePresupuestoHelpText_fechaHoraModificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_usuarioModificacion}" for="usuarioModificacion" />
+                        <h:panelGroup>
+                            <p:inputText id="usuarioModificacion" value="#{fnDetallePresupuestoController.selected.usuarioModificacion}" title="#{mensajes.CreateFnDetallePresupuestoTitle_usuarioModificacion}"/>
+                            <p:tooltip for="usuarioModificacion" value="#{fnDetallePresupuestoController.getComponentMessages('usuarioModificacion', mensajes.CreateFnDetallePresupuestoHelpText_usuarioModificacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_valorInicial}" for="valorInicial" />
+                        <h:panelGroup>
+                            <p:inputText id="valorInicial" value="#{fnDetallePresupuestoController.selected.valorInicial}" title="#{mensajes.CreateFnDetallePresupuestoTitle_valorInicial}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_valorInicial}"/>
+                            <p:tooltip for="valorInicial" value="#{fnDetallePresupuestoController.getComponentMessages('valorInicial', mensajes.CreateFnDetallePresupuestoHelpText_valorInicial)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_valor}" for="valor" />
+                        <h:panelGroup>
+                            <p:inputText id="valor" value="#{fnDetallePresupuestoController.selected.valor}" title="#{mensajes.CreateFnDetallePresupuestoTitle_valor}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_valor}"/>
+                            <p:tooltip for="valor" value="#{fnDetallePresupuestoController.getComponentMessages('valor', mensajes.CreateFnDetallePresupuestoHelpText_valor)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_distribucion}" for="distribucion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="distribucion" value="#{fnDetallePresupuestoController.selected.distribucion}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_distribucion}" converter="fnDistribucionConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDistribucionController.items}"
+                                               var="distribucionItem"
+                                               itemValue="#{distribucionItem}"
+                                               itemLabel="#{distribucionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="distribucion" value="#{fnDetallePresupuestoController.getComponentMessages('distribucion', mensajes.CreateFnDetallePresupuestoHelpText_distribucion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_objetoDeGasto}" for="objetoDeGasto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="objetoDeGasto" value="#{fnDetallePresupuestoController.selected.objetoDeGasto}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_objetoDeGasto}" converter="fnObjetosDeGastoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnObjetosDeGastoController.items}"
+                                               var="objetoDeGastoItem"
+                                               itemValue="#{objetoDeGastoItem}"
+                                               itemLabel="#{objetoDeGastoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="objetoDeGasto" value="#{fnDetallePresupuestoController.getComponentMessages('objetoDeGasto', mensajes.CreateFnDetallePresupuestoHelpText_objetoDeGasto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_presupuesto}" for="presupuesto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="presupuesto" value="#{fnDetallePresupuestoController.selected.presupuesto}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_presupuesto}" converter="fnPresupuestoConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnPresupuestoController.items}"
+                                               var="presupuestoItem"
+                                               itemValue="#{presupuestoItem}"
+                                               itemLabel="#{presupuestoItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="presupuesto" value="#{fnDetallePresupuestoController.getComponentMessages('presupuesto', mensajes.CreateFnDetallePresupuestoHelpText_presupuesto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_proyecto}" for="proyecto" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proyecto" value="#{fnDetallePresupuestoController.selected.proyecto}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_proyecto}" converter="fnProyectosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProyectosController.items}"
+                                               var="proyectoItem"
+                                               itemValue="#{proyectoItem}"
+                                               itemLabel="#{proyectoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proyecto" value="#{fnDetallePresupuestoController.getComponentMessages('proyecto', mensajes.CreateFnDetallePresupuestoHelpText_proyecto)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetallePresupuestoLabel_subdistribucion}" for="subdistribucion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="subdistribucion" value="#{fnDetallePresupuestoController.selected.subdistribucion}" required="true" requiredMessage="#{mensajes.CreateFnDetallePresupuestoRequiredMessage_subdistribucion}" converter="fnSubDistribucionConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnSubDistribucionController.items}"
+                                               var="subdistribucionItem"
+                                               itemValue="#{subdistribucionItem}"
+                                               itemLabel="#{subdistribucionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="subdistribucion" value="#{fnDetallePresupuestoController.getComponentMessages('subdistribucion', mensajes.CreateFnDetallePresupuestoHelpText_subdistribucion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetallePresupuestoController.saveNew}" value="#{mensajes.Save}" update="display,:FnDetallePresupuestoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetallePresupuestoCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetallePresupuestoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

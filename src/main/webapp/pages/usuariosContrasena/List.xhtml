@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="UsuariosListForm">
+
+        <p:panel header="#{mensajes.ListUsuariosTitle}">
+            <p:dataTable id="datalist"
+                         value="#{usuariosContrasenaController.items}"
+                         lazy="false" emptyMessage="#{mensajes.NoRegistros}"
+                         rowKey="#{item.id}"
+                         var="item" filterEvent="enter"
+                         paginator="true" paginatorPosition="bottom"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{usuariosContrasenaController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{usuariosContrasenaController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:contrasenaButton" listener="#{usuariosContrasenaController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:contrasenaButton" listener="#{usuariosContrasenaController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:contrasenaButton" listener="#{usuariosContrasenaController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('UsuariosListForm:contrasenaButton').click();"/>
+                <!--
+                                <p:column sortBy="#{item.id}" filterMatchMode="contains" filterBy="#{item.id}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_id}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.id}"/>
+                                </p:column>
+                -->
+
+                <p:column sortBy="#{item.usuario}" filterMatchMode="contains" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+
+                <!--
+                                <p:column sortBy="#{item.contrasena}" filterMatchMode="contains" filterBy="#{item.contrasena}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_contrasena}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.contrasena}"/>
+                                </p:column>
+                -->
+
+                <p:column sortBy="#{item.nombresApellidos}" filterMatchMode="contains" filterBy="#{item.nombresApellidos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_nombresApellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombresApellidos}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.departamento.nombre}" filterMatchMode="contains" filterBy="#{item.departamento.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_departamento}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.departamento.nombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.ci}" filterMatchMode="contains" filterBy="#{item.ci}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_ci}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ci}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.direccion}" filterMatchMode="contains" filterBy="#{item.direccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_direccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.direccion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.telefono}" filterMatchMode="contains" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.celular}" filterMatchMode="contains" filterBy="#{item.celular}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_celular}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.celular}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.sexo.descripcion}" filterMatchMode="contains" filterBy="#{item.sexo.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_sexo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.sexo.descripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.pantallaPrincipal.descripcion}" filterMatchMode="contains" filterBy="#{item.pantallaPrincipal.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_pantallaPrincipal}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pantallaPrincipal.descripcion}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.estado.descripcion}" filterMatchMode="contains" filterBy="#{item.estado.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListUsuariosTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado.descripcion}"/>
+                </p:column>
+                <!--
+                                <p:column sortBy="#{item.usuarioAlta.usuario}" filterMatchMode="contains" filterBy="#{item.usuarioAlta.usuario}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_usuarioAlta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.usuarioAlta.usuario}"/>
+                                </p:column>
+                
+                                <p:column sortBy="#{item.fechaHoraAlta}" filterMatchMode="contains" filterBy="#{item.fechaHoraAlta}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_fechaHoraAlta}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fechaHoraAlta}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" timeZone="America/Asuncion" />
+                                    </h:outputText>
+                                </p:column>
+                
+                                <p:column sortBy="#{item.usuarioUltimoEstado.usuario}" filterMatchMode="contains" filterBy="#{item.usuarioUltimoEstado.usuario}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_usuarioUltimoEstado}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.usuarioUltimoEstado.usuario}"/>
+                                </p:column>
+                
+                                <p:column sortBy="#{item.fechaHoraUltimoEstado}" filterMatchMode="contains" filterBy="#{item.fechaHoraUltimoEstado}">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{mensajes.ListUsuariosTitle_fechaHoraUltimoEstado}"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.fechaHoraUltimoEstado}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" timeZone="America/Asuncion" />
+                                    </h:outputText>
+                                </p:column>
+                -->
+
+                <!--
+                                    <p:column sortBy="#{item.empresa.id}" filterMatchMode="contains" filterBy="#{item.empresa.id}">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{mensajes.ListUsuariosTitle_empresa}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.empresa.id}"/>
+                                    </p:column>
+                -->
+
+
+
+            </p:dataTable>
+
+            <p:commandButton id="contrasenaButton"   style="visibility: visible;" icon="ui-icon-pencil" value="#{mensajes.Contrasena}" update=":UsuariosContrasenaForm" oncomplete="PF('UsuariosContrasenaDialog').show()" disabled="#{empty usuariosContrasenaController.selected}" />
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

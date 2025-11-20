@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="FnComprobantesDePagoListForm">
+
+        <p:panel header="#{mensajes.ListFnComprobantesDePagoTitle}">
+            <p:contextMenu id="FnComprobantesDePagoDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('FnComprobantesDePagoListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('FnComprobantesDePagoListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('FnComprobantesDePagoListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('FnComprobantesDePagoListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.FnComprobantesDePagoMenuItem_pago}" icon="ui-icon-search"  actionListener="#{fnComprobantesDePagoController.preparePago}" update=":FnPagosViewForm" oncomplete="PF('FnPagosViewDialog').show()" disabled="#{empty fnComprobantesDePagoController.selected.pago}"/>  
+                <p:menuitem value="#{mensajes.FnComprobantesDePagoMenuItem_proveedor}" icon="ui-icon-search"  actionListener="#{fnComprobantesDePagoController.prepareProveedor}" update=":FnProveedoresViewForm" oncomplete="PF('FnProveedoresViewDialog').show()" disabled="#{empty fnComprobantesDePagoController.selected.proveedor}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{fnComprobantesDePagoController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{fnComprobantesDePagoController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{fnComprobantesDePagoController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnComprobantesDePagoDataTableContextMenu" listener="#{fnComprobantesDePagoController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:FnComprobantesDePagoDataTableContextMenu" listener="#{fnComprobantesDePagoController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{fnComprobantesDePagoController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('FnComprobantesDePagoListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.tipo}" filterBy="#{item.tipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_tipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.importe}" filterBy="#{item.importe}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_importe}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.importe}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.pago.id}" filterBy="#{item.pago.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_pago}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pago.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.proveedor.id}" filterBy="#{item.proveedor.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListFnComprobantesDePagoTitle_proveedor}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.proveedor.id}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{fnComprobantesDePagoController.prepareCreate}" update=":FnComprobantesDePagoCreateForm" oncomplete="PF('FnComprobantesDePagoCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{mensajes.View}" update=":FnComprobantesDePagoViewForm" oncomplete="PF('FnComprobantesDePagoViewDialog').show()" disabled="#{empty fnComprobantesDePagoController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":FnComprobantesDePagoEditForm" oncomplete="PF('FnComprobantesDePagoEditDialog').show()" disabled="#{empty fnComprobantesDePagoController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{fnComprobantesDePagoController.delete}" update=":growl,datalist" disabled="#{empty fnComprobantesDePagoController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

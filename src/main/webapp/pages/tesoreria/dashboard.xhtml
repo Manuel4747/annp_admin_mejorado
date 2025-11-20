@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="TesoreriaDashboardForm">
+        
+        <p:panel header="Dashboard de Tesorería">
+            
+            <!-- Estadísticas Principales -->
+            <div class="ui-g dashboard-stats">
+                <div class="ui-g-12 ui-md-3">
+                    <p:panel header="Presupuesto Total" styleClass="stat-card">
+                        <h:outputText value="#{tesoreriaController.presupuestoTotal}" styleClass="stat-value">
+                            <f:convertNumber type="currency" currencySymbol="₲" groupingUsed="true"/>
+                        </h:outputText>
+                    </p:panel>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:panel header="Ejecutado" styleClass="stat-card stat-success">
+                        <h:outputText value="#{tesoreriaController.totalEjecutado}" styleClass="stat-value">
+                            <f:convertNumber type="currency" currencySymbol="₲" groupingUsed="true"/>
+                        </h:outputText>
+                        <p:spacer height="5"/>
+                        <h:outputText value="#{tesoreriaController.porcentajeEjecucion}%" styleClass="stat-percentage"/>
+                    </p:panel>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:panel header="Comprometido" styleClass="stat-card stat-warning">
+                        <h:outputText value="#{tesoreriaController.totalComprometido}" styleClass="stat-value">
+                            <f:convertNumber type="currency" currencySymbol="₲" groupingUsed="true"/>
+                        </h:outputText>
+                    </p:panel>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:panel header="Disponible" styleClass="stat-card stat-info">
+                        <h:outputText value="#{tesoreriaController.totalDisponible}" styleClass="stat-value">
+                            <f:convertNumber type="currency" currencySymbol="₲" groupingUsed="true"/>
+                        </h:outputText>
+                    </p:panel>
+                </div>
+            </div>
+            
+            <p:separator/>
+            
+            <!-- Accesos Rápidos -->
+            <div class="ui-g quick-access">
+                <div class="ui-g-12 ui-md-3">
+                    <p:commandLink action="#{tesoreriaController.navigateToPagosPendientes}" styleClass="quick-link">
+                        <p:panel header="Pagos Pendientes" styleClass="quick-card">
+                            <h:outputText value="#{tesoreriaController.pagosPendientes}" styleClass="quick-value"/>
+                        </p:panel>
+                    </p:commandLink>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:commandLink action="#{tesoreriaController.navigateToRetenciones}" styleClass="quick-link">
+                        <p:panel header="Retenciones" styleClass="quick-card">
+                            <h:outputText value="#{tesoreriaController.retencionesPendientes}" styleClass="quick-value"/>
+                        </p:panel>
+                    </p:commandLink>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:commandLink action="#{tesoreriaController.navigateToCDPs}" styleClass="quick-link">
+                        <p:panel header="CDPs Vigentes" styleClass="quick-card">
+                            <h:outputText value="#{tesoreriaController.cdpsVigentes}" styleClass="quick-value"/>
+                        </p:panel>
+                    </p:commandLink>
+                </div>
+                
+                <div class="ui-g-12 ui-md-3">
+                    <p:commandLink action="#{tesoreriaController.navigateToCompromisos}" styleClass="quick-link">
+                        <p:panel header="Compromisos" styleClass="quick-card">
+                            <h:outputText value="#{tesoreriaController.totalCompromisos}" styleClass="quick-value"/>
+                        </p:panel>
+                    </p:commandLink>
+                </div>
+            </div>
+            
+            <p:separator/>
+            
+            <!-- Gráficos -->
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-6">
+                    <p:panel header="Evolución Mensual de Pagos">
+                        <p:chart type="bar" model="#{tesoreriaController.ejecucionMensualChart}" 
+                                 style="height:300px" responsive="true"/>
+                    </p:panel>
+                </div>
+                
+                <div class="ui-g-12 ui-md-6">
+                    <p:panel header="Distribución por Rubro">
+                        <p:chart type="pie" model="#{tesoreriaController.distribucionPorRubroChart}" 
+                                 style="height:300px" responsive="true"/>
+                    </p:panel>
+                </div>
+            </div>
+            
+            <p:separator/>
+            
+            <!-- Últimos Pagos -->
+            <p:panel header="Últimos Pagos Realizados">
+                <p:dataTable id="ultimosPagos"
+                             value="#{tesoreriaController.ultimosPagos}"
+                             var="pago"
+                             rows="5"
+                             paginator="true">
+                    
+                    <p:column headerText="Número">
+                        <h:outputText value="#{pago.numero}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{pago.fecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Beneficiario">
+                        <h:outputText value="#{pago.beneficiario}"/>
+                    </p:column>
+                    
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{pago.monto}">
+                            <f:convertNumber type="currency" currencySymbol="₲" groupingUsed="true"/>
+                        </h:outputText>
+                    </p:column>
+                    
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{pago.estado}" styleClass="badge badge-#{pago.estado == 'PAGADO' ? 'success' : 'warning'}"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+            
+        </p:panel>
+        
+    </h:form>
+
+</ui:composition>

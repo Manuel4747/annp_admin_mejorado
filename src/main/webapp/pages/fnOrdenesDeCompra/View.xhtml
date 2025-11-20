@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnOrdenesDeCompraViewDlg" widgetVar="FnOrdenesDeCompraViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnOrdenesDeCompraTitle}" closeOnEscape="true">
+
+            <h:form id="FnOrdenesDeCompraViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnOrdenesDeCompraController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnOrdenesDeCompraLabel_id}"/>
+                        <h:outputText value="#{fnOrdenesDeCompraController.selected.id}" title="#{mensajes.ViewFnOrdenesDeCompraTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnOrdenesDeCompraLabel_fecha}"/>
+                        <h:outputText value="#{fnOrdenesDeCompraController.selected.fecha}" title="#{mensajes.ViewFnOrdenesDeCompraTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnOrdenesDeCompraLabel_importe}"/>
+                        <h:outputText value="#{fnOrdenesDeCompraController.selected.importe}" title="#{mensajes.ViewFnOrdenesDeCompraTitle_importe}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnOrdenesDeCompraLabel_proveedor}"/>
+                        <h:outputText value="#{fnOrdenesDeCompraController.selected.proveedor.id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnOrdenesDeCompraLabel_contrato}"/>
+                        <h:outputText value="#{fnOrdenesDeCompraController.selected.contrato.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnOrdenesDeCompraViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

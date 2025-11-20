@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetalleFacturaViewDlg" widgetVar="FnDetalleFacturaViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnDetalleFacturaTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleFacturaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnDetalleFacturaController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_id}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.id}" title="#{mensajes.ViewFnDetalleFacturaTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_cantidad}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.cantidad}" title="#{mensajes.ViewFnDetalleFacturaTitle_cantidad}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_costoUnitario}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.costoUnitario}" title="#{mensajes.ViewFnDetalleFacturaTitle_costoUnitario}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_total}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.total}" title="#{mensajes.ViewFnDetalleFacturaTitle_total}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_iva10}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.iva10}" title="#{mensajes.ViewFnDetalleFacturaTitle_iva10}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_iva5}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.iva5}" title="#{mensajes.ViewFnDetalleFacturaTitle_iva5}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_excenta}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.excenta}" title="#{mensajes.ViewFnDetalleFacturaTitle_excenta}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_totalIva}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.totalIva}" title="#{mensajes.ViewFnDetalleFacturaTitle_totalIva}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_articulo}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.articulo.id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDetalleFacturaLabel_factura}"/>
+                        <h:outputText value="#{fnDetalleFacturaController.selected.factura.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnDetalleFacturaViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

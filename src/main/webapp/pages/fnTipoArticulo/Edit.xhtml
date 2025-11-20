@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnTipoArticuloEditDlg" widgetVar="FnTipoArticuloEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnTipoArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="FnTipoArticuloEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnTipoArticuloController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnTipoArticuloLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnTipoArticuloController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnTipoArticuloController.getComponentMessages('id', mensajes.EditFnTipoArticuloHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnTipoArticuloLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnTipoArticuloController.selected.descripcion}" title="#{mensajes.EditFnTipoArticuloTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnTipoArticuloController.getComponentMessages('descripcion', mensajes.EditFnTipoArticuloHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnTipoArticuloController.save}" value="#{mensajes.Save}" update="display,:FnTipoArticuloListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnTipoArticuloEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnTipoArticuloEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

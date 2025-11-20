@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnFuentesDeFinanciamientoCreateDlg" widgetVar="FnFuentesDeFinanciamientoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnFuentesDeFinanciamientoTitle}" closeOnEscape="true">
+
+            <h:form id="FnFuentesDeFinanciamientoCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnFuentesDeFinanciamientoController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnFuentesDeFinanciamientoLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnFuentesDeFinanciamientoController.selected.id}" title="#{mensajes.CreateFnFuentesDeFinanciamientoTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnFuentesDeFinanciamientoRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnFuentesDeFinanciamientoController.getComponentMessages('id', mensajes.CreateFnFuentesDeFinanciamientoHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnFuentesDeFinanciamientoLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputText id="descripcion" value="#{fnFuentesDeFinanciamientoController.selected.descripcion}" title="#{mensajes.CreateFnFuentesDeFinanciamientoTitle_descripcion}" required="true" requiredMessage="#{mensajes.CreateFnFuentesDeFinanciamientoRequiredMessage_descripcion}" size="100" maxlength="100"/>
+                            <p:tooltip for="descripcion" value="#{fnFuentesDeFinanciamientoController.getComponentMessages('descripcion', mensajes.CreateFnFuentesDeFinanciamientoHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnFuentesDeFinanciamientoController.saveNew}" value="#{mensajes.Save}" update="display,:FnFuentesDeFinanciamientoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnFuentesDeFinanciamientoCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnFuentesDeFinanciamientoCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

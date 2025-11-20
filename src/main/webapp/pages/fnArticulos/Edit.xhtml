@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnArticulosEditDlg" widgetVar="FnArticulosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnArticulosTitle}" closeOnEscape="true">
+
+            <h:form id="FnArticulosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnArticulosController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnArticulosLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnArticulosController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnArticulosController.getComponentMessages('id', mensajes.EditFnArticulosHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnArticulosLabel_descipcion}" for="descipcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descipcion" value="#{fnArticulosController.selected.descipcion}" title="#{mensajes.EditFnArticulosTitle_descipcion}" />
+                            <p:tooltip for="descipcion" value="#{fnArticulosController.getComponentMessages('descipcion', mensajes.EditFnArticulosHelpText_descipcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnArticulosLabel_categoria}" for="categoria" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="categoria" value="#{fnArticulosController.selected.categoria}"  converter="fnCategoriaArticuloConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnCategoriaArticuloController.items}"
+                                               var="categoriaItem"
+                                               itemValue="#{categoriaItem}"
+                                               itemLabel="#{categoriaItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="categoria" value="#{fnArticulosController.getComponentMessages('categoria', mensajes.EditFnArticulosHelpText_categoria)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnArticulosLabel_rubro}" for="rubro" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="rubro" value="#{fnArticulosController.selected.rubro}"  converter="fnRubroArticuloConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnRubroArticuloController.items}"
+                                               var="rubroItem"
+                                               itemValue="#{rubroItem}"
+                                               itemLabel="#{rubroItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="rubro" value="#{fnArticulosController.getComponentMessages('rubro', mensajes.EditFnArticulosHelpText_rubro)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnArticulosLabel_tipo}" for="tipo" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipo" value="#{fnArticulosController.selected.tipo}"  converter="fnTipoArticuloConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnTipoArticuloController.items}"
+                                               var="tipoItem"
+                                               itemValue="#{tipoItem}"
+                                               itemLabel="#{tipoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipo" value="#{fnArticulosController.getComponentMessages('tipo', mensajes.EditFnArticulosHelpText_tipo)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnArticulosController.save}" value="#{mensajes.Save}" update="display,:FnArticulosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnArticulosEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnArticulosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

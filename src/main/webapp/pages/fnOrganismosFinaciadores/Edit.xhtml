@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="FnOrganismosFinaciadoresEditDlg" widgetVar="FnOrganismosFinaciadoresEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditFnOrganismosFinaciadoresTitle}" closeOnEscape="true">
+
+            <h:form id="FnOrganismosFinaciadoresEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{fnOrganismosFinaciadoresController.selected != null}">
+
+
+                        <h:outputLabel value="#{mensajes.EditFnOrganismosFinaciadoresLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <h:outputText id="id" value="#{fnOrganismosFinaciadoresController.selected.id}" />
+                            <p:tooltip for="id" value="#{fnOrganismosFinaciadoresController.getComponentMessages('id', mensajes.EditFnOrganismosFinaciadoresHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.EditFnOrganismosFinaciadoresLabel_nombre}" for="nombre" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="nombre" value="#{fnOrganismosFinaciadoresController.selected.nombre}" title="#{mensajes.EditFnOrganismosFinaciadoresTitle_nombre}" />
+                            <p:tooltip for="nombre" value="#{fnOrganismosFinaciadoresController.getComponentMessages('nombre', mensajes.EditFnOrganismosFinaciadoresHelpText_nombre)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnOrganismosFinaciadoresController.save}" value="#{mensajes.Save}" update="display,:FnOrganismosFinaciadoresListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnOrganismosFinaciadoresEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnOrganismosFinaciadoresEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

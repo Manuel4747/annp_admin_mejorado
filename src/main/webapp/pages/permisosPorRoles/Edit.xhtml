@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PermisosPorRolesEditDlg" positionType="absolute" widgetVar="PermisosPorRolesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.EditPermisosPorRolesTitle}" closeOnEscape="true">
+
+            <h:form id="PermisosPorRolesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{permisosPorRolesController.selected != null}">
+
+                        <h:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_permisos}" for="permisos" />
+                        <h:panelGroup>
+                            <h:outputText id="permisos" value="#{permisosPorRolesController.selected.permisos.descripcion}" />
+                            <p:tooltip for="permisos" value="#{permisosPorRolesController.getComponentMessages('permisos', mensajes.EditPermisosPorRolesHelpText_permisos)}"/>
+                        </h:panelGroup>
+
+                        <h:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_roles}" for="roles" />
+                        <h:panelGroup>
+                            <h:outputText id="roles" value="#{permisosPorRolesController.selected.roles.descripcion}" />
+                            <p:tooltip for="roles" value="#{permisosPorRolesController.getComponentMessages('roles', mensajes.EditPermisosPorRolesHelpText_roles)}"/>
+                        </h:panelGroup>
+                        
+                        <p:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_estado}" for="estado" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="estado" value="#{permisosPorRolesController.selected.estado}" required="true" requiredMessage="#{mensajes.EditPermisosPorRolesRequiredMessage_estado}" converter="estadosConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{estadosController.items}"
+                                               var="estadoItem"
+                                               itemValue="#{estadoItem}"
+                                               itemLabel="#{estadoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="estado" value="#{permisosPorRolesController.getComponentMessages('estado', mensajes.EditPermisosPorRolesHelpText_estado)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{permisosPorRolesController.save}" value="#{mensajes.Save}" update="display,:PermisosPorRolesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PermisosPorRolesEditDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('PermisosPorRolesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+<!--
+                        <p:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_empresa}" for="empresa" />
+                        <h:panelGroup>
+                            <p:selectOneMenu filter="true" filterMatchMode="contains"  id="empresa" value="#{permisosPorRolesController.selected.empresa}" required="true" requiredMessage="#{mensajes.EditPermisosPorRolesRequiredMessage_empresa}" converter="empresasConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{empresasController.items}"
+                                               var="empresaItem"
+                                               itemValue="#{empresaItem}"
+                                               itemLabel="#{empresaItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="empresa" value="#{permisosPorRolesController.getComponentMessages('empresa', mensajes.EditPermisosPorRolesHelpText_empresa)}"/>
+                        </h:panelGroup>
+-->
+<!--
+                        <h:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_permisosPorRolesPK_permiso}" for="permisosPorRolesPK_permiso" />
+                        <h:panelGroup>
+                            <h:outputText id="permisosPorRolesPK_permiso" value="#{permisosPorRolesController.selected.permisosPorRolesPK.permiso}" />
+                            <p:tooltip for="permisosPorRolesPK_permiso" value="#{permisosPorRolesController.getComponentMessages('permisosPorRolesPK_permiso', mensajes.EditPermisosPorRolesHelpText_permisosPorRolesPK_permiso)}"/>
+                        </h:panelGroup>
+
+
+                        <h:outputLabel value="#{mensajes.EditPermisosPorRolesLabel_permisosPorRolesPK_rol}" for="permisosPorRolesPK_rol" />
+                        <h:panelGroup>
+                            <h:outputText id="permisosPorRolesPK_rol" value="#{permisosPorRolesController.selected.permisosPorRolesPK.rol}" />
+                            <p:tooltip for="permisosPorRolesPK_rol" value="#{permisosPorRolesController.getComponentMessages('permisosPorRolesPK_rol', mensajes.EditPermisosPorRolesHelpText_permisosPorRolesPK_rol)}"/>
+                        </h:panelGroup>
+-->
+    </ui:composition>
+
+</html>

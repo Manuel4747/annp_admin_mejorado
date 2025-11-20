@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="jakarta.faces.facelets"
+                xmlns:h="jakarta.faces.html"
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RolesPorUsuariosListForm">
+
+        <p:panel header="#{mensajes.ListRolesPorUsuariosTitle}">
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{rolesPorUsuariosController.prepareCreate}" update=":RolesPorUsuariosCreateForm" oncomplete="PF('RolesPorUsuariosCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: visible;" icon="ui-icon-search" value="#{mensajes.View}" update=":RolesPorUsuariosViewForm" oncomplete="PF('RolesPorUsuariosViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected}"/>
+            <p:commandButton id="editButton" rendered="false" style="visibility: visible;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":RolesPorUsuariosEditForm" oncomplete="PF('RolesPorUsuariosEditDialog').show()" disabled="#{empty rolesPorUsuariosController.selected}"/>
+            <p:commandButton id="deleteButton" rendered="false" style="visibility: hidden;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{rolesPorUsuariosController.delete}" update=":growl,datalist" disabled="#{empty rolesPorUsuariosController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:contextMenu id="RolesPorUsuariosDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('RolesPorUsuariosListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('RolesPorUsuariosListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('RolesPorUsuariosListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('RolesPorUsuariosListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_empresa}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareEmpresa}" update=":EmpresasViewForm" oncomplete="PF('EmpresasViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.empresa}"/>  
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_estado}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareEstado}" update=":EstadosViewForm" oncomplete="PF('EstadosViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.estado}"/>  
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_usuarioAlta}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareUsuarioAlta}" update=":UsuariosViewForm" oncomplete="PF('UsuariosViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.usuarioAlta}"/>  
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_usuarioUltimoEstado}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareUsuarioUltimoEstado}" update=":UsuariosViewForm" oncomplete="PF('UsuariosViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.usuarioUltimoEstado}"/>  
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_roles}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareRoles}" update=":RolesViewForm" oncomplete="PF('RolesViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.roles}"/>  
+                <p:menuitem value="#{mensajes.RolesPorUsuariosMenuItem_usuarios}" icon="ui-icon-search"  actionListener="#{rolesPorUsuariosController.prepareUsuarios}" update=":UsuariosViewForm" oncomplete="PF('UsuariosViewDialog').show()" disabled="#{empty rolesPorUsuariosController.selected.usuarios}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{rolesPorUsuariosController.items}"
+                         lazy="false" emptyMessage="#{mensajes.NoRegistros}"
+                         rowKey="#{item.rolesPorUsuariosPK}"
+                         var="item" filterEvent="enter"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{rolesPorUsuariosController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.rolesPorUsuariosPK}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RolesPorUsuariosDataTableContextMenu" listener="#{rolesPorUsuariosController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:RolesPorUsuariosDataTableContextMenu" listener="#{rolesPorUsuariosController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{rolesPorUsuariosController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('RolesPorUsuariosListForm:viewButton').click();"/>
+                <ui:remove>
+                    <p:column sortBy="#{item.rolesPorUsuariosPK.usuario}" filterMatchMode="contains" filterBy="#{item.rolesPorUsuariosPK.usuario}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_rolesPorUsuariosPK_usuario}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.rolesPorUsuariosPK.usuario}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.rolesPorUsuariosPK.rol}" filterMatchMode="contains" filterBy="#{item.rolesPorUsuariosPK.rol}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_rolesPorUsuariosPK_rol}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.rolesPorUsuariosPK.rol}"/>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaHoraAlta}" filterMatchMode="contains" filterBy="#{item.fechaHoraAlta}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_fechaHoraAlta}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaHoraAlta}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.fechaHoraUltimoEstado}" filterMatchMode="contains" filterBy="#{item.fechaHoraUltimoEstado}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_fechaHoraUltimoEstado}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.fechaHoraUltimoEstado}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Asuncion" />
+                        </h:outputText>
+                    </p:column>
+
+
+                    <p:column sortBy="#{item.empresa.id}" filterMatchMode="contains" filterBy="#{item.empresa.id}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_empresa}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.empresa.id}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usuarioAlta.id}" filterMatchMode="contains" filterBy="#{item.usuarioAlta.id}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_usuarioAlta}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usuarioAlta.id}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{item.usuarioUltimoEstado.id}" filterMatchMode="contains" filterBy="#{item.usuarioUltimoEstado.id}">
+                        <f:facet name="header">
+                            <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_usuarioUltimoEstado}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.usuarioUltimoEstado.id}"/>
+                    </p:column>
+                </ui:remove>
+
+                <p:column sortBy="#{item.roles.descripcion}" filterMatchMode="contains" filterBy="#{item.roles.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_roles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roles.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarios.nombresApellidos}" filterMatchMode="contains" filterBy="#{item.usuarios.nombresApellidos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_usuarios}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarios.nombresApellidos}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.usuarios.departamento.nombre}" filterMatchMode="contains" filterBy="#{item.usuarios.departamento.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="Dependencia"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarios.departamento.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.perfiles.descripcion}" filterMatchMode="contains" filterBy="#{item.perfiles.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="Perfil"/>
+                    </f:facet>
+                    <h:outputText value="#{item.perfiles.descripcion}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.estado.descripcion}" filterMatchMode="contains" filterBy="#{item.estado.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListRolesPorUsuariosTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado.descripcion}"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton id="editarButton" icon="ui-icon-pencil" value="#{mensajes.Edit}" actionListener="#{rolesPorUsuariosController.prepareEdit(item)}" update=":RolesPorUsuariosEditForm" oncomplete="PF('RolesPorUsuariosEditDialog').show()"/>
+                </p:column>
+
+                <p:column>
+                    <p:commandButton id="borrarButton" value="Borrar" actionListener="#{rolesPorUsuariosController.borrar(item)}" update="datalist"/>
+                </p:column>
+            </p:dataTable>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+</ui:composition>

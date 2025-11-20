@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PermisosPorRolesListForm">
+
+        <p:panel header="#{mensajes.ListPermisosPorRolesTitle}">
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{mensajes.Create}" actionListener="#{permisosPorRolesController.prepareCreate}" update=":PermisosPorRolesCreateForm" oncomplete="PF('PermisosPorRolesCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: visible;" icon="ui-icon-search" value="#{mensajes.View}" update=":PermisosPorRolesViewForm" oncomplete="PF('PermisosPorRolesViewDialog').show()" disabled="#{empty permisosPorRolesController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: visible;" icon="ui-icon-pencil" value="#{mensajes.Edit}" update=":PermisosPorRolesEditForm" oncomplete="PF('PermisosPorRolesEditDialog').show()" disabled="#{empty permisosPorRolesController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: visible;" icon="ui-icon-trash"  value="#{mensajes.Delete}" actionListener="#{permisosPorRolesController.delete}" update=":growl,datalist" disabled="#{empty permisosPorRolesController.selected}">
+                <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:contextMenu id="PermisosPorRolesDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{mensajes.Create}" onclick="document.getElementById('PermisosPorRolesListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{mensajes.View}" onclick="document.getElementById('PermisosPorRolesListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{mensajes.Edit}" onclick="document.getElementById('PermisosPorRolesListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{mensajes.Delete}" onclick="document.getElementById('PermisosPorRolesListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{mensajes.PermisosPorRolesMenuItem_permisos}" icon="ui-icon-search"  actionListener="#{permisosPorRolesController.preparePermisos}" update=":PermisosViewForm" oncomplete="PF('PermisosViewDialog').show()" disabled="#{empty permisosPorRolesController.selected.permisos}"/>  
+                <p:menuitem value="#{mensajes.PermisosPorRolesMenuItem_roles}" icon="ui-icon-search"  actionListener="#{permisosPorRolesController.prepareRoles}" update=":RolesViewForm" oncomplete="PF('RolesViewDialog').show()" disabled="#{empty permisosPorRolesController.selected.roles}"/>  
+                <p:menuitem value="#{mensajes.PermisosPorRolesMenuItem_empresa}" icon="ui-icon-search"  actionListener="#{permisosPorRolesController.prepareEmpresa}" update=":EmpresasViewForm" oncomplete="PF('EmpresasViewDialog').show()" disabled="#{empty permisosPorRolesController.selected.empresa}"/>  
+                <p:menuitem value="#{mensajes.PermisosPorRolesMenuItem_estado}" icon="ui-icon-search"  actionListener="#{permisosPorRolesController.prepareEstado}" update=":EstadosViewForm" oncomplete="PF('EstadosViewDialog').show()" disabled="#{empty permisosPorRolesController.selected.estado}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{permisosPorRolesController.items}"
+                         lazy="false" emptyMessage="#{mensajes.NoRegistros}"
+                         rowKey="#{item.permisosPorRolesPK}"
+                         var="item" filterEvent="enter"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{permisosPorRolesController.selected}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{permisosPorRolesController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.permisosPorRolesPK}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PermisosPorRolesDataTableContextMenu" listener="#{permisosPorRolesController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:PermisosPorRolesDataTableContextMenu" listener="#{permisosPorRolesController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{permisosPorRolesController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PermisosPorRolesListForm:viewButton').click();"/>
+<!--
+                <p:column sortBy="#{item.permisosPorRolesPK.permiso}" filterMatchMode="contains" filterBy="#{item.permisosPorRolesPK.permiso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_permisosPorRolesPK_permiso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permisosPorRolesPK.permiso}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.permisosPorRolesPK.rol}" filterMatchMode="contains" filterBy="#{item.permisosPorRolesPK.rol}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_permisosPorRolesPK_rol}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permisosPorRolesPK.rol}"/>
+                </p:column>
+-->
+
+                <p:column sortBy="#{item.permisos.descripcion}" filterMatchMode="contains" filterBy="#{item.permisos.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_permisos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permisos.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.roles.descripcion}" filterMatchMode="contains" filterBy="#{item.roles.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_roles}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.roles.descripcion}"/>
+                </p:column>
+
+<!--
+                <p:column sortBy="#{item.empresa.id}" filterMatchMode="contains" filterBy="#{item.empresa.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_empresa}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empresa.id}"/>
+                </p:column>
+-->
+
+                <p:column sortBy="#{item.estado.descripcion}" filterMatchMode="contains" filterBy="#{item.estado.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{mensajes.ListPermisosPorRolesTitle_estado}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.estado.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+        </p:panel>
+        <ui:include src="/pages/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

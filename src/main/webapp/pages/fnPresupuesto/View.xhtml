@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnPresupuestoViewDlg" widgetVar="FnPresupuestoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnPresupuestoTitle}" closeOnEscape="true">
+
+            <h:form id="FnPresupuestoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnPresupuestoController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_id}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.id}" title="#{mensajes.ViewFnPresupuestoTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_periodo}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.periodo}" title="#{mensajes.ViewFnPresupuestoTitle_periodo}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_fechaHoraCreacion}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.fechaHoraCreacion}" title="#{mensajes.ViewFnPresupuestoTitle_fechaHoraCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_usuarioCreacion}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.usuarioCreacion}" title="#{mensajes.ViewFnPresupuestoTitle_usuarioCreacion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_fechaHoraModificacion}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.fechaHoraModificacion}" title="#{mensajes.ViewFnPresupuestoTitle_fechaHoraModificacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_usuarioModificacion}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.usuarioModificacion}" title="#{mensajes.ViewFnPresupuestoTitle_usuarioModificacion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_organismoFinanciador}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.organismoFinanciador.id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_programa}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.programa.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_subPrograma}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.subPrograma.descripcion}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnPresupuestoLabel_tipoPresupuesto}"/>
+                        <h:outputText value="#{fnPresupuestoController.selected.tipoPresupuesto.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnPresupuestoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

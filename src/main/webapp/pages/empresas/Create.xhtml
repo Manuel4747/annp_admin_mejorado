@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EmpresasCreateDlg" widgetVar="EmpresasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateEmpresasTitle}" closeOnEscape="true">
+
+            <h:form id="EmpresasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{empresasController.selected != null}">
+                    <p:tabView id="EmpresasTabView">
+
+                        <p:tab id="EmpresasTab1" title="#{mensajes.TabHeaderPrefix} 1">
+                            <p:panelGrid columns="2" columnClasses="column">
+                                <p:outputLabel value="#{mensajes.CreateEmpresasLabel_razonSocial}" for="razonSocial" />
+                                <h:panelGroup>
+                                    <p:inputText id="razonSocial" value="#{empresasController.selected.razonSocial}" title="#{mensajes.CreateEmpresasTitle_razonSocial}" required="true" requiredMessage="#{mensajes.CreateEmpresasRequiredMessage_razonSocial}" size="100" maxlength="200"/>
+                                    <p:tooltip for="razonSocial" value="#{empresasController.getComponentMessages('razonSocial', mensajes.CreateEmpresasHelpText_razonSocial)}"/>
+                                </h:panelGroup>
+
+                                <p:outputLabel value="#{mensajes.CreateEmpresasLabel_ruc}" for="ruc" />
+                                <h:panelGroup>
+                                    <p:inputText id="ruc" value="#{empresasController.selected.ruc}" title="#{mensajes.CreateEmpresasTitle_ruc}" required="true" requiredMessage="#{mensajes.CreateEmpresasRequiredMessage_ruc}" size="20" maxlength="20"/>
+                                    <p:tooltip for="ruc" value="#{empresasController.getComponentMessages('ruc', mensajes.CreateEmpresasHelpText_ruc)}"/>
+                                </h:panelGroup>
+
+                                <p:outputLabel value="#{mensajes.CreateEmpresasLabel_direccion}" for="direccion" />
+                                <h:panelGroup>
+                                    <p:inputTextarea rows="4" cols="30" id="direccion" value="#{empresasController.selected.direccion}" title="#{mensajes.CreateEmpresasTitle_direccion}" required="true" requiredMessage="#{mensajes.CreateEmpresasRequiredMessage_direccion}"/>
+                                    <p:tooltip for="direccion" value="#{empresasController.getComponentMessages('direccion', mensajes.CreateEmpresasHelpText_direccion)}"/>
+                                </h:panelGroup>
+
+                                <p:outputLabel value="#{mensajes.CreateEmpresasLabel_telefono}" for="telefono" />
+                                <h:panelGroup>
+                                    <p:inputText id="telefono" value="#{empresasController.selected.telefono}" title="#{mensajes.CreateEmpresasTitle_telefono}" required="true" requiredMessage="#{mensajes.CreateEmpresasRequiredMessage_telefono}" size="20" maxlength="20"/>
+                                    <p:tooltip for="telefono" value="#{empresasController.getComponentMessages('telefono', mensajes.CreateEmpresasHelpText_telefono)}"/>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton actionListener="#{empresasController.saveNew}" value="#{mensajes.Save}" update="display,:EmpresasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EmpresasCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('EmpresasCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

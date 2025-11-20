@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnTipoArticuloCreateDlg" widgetVar="FnTipoArticuloCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnTipoArticuloTitle}" closeOnEscape="true">
+
+            <h:form id="FnTipoArticuloCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnTipoArticuloController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnTipoArticuloLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnTipoArticuloController.selected.id}" title="#{mensajes.CreateFnTipoArticuloTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnTipoArticuloRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnTipoArticuloController.getComponentMessages('id', mensajes.CreateFnTipoArticuloHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnTipoArticuloLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnTipoArticuloController.selected.descripcion}" title="#{mensajes.CreateFnTipoArticuloTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnTipoArticuloController.getComponentMessages('descripcion', mensajes.CreateFnTipoArticuloHelpText_descripcion)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnTipoArticuloController.saveNew}" value="#{mensajes.Save}" update="display,:FnTipoArticuloListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnTipoArticuloCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnTipoArticuloCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

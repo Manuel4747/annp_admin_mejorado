@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDetalleReprogramacionCreateDlg" widgetVar="FnDetalleReprogramacionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnDetalleReprogramacionTitle}" closeOnEscape="true">
+
+            <h:form id="FnDetalleReprogramacionCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnDetalleReprogramacionController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleReprogramacionLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnDetalleReprogramacionController.selected.id}" title="#{mensajes.CreateFnDetalleReprogramacionTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnDetalleReprogramacionRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnDetalleReprogramacionController.getComponentMessages('id', mensajes.CreateFnDetalleReprogramacionHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleReprogramacionLabel_idDetallePtoAumentar}" for="idDetallePtoAumentar" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idDetallePtoAumentar" value="#{fnDetalleReprogramacionController.selected.idDetallePtoAumentar}"  converter="fnDetallePlanFinancieroConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDetallePlanFinancieroController.items}"
+                                               var="idDetallePtoAumentarItem"
+                                               itemValue="#{idDetallePtoAumentarItem}"
+                                               itemLabel="#{idDetallePtoAumentarItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idDetallePtoAumentar" value="#{fnDetalleReprogramacionController.getComponentMessages('idDetallePtoAumentar', mensajes.CreateFnDetalleReprogramacionHelpText_idDetallePtoAumentar)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleReprogramacionLabel_idDetallePtoDisminuir}" for="idDetallePtoDisminuir" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="idDetallePtoDisminuir" value="#{fnDetalleReprogramacionController.selected.idDetallePtoDisminuir}"  converter="fnDetallePlanFinancieroConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDetallePlanFinancieroController.items}"
+                                               var="idDetallePtoDisminuirItem"
+                                               itemValue="#{idDetallePtoDisminuirItem}"
+                                               itemLabel="#{idDetallePtoDisminuirItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="idDetallePtoDisminuir" value="#{fnDetalleReprogramacionController.getComponentMessages('idDetallePtoDisminuir', mensajes.CreateFnDetalleReprogramacionHelpText_idDetallePtoDisminuir)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleReprogramacionLabel_tipoDeVariacionRp}" for="tipoDeVariacionRp" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="tipoDeVariacionRp" value="#{fnDetalleReprogramacionController.selected.tipoDeVariacionRp}" required="true" requiredMessage="#{mensajes.CreateFnDetalleReprogramacionRequiredMessage_tipoDeVariacionRp}" converter="fnTipoDeVariacionRpConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnTipoDeVariacionRpController.items}"
+                                               var="tipoDeVariacionRpItem"
+                                               itemValue="#{tipoDeVariacionRpItem}"
+                                               itemLabel="#{tipoDeVariacionRpItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="tipoDeVariacionRp" value="#{fnDetalleReprogramacionController.getComponentMessages('tipoDeVariacionRp', mensajes.CreateFnDetalleReprogramacionHelpText_tipoDeVariacionRp)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnDetalleReprogramacionLabel_reprogramaciones}" for="reprogramaciones" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="reprogramaciones" value="#{fnDetalleReprogramacionController.selected.reprogramaciones}" required="true" requiredMessage="#{mensajes.CreateFnDetalleReprogramacionRequiredMessage_reprogramaciones}" converter="fnDetalleReprogramacionConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnDetalleReprogramacionController.items}"
+                                               var="reprogramacionesItem"
+                                               itemValue="#{reprogramacionesItem}"
+                                               itemLabel="#{reprogramacionesItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="reprogramaciones" value="#{fnDetalleReprogramacionController.getComponentMessages('reprogramaciones', mensajes.CreateFnDetalleReprogramacionHelpText_reprogramaciones)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnDetalleReprogramacionController.saveNew}" value="#{mensajes.Save}" update="display,:FnDetalleReprogramacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnDetalleReprogramacionCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnDetalleReprogramacionCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

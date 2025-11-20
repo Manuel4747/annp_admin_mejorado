@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnDepartamentoViewDlg" widgetVar="FnDepartamentoViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnDepartamentoTitle}" closeOnEscape="true">
+
+            <h:form id="FnDepartamentoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnDepartamentoController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnDepartamentoLabel_id}"/>
+                        <h:outputText value="#{fnDepartamentoController.selected.id}" title="#{mensajes.ViewFnDepartamentoTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnDepartamentoLabel_descripcion}"/>
+                        <h:outputText value="#{fnDepartamentoController.selected.descripcion}" title="#{mensajes.ViewFnDepartamentoTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnDepartamentoViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

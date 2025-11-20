@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="jakarta.faces.core" xmlns:h="jakarta.faces.html"
+                xmlns:ui="jakarta.faces.facelets" xmlns:p="http://primefaces.org/ui">
+
+    <div class="layout-rightpanel">
+        <div class="nano">
+            <div class="nano-content right-panel-scroll-content ">
+                <div class="layout-rightpanel-content">
+                    <div class="layout-menu">
+                        <div align="center">
+                            <p:outputLabel style="background: #2c2d3c; color: #ffffff; font-weight: bold; font-size: 20px !important" value="PANEL DE ALERTAS" />
+                        </div>
+                        <h:form id="menuform3">
+                            <p:fieldset legend="MEMORANDUMS" style="margin-top: 10px" rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PROYECTO') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'REVISION') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PARA_REVISION')}">
+                                <p:menu style="background: #2c2d3c; color: #ffffff">
+                                    <p:menuitem icon="pi-inbox" style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml')}" value="#{usuariosController.stringCantidadArchivosAdmBandejaEntrada}" outcome="/pages/documentosAdministrativos/index" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadArchivosAdmBandejaEntrada}" />
+                                    </p:menuitem>
+                                    <p:menuitem icon="pi-inbox" style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml')}" value="#{usuariosController.stringCantidadArchivosAdmBandejaCC}" outcome="/pages/documentosAdministrativos/index?tipo=band_salida" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadArchivosAdmBandejaCC}" />
+                                    </p:menuitem>
+                                    <p:menuitem style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PROYECTO')}" value="#{usuariosController.stringCantidadArchivosAdmEnProyecto}" outcome="/pages/archivosAdministrativo/index?tipo=proyecto" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadArchivosAdmEnProyecto}" />
+                                    </p:menuitem>
+                                    <p:menuitem style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'REVISION')}" value="#{usuariosController.stringCantidadArchivosAdmEnRevision}" outcome="/pages/archivosAdministrativo/index?tipo=revision" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadArchivosAdmEnRevision}" />
+                                    </p:menuitem>
+                                    <p:menuitem style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PARA_REVISION')}" value="#{usuariosController.stringCantidadArchivosAdmParaRevision}" outcome="/pages/archivosAdministrativo/index?tipo=para_revision" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadArchivosAdmParaRevision}" />
+                                    </p:menuitem>
+                                </p:menu>
+                            </p:fieldset>
+                            <p:fieldset legend="MESA DE ENTRADA" style="margin-top: 10px" rendered="#{filtroURL.verifPermiso('/pages/verDocumentosAdministrativosMesa/index.xhtml')}">
+                                <p:menu style="background: #2c2d3c; color: #ffffff">
+                                    <p:menuitem style="background: #2c2d3c; color: #ffffff" rendered="#{filtroURL.verifPermiso('/pages/verDocumentosAdministrativosMesa/index.xhtml')}" value="#{usuariosController.stringCantidadMesaDeEntradaBandejaEntrada}" outcome="/pages/verDocumentosAdministrativosMesa/index" >
+                                        <f:attribute name="badge" value="#{usuariosController.cantidadMesaDeEntradaBandejaEntrada}" />
+                                    </p:menuitem>
+                                </p:menu>
+                            </p:fieldset>
+                            <p:fieldset legend="REGLAMENTOS" style="margin-top: 10px" rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PROYECTO') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'REVISION') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PARA_REVISION')}">
+                                <div class="ui-sm-12 ui-md-12 ui-lg-12 ui-g-12" style="background: #2c2d3c; color: #ffffff">
+                                    <p:commandLink value="Memorandum" style="color: #ffffff" action="#{memorandumController.verDoc('resolucion_sg_533_2022', 'pdf')}" ajax="false"/>
+                                </div>
+                                <div class="ui-sm-12 ui-md-12 ui-lg-12 ui-g-12" style="background: #2c2d3c; color: #ffffff">
+                                    <p:commandLink value="Mesa de Entrada" style="color: #ffffff" action="#{memorandumController.verDoc('resolucion_sg_233_2022', 'pdf')}" ajax="false"/>
+                                </div>
+                            </p:fieldset>
+                            <p:fieldset legend="TUTORIALES" style="margin-top: 10px" rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PROYECTO') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'REVISION') or filtroURL.verifPermiso('/pages/archivosAdministrativo/index.xhtml', 'PARA_REVISION')}">
+                                <div class="ui-sm-12 ui-md-12 ui-lg-12 ui-g-12" style="background: #2c2d3c; color: #ffffff">
+                                    <a href="https://intranet.jem.gov.py/intranet/tutoriales/" style="background: #2c2d3c; color: #ffffff" target="_blank">Memorandum</a>
+                                </div>
+                            </p:fieldset>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnContratosCreateDlg" widgetVar="FnContratosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{mensajes.CreateFnContratosTitle}" closeOnEscape="true">
+
+            <h:form id="FnContratosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{fnContratosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_id}" for="id" />
+                        <h:panelGroup>
+                            <p:inputText id="id" value="#{fnContratosController.selected.id}" title="#{mensajes.CreateFnContratosTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnContratosRequiredMessage_id}"/>
+                            <p:tooltip for="id" value="#{fnContratosController.getComponentMessages('id', mensajes.CreateFnContratosHelpText_id)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_fecha}" for="fecha" />
+                        <h:panelGroup>
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{fnContratosController.selected.fecha}" title="#{mensajes.CreateFnContratosTitle_fecha}"  showOn="button"/>
+                            <p:tooltip for="fecha" value="#{fnContratosController.getComponentMessages('fecha', mensajes.CreateFnContratosHelpText_fecha)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_descripcion}" for="descripcion" />
+                        <h:panelGroup>
+                            <p:inputTextarea rows="4" cols="30" id="descripcion" value="#{fnContratosController.selected.descripcion}" title="#{mensajes.CreateFnContratosTitle_descripcion}" />
+                            <p:tooltip for="descripcion" value="#{fnContratosController.getComponentMessages('descripcion', mensajes.CreateFnContratosHelpText_descripcion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_importe}" for="importe" />
+                        <h:panelGroup>
+                            <p:inputText id="importe" value="#{fnContratosController.selected.importe}" title="#{mensajes.CreateFnContratosTitle_importe}"/>
+                            <p:tooltip for="importe" value="#{fnContratosController.getComponentMessages('importe', mensajes.CreateFnContratosHelpText_importe)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_licitacion}" for="licitacion" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="licitacion" value="#{fnContratosController.selected.licitacion}"  converter="fnLicitacionesConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnLicitacionesController.items}"
+                                               var="licitacionItem"
+                                               itemValue="#{licitacionItem}"
+                                               itemLabel="#{licitacionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="licitacion" value="#{fnContratosController.getComponentMessages('licitacion', mensajes.CreateFnContratosHelpText_licitacion)}"/>
+                        </h:panelGroup>
+
+                        <p:outputLabel value="#{mensajes.CreateFnContratosLabel_proveedor}" for="proveedor" />
+                        <h:panelGroup>
+                            <p:selectOneMenu id="proveedor" value="#{fnContratosController.selected.proveedor}"  converter="fnProveedoresConverter">
+                                <f:selectItem itemLabel="#{mensajes.SelectOneMessage}"/>
+                                <f:selectItems value="#{fnProveedoresController.items}"
+                                               var="proveedorItem"
+                                               itemValue="#{proveedorItem}"
+                                               itemLabel="#{proveedorItem.id.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                            <p:tooltip for="proveedor" value="#{fnContratosController.getComponentMessages('proveedor', mensajes.CreateFnContratosHelpText_proveedor)}"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{fnContratosController.saveNew}" value="#{mensajes.Save}" update="display,:FnContratosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('FnContratosCreateDialog'));">
+                        <p:confirm header="#{mensajes.ConfirmationHeader}" message="#{mensajes.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{mensajes.Cancel}" oncomplete="PF('FnContratosCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

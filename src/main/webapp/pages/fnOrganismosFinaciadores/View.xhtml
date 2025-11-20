@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FnOrganismosFinaciadoresViewDlg" widgetVar="FnOrganismosFinaciadoresViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{mensajes.ViewFnOrganismosFinaciadoresTitle}" closeOnEscape="true">
+
+            <h:form id="FnOrganismosFinaciadoresViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{fnOrganismosFinaciadoresController.selected != null}">
+
+                        <h:outputText value="#{mensajes.ViewFnOrganismosFinaciadoresLabel_id}"/>
+                        <h:outputText value="#{fnOrganismosFinaciadoresController.selected.id}" title="#{mensajes.ViewFnOrganismosFinaciadoresTitle_id}"/>
+
+                        <h:outputText value="#{mensajes.ViewFnOrganismosFinaciadoresLabel_nombre}"/>
+                        <h:outputText value="#{fnOrganismosFinaciadoresController.selected.nombre}" title="#{mensajes.ViewFnOrganismosFinaciadoresTitle_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{mensajes.Close}" onclick="PF('FnOrganismosFinaciadoresViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
