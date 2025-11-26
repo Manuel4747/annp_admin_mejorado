@@ -20,44 +20,105 @@
                         <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/formulario/index.xhtml')}" value="Formulario" outcome="/pages/formulario/index" />
                     </p:submenu> 
 
-                    <p:submenu label="#{mensajes.Maintenance}">
-                        <p:menuitem value="#{mensajes.FnArticuloCaracteristicasHeading}..." outcome="/pages/fnArticuloCaracteristicas/index" />
-                        <p:menuitem value="#{mensajes.FnArticulosHeading}..." outcome="/pages/fnArticulos/index" />
-                        <p:menuitem value="#{mensajes.FnCategoriaArticuloHeading}..." outcome="/pages/fnCategoriaArticulo/index" />
-                        <p:menuitem value="#{mensajes.FnCertificadosDisponibilidadHeading}..." outcome="/pages/fnCertificadosDisponibilidad/index" />
-                        <p:menuitem value="#{mensajes.FnChequesHeading}..." outcome="/pages/fnCheques/index" />
-                        <p:menuitem value="#{mensajes.FnComprobantesDePagoHeading}..." outcome="/pages/fnComprobantesDePago/index" />
-                        <p:menuitem value="#{mensajes.FnContratosHeading}..." outcome="/pages/fnContratos/index" />
-                        <p:menuitem value="#{mensajes.FnDepartamentoHeading}..." outcome="/pages/fnDepartamento/index" />
-                        <p:menuitem value="#{mensajes.FnDetalleFacturaHeading}..." outcome="/pages/fnDetalleFactura/index" />
-                        <p:menuitem value="#{mensajes.FnDetalleLicitacionHeading}..." outcome="/pages/fnDetalleLicitacion/index" />
-                        <p:menuitem value="#{mensajes.FnDetalleOrdenCompraHeading}..." outcome="/pages/fnDetalleOrdenCompra/index" />
-                        <p:menuitem value="#{mensajes.FnDetallePlanFinancieroHeading}..." outcome="/pages/fnDetallePlanFinanciero/index" />
-                        <p:menuitem value="#{mensajes.FnDetallePresupuestoHeading}..." outcome="/pages/fnDetallePresupuesto/index" />
-                        <p:menuitem value="#{mensajes.FnDetalleReprogramacionHeading}..." outcome="/pages/fnDetalleReprogramacion/index" />
-                        <p:menuitem value="#{mensajes.FnDistribucionHeading}..." outcome="/pages/fnDistribucion/index" />
-                        <p:menuitem value="#{mensajes.FnFacturasHeading}..." outcome="/pages/fnFacturas/index" />
-                        <p:menuitem value="#{mensajes.FnFuentesDeFinanciamientoHeading}..." outcome="/pages/fnFuentesDeFinanciamiento/index" />
-                        <p:menuitem value="#{mensajes.FnLicitacionesHeading}..." outcome="/pages/fnLicitaciones/index" />
-                        <p:menuitem value="#{mensajes.FnObjetosDeGastoHeading}..." outcome="/pages/fnObjetosDeGasto/index" />
-                        <p:menuitem value="#{mensajes.FnOrdenesDeCompraHeading}..." outcome="/pages/fnOrdenesDeCompra/index" />
-                        <p:menuitem value="#{mensajes.FnOrganismosFinaciadoresHeading}..." outcome="/pages/fnOrganismosFinaciadores/index" />
-                        <p:menuitem value="#{mensajes.FnPagosHeading}..." outcome="/pages/fnPagos/index" />
-                        <p:menuitem value="#{mensajes.FnPlanFinancieroHeading}..." outcome="/pages/fnPlanFinanciero/index" />
-                        <p:menuitem value="#{mensajes.FnPresupuestoHeading}..." outcome="/pages/fnPresupuesto/index" />
-                        <p:menuitem value="#{mensajes.FnProgramasHeading}..." outcome="/pages/fnProgramas/index" />
-                        <p:menuitem value="#{mensajes.FnProveedoresHeading}..." outcome="/pages/fnProveedores/index" />
-                        <p:menuitem value="#{mensajes.FnProyectosHeading}..." outcome="/pages/fnProyectos/index" />
-                        <p:menuitem value="#{mensajes.FnReprogramacionesHeading}..." outcome="/pages/fnReprogramaciones/index" />
-                        <p:menuitem value="#{mensajes.FnRetencionesHeading}..." outcome="/pages/fnRetenciones/index" />
-                        <p:menuitem value="#{mensajes.FnRubroArticuloHeading}..." outcome="/pages/fnRubroArticulo/index" />
-                        <p:menuitem value="#{mensajes.FnSubDistribucionHeading}..." outcome="/pages/fnSubDistribucion/index" />
-                        <p:menuitem value="#{mensajes.FnSubProgramaHeading}..." outcome="/pages/fnSubPrograma/index" />
-                        <p:menuitem value="#{mensajes.FnTipoArticuloHeading}..." outcome="/pages/fnTipoArticulo/index" />
-                        <p:menuitem value="#{mensajes.FnTipoDeVariacionRpHeading}..." outcome="/pages/fnTipoDeVariacionRp/index" />
-                        <p:menuitem value="#{mensajes.FnTiposPresupuestoHeading}..." outcome="/pages/fnTiposPresupuesto/index" />
-                        <p:menuitem value="#{mensajes.FnTiposReprogramacionesHeading}..." outcome="/pages/fnTiposReprogramaciones/index" />
-                    </p:submenu>
+                <p:submenu label="#{mensajes.Articulos}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnTipoArticulo/index.xhtml')}" value="Tipos Articulos..." outcome="/pages/fnTipoArticulo/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnArticulos/index.xhtml')}" value="Articulos..." outcome="/pages/fnArticulos/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnArticuloCaracteristicas/index.xhtml')}" value="Articulos Características..." outcome="/pages/fnArticuloCaracteristicas/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCategoriaArticulo/index.xhtml')}" value="Categoria Articulos..." outcome="/pages/fnCategoriaArticulo/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnRubroArticulo/index.xhtml')}" value="Rubros Articulos..." outcome="/pages/fnRubroArticulo/index" />
+                            </p:submenu>
+                            <p:submenu label="#{mensajes.Maestros}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnObjetosDeGasto/index.xhtml')}" value="Objetos del Gasto..." outcome="/pages/fnObjetosDeGasto/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnFuentesDeFinanciamiento/index.xhtml')}" value="Fuentes de Financiamiento..." outcome="/pages/fnFuentesDeFinanciamiento/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnTiposPresupuesto/index.xhtml')}" value="Tipos Presupuesto..." outcome="/pages/fnTiposPresupuesto/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnTiposReprogramaciones/index.xhtml')}" value="Tipos Reprogramación..." outcome="/pages/fnTiposReprogramaciones/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnTipoDeVariacionRp/index.xhtml')}" value="Tipo de Variacioión Rp..." outcome="/pages/fnTipoDeVariacionRp/index" />
+                            </p:submenu>
+                            <p:submenu label="#{mensajes.Presupuesto}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnPresupuesto/index.xhtml')}" value="Presupuesto..." outcome="/pages/fnPresupuesto/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnPlanFinanciero/index.xhtml')}" value="Plan Financiero..." outcome="/pages/fnPlanFinanciero/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnReprogramaciones.xhtml')}" value="Reprogramaciones..." outcome="/pages/fnReprogramaciones/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetallePlanFinanciero/index.xhtml')}" value="Detalles Plan Financiero..." outcome="/pages/fnDetallePlanFinanciero/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetallePresupuesto/index.xhtml')}" value="Detalles Presupuesto..." outcome="/pages/fnDetallePresupuesto/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleReprogramacion/index.xhtml')}" value="Detalles Reprogramación..." outcome="/pages/fnDetalleReprogramacion/index" />
+                            </p:submenu>
+                            <p:submenu label="#{mensajes.Ejecucion}">
+                            <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCertificadosDisponibilidad/index.xhtml')}" value="CDPs..." outcome="/pages/fnCertificadosDisponibilidad/index" />
+                            <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProyectos/index.xhtml')}" value="Proyectos..." outcome="/pages/fnProyectos/index" />
+                        
+                            </p:submenu>
+                            <p:submenu label="#{mensajes.Licitaciones}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnLicitaciones/index.xhtml')}" value="Licitaciones..." outcome="/pages/fnLicitaciones/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnContratos/index.xhtml')}" value="Contratos..." outcome="/pages/fnContratos/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleLicitacion/index.xhtml')}" value="Detalles Licitaciones..." outcome="/pages/fnDetalleLicitacion/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleOrdenCompra/index')}" value="Detalles Orden de Compra..." outcome="/pages/fnDetalleOrdenCompra/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDistribucion/index.xhtml')}" value="Distribuición..." outcome="/pages/fnDistribucion/index" />   
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProveedores/index.xhtml')}" value="Proveedores..." outcome="/pages/fnProveedores/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnSubDistribucion/index.xhtml')}" value="SubDistribuición..." outcome="/pages/fnSubDistribucion/index" />
+   
+
+                            </p:submenu>
+                            <p:submenu label="#{mensajes.Pagos}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnOrdenesDeCompra/index.xhtml')}" value="Ordenes de Compra..." outcome="/pages/fnOrdenesDeCompra/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnOrganismosFinaciadores/index.xhtml')}" value="Organismos Financiadores..." outcome="/pages/fnOrganismosFinaciadores/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnPagos/index.xhtml')}" value="Pagos..." outcome="/pages/fnPagos/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProgramas/index.xhtml')}" value="Programas..." outcome="/pages/fnProgramas/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('pages/fnSubPrograma/index.xhtml')}" value="Sud Programa..." outcome="pages/fnSubPrograma/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCheques/index.xhtml')}" value="Cheques..." outcome="/pages/fnCheques/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnComprobantesDePago/index.xhtml')}" value="Comprobantes de Pagos..." outcome="/pages/fnComprobantesDePago/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnRetenciones/index.xhtml')}" value="Retenciones..." outcome="/pages/fnRetenciones/index" /> 
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnFacturas/index.xhtml')}" value="Facturas..." outcome="/pages/fnFacturas/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleFactura/index.xhtml')}" value="Detalles Factura..." outcome="/pages/fnDetalleFactura/index" />
+
+                                
+                            </p:submenu>
+                           
+                            <ui:remove>
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/menuTalento/index.xhtml')}" value="Talento Humano" outcome="/pages/menuTalento/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/documentosAdministrativos/index.xhtml')}" value="Memorandums" outcome="/pages/documentosAdministrativos/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/menuReportes/index.xhtml')}" value="Reportes" outcome="/pages/menuReportes/index" />
+                                <p:submenu label="#{mensajes.Agendamientos}" rendered="#{filtroURL.verifPermiso('menuAgendamientos')}">
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/agendamientos/index.xhtml')}" value="#{mensajes.AgendamientosHeading}..." outcome="/pages/agendamientos/index" />
+                                </p:submenu>
+
+
+                                <p:submenu label="#{mensajes.Patrimonio}" rendered="#{filtroURL.verifPermiso('menuPatrimonio')}">
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/bienes/index.xhtml')}" value="#{mensajes.BienesHeading}..." outcome="/pages/bienes/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/movimientosReparacionesBienes/index.xhtml')}" value="#{mensajes.MovimientosReparacionBienesHeading}..." outcome="/pages/movimientosReparacionBienes/index" />
+                                    <p:separator />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/proveedores/index.xhtml')}" value="#{mensajes.ProveedoresHeading}..." outcome="/pages/proveedores/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/cuentas/index.xhtml')}" value="#{mensajes.CuentasHeading}..." outcome="/pages/cuentas/index" />
+                                </p:submenu>
+                                <p:submenu label="#{mensajes.Juridico}" rendered="#{filtroURL.verifPermiso('menuJuridico')}">
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/resoluciones/index.xhtml')}" value="#{mensajes.ResolucionesHeading}..." outcome="/pages/resoluciones/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/entradaDirectaDocumentosJudiciales/index.xhtml')}" value="#{mensajes.DocumentosJudicialesHeading}..." outcome="/pages/entradaDirectaDocumentosJudiciales/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/entradaDirectaDocumentosJudicialesPreliminares/index.xhtml')}" value="#{mensajes.DocumentosJudicialesPreliminaresHeading}..." outcome="/pages/entradaDirectaDocumentosJudicialesPreliminares/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/verDocumentosJudicialesMesa/index.xhtml')}" value="Documentos Judiciales por Mesa..." outcome="/pages/verDocumentosJudicialesMesa/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/personas/index.xhtml')}" value="Personas..." outcome="/pages/personas/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/despachosPersona/index.xhtml')}" value="#{mensajes.DespachosPersonaHeading}..." outcome="/pages/despachosPersona/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/pedidosPersona/index.xhtml')}" value="Pedidos Usuario Magistrados..." outcome="/pages/pedidosPersona/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/chartAntecedentesPorDia/index.xhtml')}" value="Grafico..." outcome="/pages/chartAntecedentesPorDia/index" />
+                                    <p:separator />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/chartDocumentosSecretariaPorDia/index.xhtml')}" value="Grafico Secretaria..." outcome="/pages/chartDocumentosSecretariaPorDia/index" />
+                                </p:submenu>
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/menuResolucion/index.xhtml')}" value="Resoluciones" outcome="/pages/menuResolucion/index" />
+                                <p:submenu label="#{mensajes.FormularioUOC}" rendered="#{filtroURL.verifPermiso('menuFormulario')}">
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/formulario/index.xhtml')}" value="Formulario" outcome="/pages/formulario/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/historicoContrato/index.xhtml')}" value="Historico Contrato" outcome="/pages/historicoContrato/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/historicoEjecucion/index.xhtml')}" value="Historico Ejecución" outcome="/pages/historicoEjecucion/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/sistemaAdjudicacion/index.xhtml')}" value="Sistema Adjudicación" outcome="/pages/sistemaAdjudicacion/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/tipoModalidad/index.xhtml')}" value="Tipo Modalidad" outcome="/pages/tipoModalidad/index" />
+                                </p:submenu>
+                                <p:submenu label="#{mensajes.Informes}" rendered="#{filtroURL.verifPermiso('menuInformes')}">
+
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/acciones/index.xhtml')}" value="#{mensajes.AccionesHeading}..." outcome="/pages/acciones/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/actividades/index.xhtml')}" value="#{mensajes.ActividadesHeading}..." outcome="/pages/actividades/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/programacion/index.xhtml')}" value="Programacion" outcome="/pages/programacion/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/planEstrategicas/index.xhtml')}" value="#{mensajes.PanEstrategicasHeading}..." outcome="/pages/planEstrategicas/index" />  
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/menuGrafico/index.xhtml')}" value="Resultados" outcome="/pages/menuGrafico/index" />
+                                    <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/menuProceso/index.xhtml')}" value="Procesos" outcome="/pages/menuProceso/index" />
+
+                                </p:submenu>
                     <p:separator />               
                     <p:menuitem value="#{mensajes.Logout}" action="#{usuariosController.cerrarSession()}"/>
                 </p:menubar>

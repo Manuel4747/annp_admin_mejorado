@@ -15,11 +15,7 @@
                 <h:panelGroup id="display" rendered="#{fnArticuloCaracteristicasController.selected != null}">
                     <p:panelGrid columns="2" columnClasses="column">
 
-                        <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_id}" for="id" />
-                        <h:panelGroup>
-                            <p:inputText id="id" value="#{fnArticuloCaracteristicasController.selected.id}" title="#{mensajes.CreateFnArticuloCaracteristicasTitle_id}" required="true" requiredMessage="#{mensajes.CreateFnArticuloCaracteristicasRequiredMessage_id}"/>
-                            <p:tooltip for="id" value="#{fnArticuloCaracteristicasController.getComponentMessages('id', mensajes.CreateFnArticuloCaracteristicasHelpText_id)}"/>
-                        </h:panelGroup>
+                        
 
                         <p:outputLabel value="#{mensajes.CreateFnArticuloCaracteristicasLabel_caracteristica}" for="caracteristica" />
                         <h:panelGroup>

@@ -30,6 +30,11 @@
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/usuariosContrasena/index.xhtml')}" value="Cambio Contrasena" outcome="/pages/usuariosContrasena/index" />
 
                             </p:submenu>
+                            <p:submenu label="#{mensajes.Ejecucion}">
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCertificadosDisponibilidad/index.xhtml')}" value="CDPs..." outcome="/pages/fnCertificadosDisponibilidad/index" />
+                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProyectos/index.xhtml')}" value="Proyectos..." outcome="/pages/fnProyectos/index" />
+                            </p:submenu>
+
                             <p:submenu label="#{mensajes.Articulos}">
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnTipoArticulo/index.xhtml')}" value="Tipos Articulos..." outcome="/pages/fnTipoArticulo/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnArticulos/index.xhtml')}" value="Articulos..." outcome="/pages/fnArticulos/index" />
@@ -37,6 +42,7 @@
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCategoriaArticulo/index.xhtml')}" value="Categoria Articulos..." outcome="/pages/fnCategoriaArticulo/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnRubroArticulo/index.xhtml')}" value="Rubros Articulos..." outcome="/pages/fnRubroArticulo/index" />
                             </p:submenu>
+
                             <p:submenu label="#{mensajes.Maestros}">
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnObjetosDeGasto/index.xhtml')}" value="Objetos del Gasto..." outcome="/pages/fnObjetosDeGasto/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnFuentesDeFinanciamiento/index.xhtml')}" value="Fuentes de Financiamiento..." outcome="/pages/fnFuentesDeFinanciamiento/index" />
@@ -54,8 +60,7 @@
                             </p:submenu>
                             <p:submenu label="#{mensajes.Ejecucion}">
                             <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCertificadosDisponibilidad/index.xhtml')}" value="CDPs..." outcome="/pages/fnCertificadosDisponibilidad/index" />
-                            <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProyectos/index.xhtml')}" value="Proyectos..." outcome="/pages/fnProyectos/index" />
-                        
+                            <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProyectos/index.xhtml')}" value="Proyectos..." outcome="/pages/fnProyectos/index" />        
                             </p:submenu>
                             <p:submenu label="#{mensajes.Licitaciones}">
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnLicitaciones/index.xhtml')}" value="Licitaciones..." outcome="/pages/fnLicitaciones/index" />
@@ -65,7 +70,6 @@
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDistribucion/index.xhtml')}" value="Distribuición..." outcome="/pages/fnDistribucion/index" />   
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProveedores/index.xhtml')}" value="Proveedores..." outcome="/pages/fnProveedores/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnSubDistribucion/index.xhtml')}" value="SubDistribuición..." outcome="/pages/fnSubDistribucion/index" />
-   
 
                             </p:submenu>
                             <p:submenu label="#{mensajes.Pagos}">
@@ -73,14 +77,13 @@
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnOrganismosFinaciadores/index.xhtml')}" value="Organismos Financiadores..." outcome="/pages/fnOrganismosFinaciadores/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnPagos/index.xhtml')}" value="Pagos..." outcome="/pages/fnPagos/index" />
                                 <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnProgramas/index.xhtml')}" value="Programas..." outcome="/pages/fnProgramas/index" />
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('pages/fnSubPrograma/index.xhtml')}" value="Sud Programa..." outcome="pages/fnSubPrograma/index" />
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCheques/index.xhtml')}" value="Cheques..." outcome="/pages/fnCheques/index" />
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnComprobantesDePago/index.xhtml')}" value="Comprobantes de Pagos..." outcome="/pages/fnComprobantesDePago/index" />
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnRetenciones/index.xhtml')}" value="Retenciones..." outcome="/pages/fnRetenciones/index" /> 
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnFacturas/index.xhtml')}" value="Facturas..." outcome="/pages/fnFacturas/index" />
-                                <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleFactura/index.xhtml')}" value="Detalles Factura..." outcome="/pages/fnDetalleFactura/index" />
+                               <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnCheques/index.xhtml')}" value="Cheques..." outcome="/pages/fnCheques/index" />
+                               <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnComprobantesDePago/index.xhtml')}" value="Comprobantes de Pagos..." outcome="/pages/fnComprobantesDePago/index" />
+                               <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnRetenciones/index.xhtml')}" value="Retenciones..." outcome="/pages/fnRetenciones/index" /> 
+                               <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnFacturas/index.xhtml')}" value="Facturas..." outcome="/pages/fnFacturas/index" />
+                               <p:menuitem rendered="#{filtroURL.verifPermiso('/pages/fnDetalleFactura/index.xhtml')}" value="Detalles Factura..." outcome="/pages/fnDetalleFactura/index" />
 
-                                
+
                             </p:submenu>
                            
                             <ui:remove>

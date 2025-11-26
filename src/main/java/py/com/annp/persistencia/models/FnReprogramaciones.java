@@ -11,6 +11,8 @@ import java.util.Date;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -31,18 +33,19 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @Table(name = "fn_reprogramaciones")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FnReprogramaciones.findAll", query = "SELECT f FROM FnReprogramaciones f")
-    , @NamedQuery(name = "FnReprogramaciones.findById", query = "SELECT f FROM FnReprogramaciones f WHERE f.id = :id")
-    , @NamedQuery(name = "FnReprogramaciones.findByFechaInicio", query = "SELECT f FROM FnReprogramaciones f WHERE f.fechaInicio = :fechaInicio")
-    , @NamedQuery(name = "FnReprogramaciones.findByDescripcion", query = "SELECT f FROM FnReprogramaciones f WHERE f.descripcion = :descripcion")
-    , @NamedQuery(name = "FnReprogramaciones.findByPeriodo", query = "SELECT f FROM FnReprogramaciones f WHERE f.periodo = :periodo")
-    , @NamedQuery(name = "FnReprogramaciones.findByFechaAprobacion", query = "SELECT f FROM FnReprogramaciones f WHERE f.fechaAprobacion = :fechaAprobacion")
-    , @NamedQuery(name = "FnReprogramaciones.findByNroDocAprobacion", query = "SELECT f FROM FnReprogramaciones f WHERE f.nroDocAprobacion = :nroDocAprobacion")
-    , @NamedQuery(name = "FnReprogramaciones.findByImporte", query = "SELECT f FROM FnReprogramaciones f WHERE f.importe = :importe")})
+    @NamedQuery(name = "FnReprogramaciones.findAll", query = "SELECT f FROM FnReprogramaciones f"),
+    @NamedQuery(name = "FnReprogramaciones.findById", query = "SELECT f FROM FnReprogramaciones f WHERE f.id = :id"),
+    @NamedQuery(name = "FnReprogramaciones.findByFechaInicio", query = "SELECT f FROM FnReprogramaciones f WHERE f.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "FnReprogramaciones.findByDescripcion", query = "SELECT f FROM FnReprogramaciones f WHERE f.descripcion = :descripcion"),
+    @NamedQuery(name = "FnReprogramaciones.findByPeriodo", query = "SELECT f FROM FnReprogramaciones f WHERE f.periodo = :periodo"),
+    @NamedQuery(name = "FnReprogramaciones.findByFechaAprobacion", query = "SELECT f FROM FnReprogramaciones f WHERE f.fechaAprobacion = :fechaAprobacion"),
+    @NamedQuery(name = "FnReprogramaciones.findByNroDocAprobacion", query = "SELECT f FROM FnReprogramaciones f WHERE f.nroDocAprobacion = :nroDocAprobacion"),
+    @NamedQuery(name = "FnReprogramaciones.findByImporte", query = "SELECT f FROM FnReprogramaciones f WHERE f.importe = :importe")})
 public class FnReprogramaciones implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
@@ -175,5 +178,5 @@ public class FnReprogramaciones implements Serializable {
     public String toString() {
         return "py.com.staric.gestion.models.FnReprogramaciones[ id=" + id + " ]";
     }
-    
+
 }
