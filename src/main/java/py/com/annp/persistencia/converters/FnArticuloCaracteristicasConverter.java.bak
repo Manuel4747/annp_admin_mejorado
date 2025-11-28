@@ -1,6 +1,5 @@
 package py.com.annp.persistencia.converters;
 
-import jakarta.enterprise.inject.spi.CDI;
 import py.com.startic.gestion.converters.*;
 import py.com.startic.gestion.controllers.util.JsfUtil;
 import java.util.logging.Level;
@@ -10,18 +9,14 @@ import jakarta.inject.Inject;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
-import py.com.annp.persistencia.facades.FnCertificadosDisponibilidadFacade;
-import py.com.annp.persistencia.models.FnCertificadosDisponibilidad;
+import py.com.annp.persistencia.facades.FnArticuloCaracteristicasFacade;
+import py.com.annp.persistencia.models.FnArticuloCaracteristicas;
 
-@FacesConverter(value = "fnCertificadosDisponibilidadConverter")
-public class FnCertificadosDisponibilidadConverter implements Converter {
+@FacesConverter(value = "fnArticuloCaracteristicasConverter")
+public class FnArticuloCaracteristicasConverter implements Converter {
 
-    //@Inject
-    private FnCertificadosDisponibilidadFacade ejbFacade;
-    
-    public FnCertificadosDisponibilidadConverter() {
-        this.ejbFacade = CDI.current().select(FnCertificadosDisponibilidadFacade.class).get();
-    }
+    @Inject
+    private FnArticuloCaracteristicasFacade ejbFacade;
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
@@ -49,11 +44,11 @@ public class FnCertificadosDisponibilidadConverter implements Converter {
                 || (object instanceof String && ((String) object).length() == 0)) {
             return null;
         }
-        if (object instanceof FnCertificadosDisponibilidad) {
-            FnCertificadosDisponibilidad o = (FnCertificadosDisponibilidad) object;
+        if (object instanceof FnArticuloCaracteristicas) {
+            FnArticuloCaracteristicas o = (FnArticuloCaracteristicas) object;
             return getStringKey(o.getId());
         } else {
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), FnCertificadosDisponibilidad.class.getName()});
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), FnArticuloCaracteristicas.class.getName()});
             return null;
         }
     }

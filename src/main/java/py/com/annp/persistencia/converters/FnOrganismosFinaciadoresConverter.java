@@ -1,5 +1,6 @@
 package py.com.annp.persistencia.converters;
 
+import jakarta.enterprise.inject.spi.CDI;
 import py.com.startic.gestion.converters.*;
 import py.com.startic.gestion.controllers.util.JsfUtil;
 import java.util.logging.Level;
@@ -15,8 +16,11 @@ import py.com.annp.persistencia.models.FnOrganismosFinaciadores;
 @FacesConverter(value = "fnOrganismosFinaciadoresConverter")
 public class FnOrganismosFinaciadoresConverter implements Converter {
 
-    @Inject
+    //@Inject
     private FnOrganismosFinaciadoresFacade ejbFacade;
+    public FnOrganismosFinaciadoresConverter() {
+        this.ejbFacade = CDI.current().select(FnOrganismosFinaciadoresFacade.class).get();
+    }
 
     @Override
     public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
